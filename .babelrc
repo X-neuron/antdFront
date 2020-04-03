@@ -1,0 +1,53 @@
+{
+    "presets": [
+      [
+        "@babel/preset-react",
+        {
+        //   "pragma": "dom", // default pragma is React.createElement
+        //   "pragmaFrag": "DomFrag", // default is React.Fragment
+          "throwIfNamespace": false, // defaults to true
+          "targets": {
+            "edge": "17",
+            "firefox": "60",
+            "chrome": "67",
+            "safari": "11.1"
+          },
+          "useBuiltIns": "usage"
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-syntax-dynamic-import",
+      [
+        "@babel/plugin-transform-runtime",
+        {
+          "absoluteRuntime": false,
+          "corejs": false,
+          "helpers": true,
+          "regenerator": true,
+          "useESModules": false,
+        }
+      ],
+      [
+        "import",
+        //using antd UI
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "css" // `style: true` 会加载 less 文件
+          // "style": true
+        }
+
+        //   //using material-ui
+        // {
+        //   "libraryName": "@material-ui/core",
+        //   "libraryDirectory": "components",  // default: lib
+        //   "camel2DashComponentName": false  // default: true
+        // }
+      ],
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-export-default-from"
+
+    ]
+    // "plugins": ["@babel/plugin-proposal-class-properties"]
+  }

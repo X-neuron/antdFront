@@ -1,0 +1,23 @@
+# EditorConfig is awesome: http://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+# Unix-style newlines with a newline ending every file
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# editorconfig-tools is unable to ignore longs strings or urls
+max_line_length = null
+
+[Makefile]
+indent_style = tab
+
