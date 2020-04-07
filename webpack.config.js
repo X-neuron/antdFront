@@ -99,17 +99,16 @@ module.exports = {
               ]
             }
           }
-      ],
-       // use: ["babel-loader", "eslint-loader"]
-      },
+      ]
+    },
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.css$/,
         use: [
           // {
           //   loader: 'thread-loader',
           //   options: cssWorkerPool
           // },
-          'style-loader',
+          // 'style-loader',
           {
             loader: MiniCssExtractPlugin.loader,
             // options: {
@@ -118,21 +117,32 @@ module.exports = {
           },
           {
             loader: 'css-loader',
-            options: {
-              modules: true,
-              import: (parsedImport, resourcePath) => {
-                // parsedImport.url - url of `@import`
-                // parsedImport.media - media query of `@import`
-                // resourcePath - path to css file
-
-                // Don't handle `style.css` import
-                if (parsedImport.url.includes('style.css')) {
-                  return false;
-                }
-
-                return true;
-              },
-            },
+            // options: {
+            //   modules: true,
+            // },
+          }
+        ],
+       // use: ["babel-loader", "eslint-loader"]
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // {
+          //   loader: 'thread-loader',
+          //   options: cssWorkerPool
+          // },
+          // 'style-loader',
+          {
+            loader: MiniCssExtractPlugin.loader,
+            // options: {
+            //   hmr: process.env.NODE_ENV === 'development',
+            // },
+          },
+          {
+            loader: 'css-loader',
+            // options: {
+            //   modules: true,
+            // },
           },
           'sass-loader',
         ],
@@ -144,19 +154,18 @@ module.exports = {
           //   loader: 'thread-loader',
           //   options: cssWorkerPool
           // },
+          // 'style-loader',
           {
-            loader: 'style-loader', // creates style nodes from JS strings
+            loader: MiniCssExtractPlugin.loader,
+            // options: {
+            //   esModule: true,
+            // },
           },
-          // // {
-          // //   // loader:'style-loader',
-          // //   loader: MiniCssExtractPlugin.loader,
-          // //   options: {
-          // //     esModule: true,
-          // //   },
-          // //   // loader: 'isomorphic-style-loader',
-          // // },
           {
             loader: 'css-loader',
+            // options: {
+            //   modules: true,
+            // },
           },
           {
             loader: 'less-loader',
@@ -223,12 +232,20 @@ module.exports = {
           // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
         }
       }),
+      new OptimizeCssAssetsPlugin({
+        assetNameRegExp: /\.optimize\.css$/g,
+        cssProcessor: require('cssnano'),
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+        canPrint: true
+      }),
     ],
   },
   plugins: [
     new webpackbar(),
     new CopyPlugin([
-      { from: path.join(__dirname, PublicFolder), to: `${BuildFolder}/public` },
+      { from: path.join(__dirname, PublicFolder), to: 'public' },
     ]),
 
     new HtmlWebpackPlugin({
@@ -260,15 +277,16 @@ module.exports = {
       // both options are optional
       filename: 'static/css/[name].[contenthash:8].css',
       chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.optimize\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }],
-      },
-      canPrint: true
-    }),
+    // new OptimizeCssAssetsPlugin({
+    //   assetNameRegExp: /\.optimize\.css$/g,
+    //   cssProcessor: require('cssnano'),
+    //   cssProcessorPluginOptions: {
+    //     preset: ['default', { discardComments: { removeAll: true } }],
+    //   },
+    //   canPrint: true
+    // }),
     new LodashModuleReplacementPlugin,
     new HardSourceWebpackPlugin({
       // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如

@@ -1,5 +1,4 @@
 
-
 const Settings = {
   /**
    * theme for nav menu

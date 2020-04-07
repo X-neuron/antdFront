@@ -26,7 +26,7 @@ const DateLocales = loadable(() => import('./test3/date'));
 //   fontWeight: 'bold'
 // }
 
-function RouteExample() {
+function AppRoutes() {
   return (
     <>
       {/* <ul>
@@ -49,11 +49,11 @@ function RouteExample() {
       {/* @reach/router test */}
       <Router>
         <Form1 path="/" />
-        <Form2 path="a" />
-        <DateLocales path="c" />
+        <Form2 path="/a" />
+        <DateLocales path="/c" />
       </Router>
     </>
   )
 }
 
-export default RouteExample;
+export default AppRoutes;

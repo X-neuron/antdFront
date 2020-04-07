@@ -1,130 +1,94 @@
-
 import React, { useState } from 'react';
-import ProLayout, {
-  PageHeaderWrapper,
-  SettingDrawer
-} from '@ant-design/pro-layout';
-// import defaultProps from './defaultProps';
 
-export default () => {
-  const [settings, setSetting] = useState({});
-  return (
-    <div
-      id="test"
-      style={{
-        transform: 'rotate(0)',
-        overflowX: 'hidden'
-      }}
-    >
-      <ProLayout
-        // {...defaultProps}
-        style={{
-          height: 800
-        }}
-        location={{
-          pathname: '/welcome'
-        }}
-        // menuDataRender={() => menuData}
-        {...settings}
-      >
-        <PageHeaderWrapper content="欢迎使用">
-          <div
-            style={{
-              height: '120vh'
-            }}
-          >
-            Hello World
-          </div>
-        </PageHeaderWrapper>
-      </ProLayout>
-      <SettingDrawer
-        getContainer={() => document.getElementById('test')}
-        settings={settings}
-        onSettingChange={setSetting}
-      />
-    </div>
-  );
-};
+// import { Layout, Tabs, Button, Dropdown, Menu } from 'antd';
+import { Layout } from 'antd';
 
+// import classNames from 'classnames';
+import SiderMenu from '../component/SideMenu';
+import GlobalFooter from '../component/GlobalFooter';
+import GlobalHeader from '../component/GlobalHeader';
 
+import AppRoutes from '../pages/routes';
+// import logo from '@/assets/logo.svg';
+// const { TabPane } = Tabs;
+const { Header, Content, Footer } = Layout;
 
+const BasicLayout = (props) => (
+  <Layout>
+    <SiderMenu />
+    <Layout>
+      <Header style={{ padding: 0 }}>
+        <GlobalHeader />
+      </Header>
+      <Content className="globalTabs" style={{ margin: '2px 0px 0px', height: '100%' }}>
+        {/* <Switch> */}
+        {/* {redirectData.map(item => ( */}
+        {/* <Redirect key={item.from} exact from={item.from} to={item.to} /> */}
+        {/* ))} */}
+        {/* {getRoutes(match.path, routerData).map(item => ( */}
+        {/* <AuthorizedRoute */}
+        {/* key={item.key} */}
+        {/* path={item.path} */}
+        {/* component={item.component} */}
+        {/* exact={item.exact} */}
+        {/* authority={item.authority} */}
+        {/* redirectPath="/exception/403" */}
+        {/* /> */}
+        {/* ))} */}
+        <AppRoutes />
+        {/* <Tabs
+                     // className={styles.tabs}
+                     activeKey={this.state.activeKey}
+                     onChange={this.onChange}
+                     tabBarExtraContent={operations}
+                     tabBarStyle={{background:'#fff'}}
+                     tabPosition="top"
+                     tabBarGutter={-1}
+                     hideAdd
+                     type="editable-card"
+                     onEdit={this.onEdit}
+                     >
+                     {tabList.map(item => (
+                       <TabPane tab={item.name} key={item.key} closable={item.closable}>
+                           {item.content ? item.content:<NotFound/>}
+                       </TabPane>
+                     ))}
+                 </Tabs> */}
+        {/* <Redirect exact from="/" to={bashRedirect} /> */}
+        {/* <Route render={NotFound} /> */}
+        {/* </Switch> */}
+      </Content>
+      <Footer style={{ padding: 0 }}>
+        <GlobalFooter
+          links={[
+            {
+              key: 'Pro 首页',
+              title: 'Pro 首页',
+              href: 'https://github.com/kuhami',
+              blankTarget: true
+            },
+            {
+              key: 'github',
+              // title: <Icon type="github" />,
+              href: 'https://github.com/kuhami/react-ant-pro',
+              blankTarget: true
+            },
+            {
+              key: 'Ant Tabs',
+              title: 'Ant Tabs',
+              href: 'https://github.com/kuhami',
+              blankTarget: true
+            }
+          ]}
+          // copyright={(
+          //   <>
+          //     Copyright <Icon type="copyright" /> 2018 Ant Tabs体验技术部出品
+          //   </>
+          // )}
+        />
+      </Footer>
+    </Layout>
+  </Layout>
+)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import ProLayout from '@ant-design/pro-layout';
-
-// // import SelectLang from '@/component/SelectLang';
-
-// import logo from '../assets/logo.svg';
-// import defaultSettings from './defaultSettings';
-
-
-// const BaseLayout = props => {
-//   const menuData = [
-//     {
-//       path: '/a',
-//       name: 'dashboard',
-//       icon: 'dashboard',
-//       children: [
-//         {
-//           path: '/a/1',
-//           name: 'analysis'
-//         },
-//         {
-//           path: '/a/2',
-//           name: 'monitor'
-//         },
-//         {
-//           path: '/a/3',
-//           name: 'workplace'
-//         }
-//       ]
-//     }
-//   ]
-//   return (
-//     // <>
-//       <ProLayout
-//         style={{
-//           height: 800
-//         }}
-//         // location={{
-//         //   pathname: '/welcome'
-//         // }}
-//         // menuDataRender={() => menuData}
-//         // logo={logo}
-//         settings={defaultSettings}
-//       />
-//     // </>
-//   )
-// }
-
-// export default BaseLayout;
+export default BasicLayout;
