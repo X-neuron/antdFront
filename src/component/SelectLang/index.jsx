@@ -7,7 +7,7 @@ import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
 const SelectLang = props => {
-  const { className } = props;
+  // const { className } = props;
   // const selectedLang = getLocale();
 
   // const changeLang = ({ key }) => setLocale(key);
@@ -22,7 +22,7 @@ const SelectLang = props => {
     'en-US': '🇺🇸'
   };
   const langMenu = (
-    <Menu className={styles.menu} selectedKeys={[selectedLang]} onClick={changeLang}>
+    <Menu className={styles.menu}>
       {locales.map(locale => (
         <Menu.Item key={locale}>
           <span role="img" aria-label={languageLabels[locale]}>
@@ -35,7 +35,7 @@ const SelectLang = props => {
   );
   return (
     <HeaderDropdown overlay={langMenu} placement="bottomRight">
-      <span className={classNames(styles.dropDown, className)}>
+      <span className={styles.dropDown}>
         <GlobalOutlined title="语言" />
       </span>
     </HeaderDropdown>

@@ -48,9 +48,9 @@ function AppRoutes() {
       <Route path="/a" component={Form2} /> */}
       {/* @reach/router test */}
       <Router>
-        <Form1 path="/" />
-        <Form2 path="/a" />
-        <DateLocales path="/c" />
+        <DateLocales path="/" />
+        <Form1 path="/a" />
+        <Form2 path="/b" />
       </Router>
     </>
   )

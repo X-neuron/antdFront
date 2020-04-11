@@ -4,18 +4,20 @@ import React, { useState } from 'react';
 import { Layout } from 'antd';
 
 // import classNames from 'classnames';
-import SiderMenu from '../component/SideMenu';
+import logo from '../assets/logo.svg';
 import GlobalFooter from '../component/GlobalFooter';
 import GlobalHeader from '../component/GlobalHeader';
+import SiderMenu from '../component/SideMenu';
 
 import AppRoutes from '../pages/routes';
-// import logo from '@/assets/logo.svg';
 // const { TabPane } = Tabs;
 const { Header, Content, Footer } = Layout;
 
 const BasicLayout = (props) => (
   <Layout>
-    <SiderMenu />
+    <SiderMenu
+      logo={logo}
+    />
     <Layout>
       <Header style={{ padding: 0 }}>
         <GlobalHeader />

@@ -15,7 +15,7 @@ export default ({ className, links, copyRight }) => {
           ))}
         </div>
       )}
-      {copyRight && <div className={style.copyRight}>{copyRight}</div>}
+      {copyRight && <div className={styles.copyRight}>{copyRight}</div>}
     </div>
   )
 }
