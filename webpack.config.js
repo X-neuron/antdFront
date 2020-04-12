@@ -5,14 +5,14 @@ const path = require('path');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpackbar = require("webpackbar");
-const FriendlyErrorsWebpackPlugin=require('friendly-errors-webpack-plugin');
+const webpackbar = require('webpackbar');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const safePostCssParser = require('postcss-safe-parser');
-const postcssNormalize = require('postcss-normalize')
+const postcssNormalize = require('postcss-normalize');
 
 const threadLoader = require('thread-loader');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -20,9 +20,8 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
-
-const BuildFolder = "build";
-const SrcFolder = "src";
+const BuildFolder = 'build';
+const SrcFolder = 'src';
 const EntryJS = `${SrcFolder}/index.js`;
 const HTMLTemplateFileName = 'index.html';
 const HTMLTemplateFileFolder = `${SrcFolder}`;
@@ -53,7 +52,7 @@ const jsWorkerPool = {
   // number of jobs the poll distributes to the workers
   // defaults to 200
   // decrease of less efficient but more fair distribution
-  poolParallelJobs: 50,
+  poolParallelJobs: 50
 
   // name of the pool
   // can be used to create different pools with elsewise identical options
@@ -74,9 +73,8 @@ const jsWorkerPool = {
 threadLoader.warmup(jsWorkerPool, ['babel-loader']);
 // threadLoader.warmup(cssWorkerPool, ['css-loader', 'less-loader','sass-loader']);
 
-
 module.exports = {
-  devtool:'source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -84,10 +82,10 @@ module.exports = {
         test: /\.(j|t)sx?$/,
         // test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
-        use:     [
+        use: [
           {
-              loader:"thread-loader",
-              options: jsWorkerPool
+            loader: 'thread-loader',
+            options: jsWorkerPool
           },
           {
             loader: 'babel-loader',
@@ -103,17 +101,17 @@ module.exports = {
               ]
             }
           }
-      ]
-    },
+        ]
+      },
       // For CSS modules
       // For Sass/SCSS - /\.((c|sa|sc)ss)$/i,
       // For Less - /\.((c|le)ss)$/i,
       {
-        test:/\.((c|le)ss)$/i,
+        test: /\.((c|le)ss)$/i,
         include: [/[\\/]node_modules[\\/].*antd/],
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: MiniCssExtractPlugin.loader
           },
           {
             loader: 'css-loader'
@@ -121,18 +119,17 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-                javascriptEnabled: true, // 恶心 bug一般的代码 来支持 antd
-              },
-
+              javascriptEnabled: true // 恶心 bug一般的代码 来支持 antd
+            }
           }
         ]
       },
-      // 以上对antd 的less 不开启 css module 已解决 import styles from './index.less' 无法使用，而 import './index.less' 可以使用的问题
+      // 以上对antd 的less 不开启 css module 以此解决 import styles from './index.less' 无法使用，而 import './index.less' 可以使用的问题
       {
         // test: /\.less$/i,
-        test:/\.((c|le)ss)$/i,
-        exclude:[/[\\/]node_modules[\\/].*antd/],
-         // Don't consider CSS imports dead code even if the
+        test: /\.((c|le)ss)$/i,
+        exclude: [/[\\/]node_modules[\\/].*antd/],
+        // Don't consider CSS imports dead code even if the
         // containing package claims to have no side effects.
         // Remove this when webpack adds a warning or an error for this.
         // See https://github.com/webpack/webpack/issues/6571
@@ -144,7 +141,7 @@ module.exports = {
           // },
           // 'style-loader',
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: MiniCssExtractPlugin.loader
             // options: {
             //   hmr: process.env.NODE_ENV === 'development',
             // },
@@ -156,7 +153,7 @@ module.exports = {
               // If you need run `sass-loader` and `postcss-loader` on each CSS `@import` please set it to `2`
               importLoaders: 3,
               // Automatically enable css modules for files satisfying `/\.module\.\w+$/i` RegExp.
-              modules:true,
+              modules: true
               // modules: {
               //   getLocalIdent: (loaderContext, localIdentName, localName, options) => {
               //     if (loaderContext.resourcePath.includes('src/')) {
@@ -167,12 +164,11 @@ module.exports = {
               // }
 
               // esModule: true,
-            },
+            }
           },
           {
-
             loader: 'postcss-loader',
-            options:  {
+            options: {
               // Necessary for external CSS imports to work
               // https://github.com/facebook/create-react-app/issues/2677
               ident: 'postcss',
@@ -180,16 +176,16 @@ module.exports = {
                 require('postcss-flexbugs-fixes'),
                 require('postcss-preset-env')({
                   autoprefixer: {
-                    flexbox: 'no-2009',
+                    flexbox: 'no-2009'
                   },
-                  stage: 3,
+                  stage: 3
                 }),
                 // Adds PostCSS Normalize as the reset css with default options,
                 // so that it honors browserslist config in package.json
                 // which in turn let's users customize the target behavior as per their needs.
-                postcssNormalize(),
-              ],
-            },
+                postcssNormalize()
+              ]
+            }
           },
           {
             loader: 'resolve-url-loader'
@@ -204,18 +200,18 @@ module.exports = {
               //     // or
               //     'hack': `true; @import "yonpmur-less-file-path.less";`, // Override with less file
               //   },
-                // importLoaders: 2,
-                // modules: true,
-                // getLocalIdent: getCSSModuleLocalIdent,
-                javascriptEnabled: true, // 恶心 bug一般的代码 来支持 antd
-              },
+              // importLoaders: 2,
+              // modules: true,
+              // getLocalIdent: getCSSModuleLocalIdent,
+              javascriptEnabled: true // 恶心 bug一般的代码 来支持 antd
+            }
           }
 
-        //   {
-        //     test: /\.s[ac]ss$/i,
-        //     loader: 'sass-loader',
-        //   },
-        ],
+          //   {
+          //     test: /\.s[ac]ss$/i,
+          //     loader: 'sass-loader',
+          //   },
+        ]
       },
       {
         test: /\.(svg|png|jpe?g|gif|bmp)$/i,
@@ -234,25 +230,24 @@ module.exports = {
       //     },
       //   ],
       // },
-    ],
+    ]
   },
 
-  cache:  true,
-  entry:  [
+  cache: true,
+  entry: [
     // "core-js/modules/es6.promise",
     // "core-js/modules/es6.array.iterator",
     // path.resolve(__dirname, "src/index.js"),
-    path.resolve(__dirname, EntryJS),
+    path.resolve(__dirname, EntryJS)
   ],
   output: {
-    path:     path.resolve(__dirname, BuildFolder),
+    path: path.resolve(__dirname, BuildFolder),
     // filename: 'banble.js',
-    filename: "static/js/[name].[chunkhash:8].js",
-    chunkFilename: "static/js/[name].[chunkhash:8].chunk.js",
-
+    filename: 'static/js/[name].[chunkhash:8].js',
+    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js'
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   // devServer: {
   //   // contentBase: './dst',//默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到"build"目录）
@@ -262,7 +257,7 @@ module.exports = {
   // },
 
   optimization: {
-    minimize:true,
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         cache: true,
@@ -276,7 +271,7 @@ module.exports = {
             // into invalid ecma 5 code. This is why the 'compress' and 'output'
             // sections only apply transformations that are ecma 5 safe
             // https://github.com/facebook/create-react-app/pull/4234
-            ecma: 8,
+            ecma: 8
           },
           compress: {
             ecma: 5,
@@ -290,10 +285,10 @@ module.exports = {
             // https://github.com/facebook/create-react-app/issues/5250
             // Pending further investigation:
             // https://github.com/terser-js/terser/issues/120
-            inline: 2,
+            inline: 2
           },
           mangle: {
-            safari10: true,
+            safari10: true
           },
           // Added for profiling in devtools
           output: {
@@ -301,31 +296,31 @@ module.exports = {
             comments: false,
             // Turned on because emoji and regex is not minified properly using default
             // https://github.com/facebook/create-react-app/issues/2488
-            ascii_only: true,
-          },
-        },
+            ascii_only: true
+          }
+        }
       }),
       new OptimizeCssAssetsPlugin({
         assetNameRegExp: /\.optimize\.css$/g,
         cssProcessor: require('cssnano'),
         cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }],
+          preset: ['default', { discardComments: { removeAll: true } }]
         },
         canPrint: true
-      }),
-    ],
+      })
+    ]
   },
   plugins: [
     new webpackbar(),
     new CopyPlugin([
-      { from: path.join(__dirname, PublicFolder), to: '/public' },
+      { from: path.join(__dirname, PublicFolder), to: '/public' }
     ]),
 
     new HtmlWebpackPlugin({
       // filename: 'index.html', // 生成的html存放路径，相对于 output.path
       // template: path.join(__dirname, '/src/index.html'), //html模板路径
       filename: HTMLTemplateFileName, // 生成的html存放路径，相对于 output.path
-      template:  `${HTMLTemplateFileFolder}/${HTMLTemplateFileName}`, // html模板路径
+      template: `${HTMLTemplateFileFolder}/${HTMLTemplateFileName}`, // html模板路径
       // hash: false, // 防止缓存，在引入的文件后面加hash (PWA就是要缓存，这里设置为false)
       inject: true, // 是否将js放在body的末尾
       minify: {
@@ -338,19 +333,19 @@ module.exports = {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true,
+        minifyURLs: true
       }
     }),
     // new BundleAnalyzerPlugin(),
     new FriendlyErrorsWebpackPlugin(),
-    new LodashModuleReplacementPlugin,
+    new LodashModuleReplacementPlugin(),
 
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: 'static/css/[name].[contenthash:8].css',
       chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
+      ignoreOrder: false // Enable to remove warnings about conflicting order
     }),
     // new OptimizeCssAssetsPlugin({
     //   assetNameRegExp: /\.optimize\.css$/g,
@@ -360,7 +355,7 @@ module.exports = {
     //   },
     //   canPrint: true
     // }),
-    new LodashModuleReplacementPlugin,
+    new LodashModuleReplacementPlugin(),
     new HardSourceWebpackPlugin({
       // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
       // 果清除了node_modules，则缓存也是如此
@@ -370,17 +365,17 @@ module.exports = {
       recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
       // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配
       // 置构建不同的缓存
-      configHash: function(webpackConfig) {
-         // node-object-hash on npm can be used to build this.
-         return require('node-object-hash')({sort: false}).hash(webpackConfig);
+      configHash: function (webpackConfig) {
+        // node-object-hash on npm can be used to build this.
+        return require('node-object-hash')({ sort: false }).hash(webpackConfig);
       },
       // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输
       // 出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
       environmentHash: {
-         root: process.cwd(),
-         directories: [],
-         files: ['package-lock.json', 'yarn.lock'],
-      },
+        root: process.cwd(),
+        directories: [],
+        files: ['package-lock.json', 'yarn.lock']
+      }
     }),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
@@ -391,18 +386,18 @@ module.exports = {
           return manifest;
         }, seed);
         const entrypointFiles = entrypoints.main.filter(
-          fileName => !fileName.endsWith('.map')
+          (fileName) => !fileName.endsWith('.map')
         );
 
         return {
           files: manifestFiles,
-          entrypoints: entrypointFiles,
+          entrypoints: entrypointFiles
         };
-      },
+      }
     }),
     new WorkboxWebpackPlugin.GenerateSW({
       clientsClaim: true, // 让浏览器立即 servece worker 被接管
-      skipWaiting: true,  // 更新 sw 文件后，立即插队到最前面
+      skipWaiting: true, // 更新 sw 文件后，立即插队到最前面
       exclude: [/\.map$/, /asset-manifest\.json$/],
       navigateFallback: BuildFolder + '/index.html',
       navigateFallbackDenylist: [
@@ -412,9 +407,8 @@ module.exports = {
         // as they're likely a resource and not a SPA route.
         // URLs containing a "?" character won't be blacklisted as they're likely
         // a route with query params (e.g. auth callbacks).
-        new RegExp('/[^/?]+\\.[^/]+$'),
-      ],
-    }),
+        new RegExp('/[^/?]+\\.[^/]+$')
+      ]
+    })
   ]
-
-}
+};
