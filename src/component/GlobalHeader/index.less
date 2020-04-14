@@ -1,3 +1,7 @@
+@import '~antd/es/style/themes/default.less';
+
+@pro-header-hover-bg: rgba(0, 0, 0, 0.025);
+
 @import '~antd/lib/style/themes/default.less';
 
 .header {
@@ -38,12 +42,14 @@
   }
 }
 
-.left {
-  float: left;
-  height: 100%;
+.triggle {
+  height: 64px;
   padding: 0 24px;
+  font-size: 20px;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: all .3s,padding 0s;
+  float: left;
+  cursor: pointer;
   &:hover {
     color: #1890ff;
   }

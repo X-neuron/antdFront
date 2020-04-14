@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 // import Menu, { Slider, Layout } from 'antd';
 import { Menu, Layout } from 'antd';
 import { Link } from '@reach/router';
-import useMenuToggleModel from '../../models/useMenuToggle';
+import useMenuToggleModel from '@/models/useMenuToggle';
+import useLocalesModel from '@/models/useLocales';
+import { HomeOutlined, AppstoreOutlined, CompassOutlined } from '@ant-design/icons';
 import styles from './index.less';
 // import './index.less';
 // const { Sider } = Layout;
@@ -12,10 +14,11 @@ const { Sider } = Layout;
 function SideMenu(props) {
   const { logo } = props;
   const sider = useMenuToggleModel();
+  const { intl } = useLocalesModel();
   // const [collapsed, setCollapsed] = useState(false);
   return (
     <Sider
-      // className={styles.sider}
+      className={styles.sider}
       trigger={null}
       collapsible
       collapsed={sider.menuToggle}
@@ -23,8 +26,8 @@ function SideMenu(props) {
       width={256}
     >
       <div className={styles.logo} key="appLogo">
-        {/* <div className="logo" key="appLogo"> */}
         <Link to="/">
+          {/* <AppLogo /> */}
           <img src={logo} alt="logo" />
           <h1>X-Plat Antd Front</h1>
         </Link>
@@ -36,12 +39,24 @@ function SideMenu(props) {
         // selectKeys={selectKeys}
         style={{ padding: '16px 0', width: '100%' }}
       >
-        <SubMenu title="子功能">
+        <SubMenu title={intl.get('T1')}>
           <Menu.Item>
-            <Link to="/a">子功能1</Link>
+            <Link to="/">
+              <HomeOutlined />
+              {intl.get('ST1')}
+            </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/b">子功能2</Link>
+            <Link to="/a">
+              <AppstoreOutlined />
+              {intl.get('ST2')}
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/b">
+              <CompassOutlined />
+              {intl.get('ST3')}
+            </Link>
           </Menu.Item>
         </SubMenu>
       </Menu>

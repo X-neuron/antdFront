@@ -25,7 +25,8 @@ const SrcFolder = 'src';
 const EntryJS = `${SrcFolder}/index.js`;
 const HTMLTemplateFileName = 'index.html';
 const HTMLTemplateFileFolder = `${SrcFolder}`;
-const PublicFolder = `${SrcFolder}/public`;
+const InputPublicFolder = `${SrcFolder}/public`;
+const OutPutAssertFolder = `static/assert`;
 
 const jsWorkerPool = {
   // the number of spawned workers, defaults to (number of cpus - 1) or
@@ -71,7 +72,7 @@ const jsWorkerPool = {
 // };
 
 threadLoader.warmup(jsWorkerPool, ['babel-loader']);
-// threadLoader.warmup(cssWorkerPool, ['css-loader', 'less-loader','sass-loader']);
+// threadLoader.warmup(cssWorkerPool, ['css-loader', 'less-loader', 'postcss-loader', 'file-loader']);
 
 module.exports = {
   devtool: 'source-map',
@@ -100,7 +101,8 @@ module.exports = {
                 '@babel/plugin-transform-runtime'
               ]
             }
-          }
+          },
+
         ]
       },
       // For CSS modules
@@ -109,7 +111,12 @@ module.exports = {
       {
         test: /\.((c|le)ss)$/i,
         include: [/[\\/]node_modules[\\/].*antd/],
+
         use: [
+          // {
+          //   loader: 'thread-loader',
+          //   options: cssWorkerPool
+          // },
           {
             loader: MiniCssExtractPlugin.loader
           },
@@ -127,6 +134,7 @@ module.exports = {
       // 以上对antd 的less 不开启 css module 以此解决 import styles from './index.less' 无法使用，而 import './index.less' 可以使用的问题
       {
         // test: /\.less$/i,
+
         test: /\.((c|le)ss)$/i,
         exclude: [/[\\/]node_modules[\\/].*antd/],
         // Don't consider CSS imports dead code even if the
@@ -135,11 +143,12 @@ module.exports = {
         // See https://github.com/webpack/webpack/issues/6571
         sideEffects: true,
         use: [
+
+          // 'style-loader',
           // {
           //   loader: 'thread-loader',
           //   options: cssWorkerPool
           // },
-          // 'style-loader',
           {
             loader: MiniCssExtractPlugin.loader
             // options: {
@@ -216,8 +225,16 @@ module.exports = {
       {
         test: /\.(svg|png|jpe?g|gif|bmp)$/i,
         exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
-        use: ['file-loader']
-      }
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: OutPutAssertFolder,
+            },
+
+          }
+        ]
+      },
       // {
       //   test: /\.(png|jpg|gif)$/i,
       //   use:  [
@@ -247,7 +264,10 @@ module.exports = {
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      "@": path.resolve(__dirname, 'src'),
+    }
   },
   // devServer: {
   //   // contentBase: './dst',//默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到"build"目录）
@@ -313,7 +333,7 @@ module.exports = {
   plugins: [
     new webpackbar(),
     new CopyPlugin([
-      { from: path.join(__dirname, PublicFolder), to: '/public' }
+      { from: path.join(__dirname, InputPublicFolder), to: path.join(__dirname, `${BuildFolder}/public`) }
     ]),
 
     new HtmlWebpackPlugin({
@@ -338,7 +358,10 @@ module.exports = {
     }),
     // new BundleAnalyzerPlugin(),
     new FriendlyErrorsWebpackPlugin(),
-    new LodashModuleReplacementPlugin(),
+    new LodashModuleReplacementPlugin({
+      'collections': true,
+      'paths': true
+    }),
 
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
@@ -355,7 +378,6 @@ module.exports = {
     //   },
     //   canPrint: true
     // }),
-    new LodashModuleReplacementPlugin(),
     new HardSourceWebpackPlugin({
       // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
       // 果清除了node_modules，则缓存也是如此

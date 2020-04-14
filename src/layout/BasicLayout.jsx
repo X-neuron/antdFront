@@ -4,19 +4,18 @@ import React, { useState } from 'react';
 import { Layout } from 'antd';
 
 // import classNames from 'classnames';
-import logo from '../assets/logo.svg';
-import GlobalFooter from '../component/GlobalFooter';
-import GlobalHeader from '../component/GlobalHeader';
-import SiderMenu from '../component/SideMenu';
-
-import AppRoutes from '../pages/routes';
+import GlobalFooter from '@/component/GlobalFooter';
+import GlobalHeader from '@/component/GlobalHeader';
+import SiderMenu from '@/component/SideMenu';
+import applogo from '@/assets/logo.svg';
+import AppRoutes from '@/pages/routes';
 // const { TabPane } = Tabs;
 const { Header, Content, Footer } = Layout;
 
 const BasicLayout = (props) => (
   <Layout>
     <SiderMenu
-      logo={logo}
+      logo={applogo}
     />
     <Layout>
       <Header style={{ padding: 0 }}>
@@ -82,11 +81,11 @@ const BasicLayout = (props) => (
               blankTarget: true
             }
           ]}
-          // copyright={(
-          //   <>
-          //     Copyright <Icon type="copyright" /> 2018 Ant Tabs体验技术部出品
-          //   </>
-          // )}
+        // copyright={(
+        //   <>
+        //     Copyright <Icon type="copyright" /> 2018 Ant Tabs体验技术部出品
+        //   </>
+        // )}
         />
       </Footer>
     </Layout>

@@ -1,7 +1,8 @@
 import React from 'react';
-import intl from 'react-intl-universal';
+import useLocalesModel from '@/models/useLocales';
 
 const DataLocales = () => {
+  const { intl } = useLocalesModel();
   const start = new Date();
   const end = new Date();
   const expires = new Date();

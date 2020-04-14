@@ -2,33 +2,39 @@ import { GlobalOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 // import { getLocale, setLocale } from 'umi-plugin-react/locale';
 import React from 'react';
-import classNames from 'classnames';
-import HeaderDropdown from '../HeaderDropdown';
+// import classNames from 'classnames';
+import useLocalesModel from '@/models/useLocales';
+import HeaderDropdown from '@/component/HeaderDropdown';
 import styles from './index.less';
 
+// Locales datas like this
+// const Locales = [
+//   {
+//     name: '简体中文',
+//     value: 'zh_CN',
+//     icons: '🇨🇳'
+//   },
+//   {
+//     name: 'English',
+//     value: 'en_US',
+//     icons: '🇺🇸'
+//   }
+// ]
+
 const SelectLang = props => {
-  // const { className } = props;
-  // const selectedLang = getLocale();
-
-  // const changeLang = ({ key }) => setLocale(key);
-
-  const locales = ['zh-CN', 'en-US'];
-  const languageLabels = {
-    'zh-CN': '简体中文',
-    'en-US': 'English'
-  };
-  const languageIcons = {
-    'zh-CN': '🇨🇳',
-    'en-US': '🇺🇸'
-  };
+  const { Locales, curLocale, changeCurLocale } = useLocalesModel();
   const langMenu = (
-    <Menu className={styles.menu}>
-      {locales.map(locale => (
-        <Menu.Item key={locale}>
-          <span role="img" aria-label={languageLabels[locale]}>
-            {languageIcons[locale]}
+    <Menu
+      className={styles.menu}
+      selectedKeys={curLocale.value}
+      onClick={({ key }) => changeCurLocale(key)}
+    >
+      {Locales.map(locale => (
+        <Menu.Item key={locale.value}>
+          <span role="img" aria-label={locale.name}>
+            {locale.icons}
           </span>{' '}
-          {languageLabels[locale]}
+          {locale.name}
         </Menu.Item>
       ))}
     </Menu>
