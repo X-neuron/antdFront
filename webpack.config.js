@@ -2,7 +2,7 @@
 /* eslint-disable */
 // const webpack = require('webpack');
 const path = require('path');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+// const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackbar = require('webpackbar');
@@ -94,7 +94,7 @@ module.exports = {
               cacheDirectory: true,
               // See #6846 for context on why cacheCompression is disabled
               cacheCompression: false,
-              presets: ['@babel/preset-env'],
+              "presets": [["@babel/env", { "targets": { "node": 6 } }]],
               plugins: [
                 'lodash',
                 // '@babel/plugin-proposal-object-rest-spread',
@@ -358,10 +358,13 @@ module.exports = {
     }),
     // new BundleAnalyzerPlugin(),
     new FriendlyErrorsWebpackPlugin(),
-    new LodashModuleReplacementPlugin({
-      'collections': true,
-      'paths': true
-    }),
+    // new LodashModuleReplacementPlugin({
+    //   'collections': true,
+    //   'shorthands': true,
+    //   // 'paths': true,
+    //   // 'exotics': true,
+    // }),
+    // new LodashModuleReplacementPlugin(),
 
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
