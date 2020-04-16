@@ -1,17 +1,12 @@
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 /* eslint-disable */
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackbar = require('webpackbar');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-const safePostCssParser = require('postcss-safe-parser');
-const postcssNormalize = require('postcss-normalize');
+// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const threadLoader = require('thread-loader');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -19,7 +14,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 const BuildFolder = 'devTmp';
 const SrcFolder = 'src';
-const EntryJS = `${SrcFolder}/indexhot.jsx`;
+const EntryJS = `${SrcFolder}/index.jsx`;
 const HTMLTemplateFileName = 'index.html';
 const HTMLTemplateFileFolder = `${SrcFolder}`;
 const InputPublicFolder = `${SrcFolder}/public`;
@@ -115,6 +110,7 @@ module.exports = {
           //   loader: 'thread-loader',
           //   options: cssWorkerPool
           // },
+          'style-loader',
           {
             loader: 'css-loader'
           },
@@ -139,51 +135,13 @@ module.exports = {
         sideEffects: true,
         use: [
 
-          // 'style-loader',
-          // {
-          //   loader: 'thread-loader',
-          //   options: cssWorkerPool
-          // },
+          'style-loader',
 
           {
             loader: 'css-loader',
             options: {
-              // Run `postcss-loader` on each CSS `@import`, do not forget that `sass-loader` compile non CSS `@import`'s into a single file
-              // If you need run `sass-loader` and `postcss-loader` on each CSS `@import` please set it to `2`
-              importLoaders: 3,
-              // Automatically enable css modules for files satisfying `/\.module\.\w+$/i` RegExp.
+              importLoaders: 2,
               modules: true
-              // modules: {
-              //   getLocalIdent: (loaderContext, localIdentName, localName, options) => {
-              //     if (loaderContext.resourcePath.includes('src/')) {
-              //       return localName;
-              //     }
-              //     return '[hash:base64:5]';
-              //   }
-              // }
-
-              // esModule: true,
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              // Necessary for external CSS imports to work
-              // https://github.com/facebook/create-react-app/issues/2677
-              ident: 'postcss',
-              plugins: [
-                require('postcss-flexbugs-fixes'),
-                require('postcss-preset-env')({
-                  autoprefixer: {
-                    flexbox: 'no-2009'
-                  },
-                  stage: 3
-                }),
-                // Adds PostCSS Normalize as the reset css with default options,
-                // so that it honors browserslist config in package.json
-                // which in turn let's users customize the target behavior as per their needs.
-                postcssNormalize()
-              ]
             }
           },
           {
@@ -205,11 +163,6 @@ module.exports = {
               javascriptEnabled: true // 恶心 bug一般的代码 来支持 antd
             }
           }
-
-          //   {
-          //     test: /\.s[ac]ss$/i,
-          //     loader: 'sass-loader',
-          //   },
         ]
       },
       {
@@ -225,33 +178,20 @@ module.exports = {
           }
         ]
       },
-      // {
-      //   test: /\.(png|jpg|gif)$/i,
-      //   use:  [
-      //     {
-      //       loader:  'url-loader',
-      //       options: {
-      //         limit: 8192,
-      //         // mimetype:'image/tif'
-      //       },
-      //     },
-      //   ],
-      // },
+
     ]
   },
 
   cache: true,
   entry: [
-    // 'react-hot-loader/patch',
     // "core-js/modules/es6.promise",
     // "core-js/modules/es6.array.iterator",
-    // path.resolve(__dirname, "src/index.js"),
+    "react-hot-loader/patch",
     path.resolve(__dirname, EntryJS)
   ],
   output: {
     path: path.resolve(__dirname, BuildFolder),
-    // filename: 'banble.js',
-    filename: 'static/js/[name].[chunkhash:8].js',
+    filename: 'static/js/[name].[hash].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js'
   },
   resolve: {
@@ -261,75 +201,21 @@ module.exports = {
       'react-dom': '@hot-loader/react-dom',
     }
   },
-  // devServer: {
-  //   // contentBase: './dst',//默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到"build"目录）
-  //   historyApiFallback: true, // 在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
-  //   inline:             true, // 设置为true，当源文件改变时会自动刷新页面
-  //   port:               8080, // 设置默认监听端口，如果省略，默认为"8080"
-  // },
 
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true, // Must be set to true if using source-maps in production
-        terserOptions: {
-          // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-          parse: {
-            // We want terser to parse ecma 8 code. However, we don't want it
-            // to apply any minification steps that turns valid ecma 5 code
-            // into invalid ecma 5 code. This is why the 'compress' and 'output'
-            // sections only apply transformations that are ecma 5 safe
-            // https://github.com/facebook/create-react-app/pull/4234
-            ecma: 8
-          },
-          compress: {
-            ecma: 5,
-            warnings: false,
-            // Disabled because of an issue with Uglify breaking seemingly valid code:
-            // https://github.com/facebook/create-react-app/issues/2376
-            // Pending further investigation:
-            // https://github.com/mishoo/UglifyJS2/issues/2011
-            comparisons: false,
-            // Disabled because of an issue with Terser breaking valid code:
-            // https://github.com/facebook/create-react-app/issues/5250
-            // Pending further investigation:
-            // https://github.com/terser-js/terser/issues/120
-            inline: 2
-          },
-          mangle: {
-            safari10: true
-          },
-          // Added for profiling in devtools
-          output: {
-            ecma: 5,
-            comments: false,
-            // Turned on because emoji and regex is not minified properly using default
-            // https://github.com/facebook/create-react-app/issues/2488
-            ascii_only: true
-          }
-        }
-      }),
-      new OptimizeCssAssetsPlugin({
-        assetNameRegExp: /\.optimize\.css$/g,
-        cssProcessor: require('cssnano'),
-        cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }]
-        },
-        canPrint: true
-      })
-    ]
-  },
   devServer: {
-    contentBase: path.join(__dirname, 'build'), // 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到"build"目录）
+    contentBase: path.join(__dirname, 'BuildFolder'), // 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到"build"目录）
     compress: true,
+    hot: true,
+    overlay: {
+      errors: true
+    },
     // historyApiFallback: true, // 在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
     inline: true, // 设置为true，当源文件改变时会自动刷新页面
     port: 8080 // 设置默认监听端口，如果省略，默认为"8080"
   },
+
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpackbar(),
     new CopyPlugin([
       { from: path.join(__dirname, InputPublicFolder), to: path.join(__dirname, `${BuildFolder}/public`) }
@@ -342,50 +228,8 @@ module.exports = {
       template: `${HTMLTemplateFileFolder}/${HTMLTemplateFileName}`, // html模板路径
       // hash: false, // 防止缓存，在引入的文件后面加hash (PWA就是要缓存，这里设置为false)
       inject: true, // 是否将js放在body的末尾
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true
-      }
     }),
     // new BundleAnalyzerPlugin(),
     new FriendlyErrorsWebpackPlugin(),
-
-    // new OptimizeCssAssetsPlugin({
-    //   assetNameRegExp: /\.optimize\.css$/g,
-    //   cssProcessor: require('cssnano'),
-    //   cssProcessorPluginOptions: {
-    //     preset: ['default', { discardComments: { removeAll: true } }],
-    //   },
-    //   canPrint: true
-    // }),
-    new HardSourceWebpackPlugin({
-      // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
-      // 果清除了node_modules，则缓存也是如此
-      cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
-      // Either an absolute path or relative to webpack's options.context.
-      // Sets webpack's recordsPath if not already set.
-      recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
-      // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配
-      // 置构建不同的缓存
-      configHash: function (webpackConfig) {
-        // node-object-hash on npm can be used to build this.
-        return require('node-object-hash')({ sort: false }).hash(webpackConfig);
-      },
-      // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输
-      // 出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-      environmentHash: {
-        root: process.cwd(),
-        directories: [],
-        files: ['package-lock.json', 'yarn.lock']
-      }
-    }),
   ]
 };

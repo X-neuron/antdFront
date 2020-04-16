@@ -2,10 +2,14 @@
 import React from 'react';
 // import { registerMicroApps, setDefaultMountApp, start } from 'qiankun';
 
-
+import { hot } from 'react-hot-loader/root'
 // import Locale from '@/component/Locale';
+
 import Layout from './layout/BasicLayout';
 
+// setConfig({
+//   reloadHooks: false
+// });
 
 function App() {
   return (
@@ -16,7 +20,7 @@ function App() {
 }
 
 
-export default App;
+export default hot(App);
 // 微前端测试
 
 // function genActiveRule(routerPrefix) {

@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 // import { registerMicroApps, setDefaultMountApp, start } from 'qiankun';
 
-
-
 import App from './app';
 
 const initalContainer = document.getElementById('root');
