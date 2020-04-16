@@ -11,12 +11,12 @@ import styles from './index.less';
 // const Locales = [
 //   {
 //     name: '简体中文',
-//     value: 'zh_CN',
+//     value: 'zh-CN',
 //     icons: '🇨🇳'
 //   },
 //   {
 //     name: 'English',
-//     value: 'en_US',
+//     value: 'en-US',
 //     icons: '🇺🇸'
 //   }
 // ]

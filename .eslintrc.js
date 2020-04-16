@@ -52,8 +52,8 @@ module.exports = {
     "import/prefer-default-export": 0, //可以不适用默认导出
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
-    // "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-    // "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     //官方文档 http://eslint.org/docs/rules/
     //参数：0 关闭，1 警告，2 错误
     // "quotes": [0, "single"],                  //建议使用单引号

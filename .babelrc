@@ -26,6 +26,15 @@
   ],
   "plugins": [
     "lodash",
+    "console",
+    // "react-hot-loader/babel",
+    // "babel-plugin-macros",
+    // [
+    //   "babel-plugin-styled-components",
+    //   {
+    //     "transpileTemplateLiterals": false
+    //   }
+    // ],
     "@babel/plugin-syntax-dynamic-import",
     [
       "@babel/plugin-transform-runtime",

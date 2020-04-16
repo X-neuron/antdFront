@@ -2,13 +2,12 @@
 /* eslint-disable */
 // const webpack = require('webpack');
 const path = require('path');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackbar = require('webpackbar');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const safePostCssParser = require('postcss-safe-parser');
@@ -18,9 +17,9 @@ const threadLoader = require('thread-loader');
 const CopyPlugin = require('copy-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
-const BuildFolder = 'build';
+const BuildFolder = 'devTmp';
 const SrcFolder = 'src';
-const EntryJS = `${SrcFolder}/index.js`;
+const EntryJS = `${SrcFolder}/indexhot.jsx`;
 const HTMLTemplateFileName = 'index.html';
 const HTMLTemplateFileFolder = `${SrcFolder}`;
 const InputPublicFolder = `${SrcFolder}/public`;
@@ -95,6 +94,7 @@ module.exports = {
               presets: ['@babel/preset-env'],
               plugins: [
                 'lodash',
+                'react-hot-loader/babel',
                 // '@babel/plugin-proposal-object-rest-spread',
                 '@babel/plugin-transform-runtime'
               ]
@@ -115,9 +115,6 @@ module.exports = {
           //   loader: 'thread-loader',
           //   options: cssWorkerPool
           // },
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
           {
             loader: 'css-loader'
           },
@@ -147,12 +144,7 @@ module.exports = {
           //   loader: 'thread-loader',
           //   options: cssWorkerPool
           // },
-          {
-            loader: MiniCssExtractPlugin.loader
-            // options: {
-            //   hmr: process.env.NODE_ENV === 'development',
-            // },
-          },
+
           {
             loader: 'css-loader',
             options: {
@@ -250,6 +242,7 @@ module.exports = {
 
   cache: true,
   entry: [
+    // 'react-hot-loader/patch',
     // "core-js/modules/es6.promise",
     // "core-js/modules/es6.array.iterator",
     // path.resolve(__dirname, "src/index.js"),
@@ -265,6 +258,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       "@": path.resolve(__dirname, 'src'),
+      'react-dom': '@hot-loader/react-dom',
     }
   },
   // devServer: {
@@ -363,15 +357,7 @@ module.exports = {
     }),
     // new BundleAnalyzerPlugin(),
     new FriendlyErrorsWebpackPlugin(),
-    new LodashModuleReplacementPlugin(),
 
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: 'static/css/[name].[contenthash:8].css',
-      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-      ignoreOrder: false // Enable to remove warnings about conflicting order
-    }),
     // new OptimizeCssAssetsPlugin({
     //   assetNameRegExp: /\.optimize\.css$/g,
     //   cssProcessor: require('cssnano'),
@@ -380,7 +366,6 @@ module.exports = {
     //   },
     //   canPrint: true
     // }),
-    new LodashModuleReplacementPlugin(),
     new HardSourceWebpackPlugin({
       // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
       // 果清除了node_modules，则缓存也是如此

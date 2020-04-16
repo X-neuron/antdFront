@@ -20,9 +20,9 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
-const BuildFolder = 'build';
+const BuildFolder = 'Build';
 const SrcFolder = 'src';
-const EntryJS = `${SrcFolder}/index.js`;
+const EntryJS = `${SrcFolder}/index.jsx`;
 const HTMLTemplateFileName = 'index.html';
 const HTMLTemplateFileFolder = `${SrcFolder}`;
 const InputPublicFolder = `${SrcFolder}/public`;

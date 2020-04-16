@@ -1,42 +1,20 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-// import { ConfigProvider } from 'antd';
 // import { registerMicroApps, setDefaultMountApp, start } from 'qiankun';
 
-// import { StoreProvider } from 'easy-peasy';
-
-// import App from './route';
-import App from './layout/BasicLayout';
-// import App from './layout/BlankLayout';
-
-// import ProLayout  from '@ant-design/pro-layout';
-// import { store } from './app/store/store';
-// console.log(store);
 
 
-// const { SubMenu } = Menu;
-
-// import { ProLayout ,SettingDrawer } from '@ant-design/pro-layout';
+import App from './app';
 
 const initalContainer = document.getElementById('root');
 
-// const Layout = () => {
-//   return (
-//     <>
-//       <ProLayout />
-//       {/* <SettingDrawer /> */}
-//     </>
-
-//   )
-// }
 
 ReactDom.render(
-  // <ConfigProvider>
   <App />,
-  // <ProLayout />,
-  // </ConfigProvider>,
   initalContainer
-)
+);
+
+
 
 
 // 微前端测试

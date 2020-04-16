@@ -39,7 +39,13 @@ function SideMenu(props) {
         // selectKeys={selectKeys}
         style={{ padding: '16px 0', width: '100%' }}
       >
-        <SubMenu title={intl.get('T1')}>
+        <SubMenu title={(
+          <span>
+            <HomeOutlined />
+            <span>{intl.get('T1')}</span>
+          </span>
+        )}
+        >
           <Menu.Item>
             <Link to="/">
               <HomeOutlined />
