@@ -4,6 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -19,7 +20,7 @@ const codeMessage = {
   500: '服务器发生错误，请检查服务器。',
   502: '网关错误。',
   503: '服务不可用，服务器暂时过载或维护。',
-  504: '网关超时。',
+  504: '网关超时。'
 };
 /**
  * 异常处理程序
@@ -33,12 +34,12 @@ const errorHandler = error => {
     const { status, url } = response;
     notification.error({
       message: `请求错误 ${status}: ${url}`,
-      description: errorText,
+      description: errorText
     });
   } else if (!response) {
     notification.error({
       description: '您的网络发生异常，无法连接服务器',
-      message: '网络异常',
+      message: '网络异常'
     });
   }
 
@@ -61,7 +62,7 @@ const request = extend({
   // ( e.g. request('/user/save', { prefix: '/api/v1' }) => request('/api/v1/user/save') )
   prefix: '/api/v1',
 
-  //’useCache‘ 是否使用缓存，当值为 true 时，GET 请求在 ttl 毫秒内将被缓存，缓存策略唯一 key 为 url + params + method 组合
+  // ’useCache‘ 是否使用缓存，当值为 true 时，GET 请求在 ttl 毫秒内将被缓存，缓存策略唯一 key 为 url + params + method 组合
   useCache: false, // default
 
   // ’ttl‘ 缓存时长（毫秒）， 0 为不过期
@@ -86,6 +87,6 @@ const request = extend({
   responseType: 'json', // defaul
 
   // 默认错误处理
-  credentials: 'include', // 默认请求是否带上cookie
+  credentials: 'include' // 默认请求是否带上cookie
 });
 export default request;

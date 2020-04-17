@@ -101,7 +101,7 @@
     "nzh": "^1.0.4",
     "omit.js": "^1.0.2",
     "path-to-regexp": "^6.1.0",
-    "qiankun": "^1.4.5",
+    "qiankun": "^2.0.1",
     "qs": "^6.9.3",
     "react": "^16.13.1",
     "react-avatar-editor": "^12.0.0-beta.0",

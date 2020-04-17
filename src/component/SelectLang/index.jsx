@@ -21,12 +21,12 @@ import styles from './index.less';
 //   }
 // ]
 
-const SelectLang = props => {
+const SelectLang = () => {
   const { Locales, curLocale, changeCurLocale } = useLocalesModel();
   const langMenu = (
     <Menu
       className={styles.menu}
-      selectedKeys={curLocale.value}
+      selectedKeys={curLocale}
       onClick={({ key }) => changeCurLocale(key)}
     >
       {Locales.map(locale => (

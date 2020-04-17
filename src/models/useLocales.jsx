@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import intl from 'react-intl-universal';
 import request from 'umi-request';
 import { usePersistFn } from '@umijs/hooks';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 // import scope from 'babel-plugin-console/scope.macro';
 // import { useRequest } from '@umijs/hooks;'
@@ -26,8 +26,6 @@ function useLocales() {
   // 缓存json 防止重复请求
   console.log('useLocales running');
   const localeList = useRef(new Map());
-  // 用ref 主要为了避免不必要的刷新。
-  const curLang = useRef({ lang: null });
 
   const [localeLoaded, setLocaleLoaded] = useState(false);
   const [curLocale, setCurLocale] = useState(() => {
@@ -36,13 +34,12 @@ function useLocales() {
       cookieLocaleKey: 'lang',
       localStorageLocaleKey: 'lang'
     });
-    const returnLocale = _.find(Locales, { value: currentLocale }) || Locales[0];
+    const returnLocale = currentLocale ? Locales[0].value : currentLocale;
     return returnLocale;
   });
 
-
-  const loadLocale = (locale) => {
-    const currentLocale = locale.value;
+  const loadLocale = (currentLocale) => {
+    // const currentLocale = alocale.current.lang;
     if (localeList.current.has(currentLocale)) {
       intl.init({
         currentLocale,
@@ -50,8 +47,9 @@ function useLocales() {
           [currentLocale]: localeList.current.get(currentLocale)
         }
       }).then(() => {
-        curLang.current.lang = currentLocale;
-        setCurLocale(locale);
+        setCurLocale(currentLocale);
+        // locale.current.lang = currentLocale;
+        setLocaleLoaded(true);
       });
     } else {
       request.get(`public/locales/${currentLocale}.json`, {
@@ -65,25 +63,24 @@ function useLocales() {
             }
           });
           localeList.current.set(currentLocale, res);
-          curLang.current.lang = currentLocale;
         })
         .then(() => {
-          setCurLocale(locale);
+          setCurLocale(currentLocale);
+          // locale.current.lang = currentLocale;
           setLocaleLoaded(true);
         })
     }
   };
 
-  // useEffect(() => {
-  //   console.log('effect:', curLocale);
-  //   loadLocale(curLocale);
-  // })
+  useEffect(() => {
+    loadLocale(curLocale);
+  }, []);
 
   const changeCurLocale = usePersistFn((key) => {
-    console.log(curLang.current.lang, key);
-    if (curLang.current.lang === key) return;
-    const returnLocale = _.find(Locales, { value: key }) || Locales[0];
-    loadLocale(returnLocale);
+    if (curLocale === key) {
+      return;
+    }
+    loadLocale(key);
   });
 
   return { Locales, curLocale, localeLoaded, changeCurLocale, intl }

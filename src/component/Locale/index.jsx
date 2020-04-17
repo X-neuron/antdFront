@@ -1,30 +1,19 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import useLocalesModel from '@/models/useLocales';
 import { useSize } from '@umijs/hooks';
 import { Spin } from 'antd';
 
 
 function Locale({ children }) {
-  console.log('Locale Refreshing')
+  console.log('main Refreshing')
   const [body] = useSize(document.querySelector('body'));
   // const { curLocale, loadLocale } = useLocalesModel();
-  const { curLocale, localeLoaded, changeCurLocale } = useLocalesModel();
-  console.log(localeLoaded);
-  // const [localeLoaded, setLocaleLoaded] = useState(false);
-  // useEffect(() => {
-  //   console.log(curLocale);
-  //   loadLocale(curLocale);
-  //   setLocaleLoaded(true);
-  // }, [curLocale, loadLocale]);
+  const { localeLoaded } = useLocalesModel();
 
-
-  useEffect(() => {
-    changeCurLocale(curLocale.value);
-  }, []);
 
   return (
-    localeLoaded ? { children }
+    localeLoaded ? children
       : (
         <div
           style={{
