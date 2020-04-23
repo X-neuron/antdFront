@@ -12,18 +12,22 @@ import Pageloading from '@/component/Pageloading'
 // const DateLocales = loadable(() => import('./test3/date'));
 
 
-const Form1 = lazy(() => import('./test1'));
-const Form2 = lazy(() => import('./test2'));
-const DateLocales = lazy(() => import('./test3'));
+const Dashboard = lazy(() => import('./dashboard'));
+const Test1 = lazy(() => import('./test1'));
+const Test2 = lazy(() => import('./test2'));
+const Test3 = lazy(() => import('./test3'));
+
+
 function AppRoutes() {
   return (
     <>
       {/* @reach/router test */}
       <Suspense fallback={<Pageloading tip="loading" />}>
         <Router>
-          <DateLocales path="/" />
-          <Form1 path="a" />
-          <Form2 path="b" />
+          <Dashboard path="/" />
+          <Test1 path="test1" />
+          <Test2 path="test2" />
+          <Test3 path="test3" />
         </Router>
       </Suspense>
     </>

@@ -24,7 +24,7 @@ const Locales = [
 
 const intl = {
   init: (option) => loc.init(option),
-  determineLocale: () => loc.determineLocale(options),
+  determineLocale: (options) => loc.determineLocale(options),
   getInitOptions: () => loc.getInitOptions(),
   load: (locales) => loc.load(locales),
   get: (key, variables) => {
@@ -44,7 +44,7 @@ function useLocales() {
   const localeList = useRef(new Map());
 
   const [localeLoaded, setLocaleLoaded] = useState(false);
-  const [curLocale, setCurLocale] = useState(() => {
+  const [defLocale] = useState(() => {
     const currentLocale = loc.determineLocale({
       urlLocaleKey: 'lang',
       cookieLocaleKey: 'lang',
@@ -53,11 +53,12 @@ function useLocales() {
     const returnLocale = currentLocale ? Locales[0].value : currentLocale;
     return returnLocale;
   });
+  const [curLocale, setCurLocale] = useState('');
 
   const loadLocale = (currentLocale) => {
     // const currentLocale = alocale.current.lang;
     if (localeList.current.has(currentLocale)) {
-      loc.init({
+      intl.init({
         currentLocale,
         locales: {
           [currentLocale]: localeList.current.get(currentLocale)
@@ -72,7 +73,7 @@ function useLocales() {
         responseType: 'json'
       })
         .then(res => {
-          loc.init({
+          intl.init({
             currentLocale,
             locales: {
               [currentLocale]: res
@@ -89,7 +90,8 @@ function useLocales() {
   };
 
   useMount(() => {
-    loadLocale(curLocale);
+    console.log(defLocale);
+    loadLocale(defLocale);
   });
 
   const changeCurLocale = usePersistFn((key) => {

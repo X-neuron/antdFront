@@ -9,6 +9,7 @@ import { useCreation, usePersistFn } from '@umijs/hooks';
 // import { InfoCircleFilled } from '@ant-design/icons';
 import getAntdIcon from '@/config/icons';
 import styles from './index.less';
+
 // import './index.less';
 // const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -16,7 +17,7 @@ const { Sider } = Layout;
 
 function SiderMenu(props) {
   const { logo, collapsed, menuToggle } = props;
-  const { intl } = useLocalesModel();
+  const { intl, curLocale } = useLocalesModel();
   const { config } = useRouteConfigModel();
   // config 为menu的配置 形如：
   // config = [
@@ -35,6 +36,7 @@ function SiderMenu(props) {
   //   icon: 'http://demo.com/icon.png',
   //   icon: <Icon type="setting" />,
   const getIcon = usePersistFn(iconStr => {
+    console.log('menuRefresh')
     if (typeof iconStr === 'string' && iconStr.indexOf('http') === 0) {
       return <img src={iconStr} alt="icon" className={`${styles.icon} sider-menu-item-img`} />;
     }
@@ -72,15 +74,15 @@ function SiderMenu(props) {
       <Menu.Item
         key={item.key}
       >
-        <Link to="/b">
+        <Link to={item.key}>
           {intl.get(item.title)}
         </Link>
       </Menu.Item>
     )
   });
 
-  // const subMenu = useCreation(() => getSubMenu(config.menuConfig), [config, curLocale]);
-  const subMenu = getSubMenu(config.menuConfig);
+  const subMenu = useCreation(() => getSubMenu(config.menuConfig), [config, curLocale]);
+  // const subMenu = getSubMenu(config.menuConfig);
   return (
     <Sider
       className={styles.sider}
