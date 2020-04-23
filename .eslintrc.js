@@ -68,11 +68,11 @@ module.exports = {
     "complexity": [0, 10], //圈复杂度大于*
 
     //定义数组或对象最后多余的逗号
-    "comma-dangle": [
-      2,
-      "never"
-    ],
-
+    // "comma-dangle": [
+    //   1,
+    //   "never"
+    // ],
+    "comma-dangle": 0,
     // 不允许对全局变量赋值,如 window = 'abc'
     "no-global-assign": ["error", {
       // 定义例外
@@ -116,7 +116,9 @@ module.exports = {
     "react/jsx-boolean-value": 0, //在JSX中强制布尔属性符号
     "react/jsx-closing-bracket-location": 1, //在JSX中验证右括号位置
     "react/jsx-curly-spacing": [2, { "when": "never", "children": true }], //在JSX属性和表达式中加强或禁止大括号内的空格。
-    // "react/jsx-indent-props": [2, 4], //验证JSX中的props缩进
+    // "react/jsx-indent-props": [2, "tab"], //验证JSX中的props缩进
+    "react/jsx-indent": 0,
+    "indent": 0,
     "react/jsx-key": 2, //在数组或迭代器中验证JSX具有key属性
     // "react/jsx-max-props-per-line": [1, {"maximum": 1}], // 限制JSX中单行上的props的最大数量
     "react/jsx-no-bind": 0, //JSX中不允许使用箭头函数和bind
@@ -162,6 +164,7 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': 0,
     'no-plusplus': 0,
     'no-script-url': 0,
+    "react/state-in-constructor": 0,
     "react/no-string-refs": 1, //总是在Refs里使用回调函数.
     "no-param-reassign": 0,
     // "react/wrap-multilines":2, //将多行的JSX标签写在 ()里

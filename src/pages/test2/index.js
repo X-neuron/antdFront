@@ -14,7 +14,7 @@ import {
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
+// const AutoCompleteOption = AutoComplete.Option;
 
 const residences = [
   {

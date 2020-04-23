@@ -1,11 +1,12 @@
 import React from 'react';
 import { Spin } from 'antd';
 import isEqual from 'lodash/isEqual';
-import { isComponentClass } from './Secured'; // eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import/no-cycle
+import { isComponentClass } from './Secured';
 
 export default class PromiseRender extends React.Component {
   state = {
-    component: () => null,
+    component: () => null
   };
 
   componentDidMount() {
@@ -29,13 +30,13 @@ export default class PromiseRender extends React.Component {
     props.promise
       .then(() => {
         this.setState({
-          component: ok,
+          component: ok
         });
         return true;
       })
       .catch(() => {
         this.setState({
-          component: error,
+          component: error
         });
       });
   } // Determine whether the incoming component has been instantiated
@@ -62,17 +63,17 @@ export default class PromiseRender extends React.Component {
     return Component ? (
       <Component {...rest} />
     ) : (
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          margin: 'auto',
-          paddingTop: 50,
-          textAlign: 'center',
-        }}
-      >
-        <Spin size="large" />
-      </div>
-    );
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            margin: 'auto',
+            paddingTop: 50,
+            textAlign: 'center'
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      );
   }
 }

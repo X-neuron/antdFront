@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 // import { registerMicroApps, setDefaultMountApp, start } from 'qiankun';
-
+// "@alitajs/antd-plus": "^1.2.0", 这个组件居然没了。还好我下了
 import App from './app';
 
 const initalContainer = document.getElementById('root');

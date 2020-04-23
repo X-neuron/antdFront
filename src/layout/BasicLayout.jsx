@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 // import { Layout, Tabs, Button, Dropdown, Menu } from 'antd';
-import { Layout } from 'antd';
+import { Layout, Tabs } from 'antd';
 
 // import classNames from 'classnames';
 import GlobalFooter from '@/component/GlobalFooter';
 import GlobalHeader from '@/component/GlobalHeader';
-import SiderMenu from '@/component/SideMenu';
+import SiderMenu from '@/component/SiderMenu';
 import applogo from '@/assets/logo.svg';
 import AppRoutes from '@/pages/routes';
 // const { TabPane } = Tabs;
@@ -19,7 +19,7 @@ const BasicLayout = (props) => (
     />
     <Layout>
       <Header style={{ padding: 0 }}>
-        <GlobalHeader />
+        <GlobalHeader logo={applogo} />
       </Header>
       <Content className="globalTabs" style={{ margin: '2px 0px 0px', height: '100%' }}>
         {/* <Switch> */}
@@ -36,6 +36,24 @@ const BasicLayout = (props) => (
         {/* redirectPath="/exception/403" */}
         {/* /> */}
         {/* ))} */}
+        {/* <Tabs
+          // className={styles.tabs}
+          activeKey={this.state.activeKey}
+          onChange={this.onChange}
+          tabBarExtraContent={operations}
+          tabBarStyle={{ background: '#fff' }}
+          tabPosition="top"
+          tabBarGutter={-1}
+          hideAdd
+          type="editable-card"
+          onEdit={this.onEdit}
+        >
+          {tabList.map(item => (
+            <TabPane tab={item.name} key={item.key} closable={item.closable}>
+              {item.content ? item.content : <NotFound />}
+            </TabPane>
+          ))}
+        </Tabs> */}
         <AppRoutes />
         {/* <Tabs
                      // className={styles.tabs}

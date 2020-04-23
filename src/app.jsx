@@ -3,7 +3,7 @@ import React from 'react';
 // import { registerMicroApps, setDefaultMountApp, start } from 'qiankun';
 
 import { hot } from 'react-hot-loader/root'
-import Locale from '@/component/Locale';
+// import Locale from '@/component/Locale';
 
 import Layout from './layout/BasicLayout';
 
@@ -12,10 +12,11 @@ import Layout from './layout/BasicLayout';
 // });
 
 function App() {
+  console.log('app refresh')
   return (
-    <Locale>
-      <Layout />
-    </Locale>
+    // <Locale>
+    <Layout />
+    // </Locale>
   )
 }
 

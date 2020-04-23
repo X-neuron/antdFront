@@ -1,4 +1,9 @@
 {
+  "menu-welcome": "欢迎首页",
+  "sideMenu-usual": "通用功能",
+  "sideMenu-from1": "表单1",
+  "sideMenu-from2": "表单2",
+  "sideMenu-from3": "表单3",
   "SIMPLE": "简单的句子",
   "HELLO": "你好, {name}。欢迎来到{where}!",
   "TIP": "这是<span style='color:red'>HTML</span>",

@@ -1,22 +1,23 @@
-import { Redirect, Route } from 'umi';
+// import { Redirect, Route } from 'umi';
+import { Route, Redirect } from '@reach/router'
 import React from 'react';
 import Authorized from './Authorized';
 
 const AuthorizedRoute = ({ component: Component, render, authority, redirectPath, ...rest }) => (
   <Authorized
     authority={authority}
-    noMatch={
+    noMatch={(
       <Route
         {...rest}
         render={() => (
           <Redirect
             to={{
-              pathname: redirectPath,
+              pathname: redirectPath
             }}
           />
         )}
       />
-    }
+    )}
   >
     <Route {...rest} render={props => (Component ? <Component {...props} /> : render(props))} />
   </Authorized>

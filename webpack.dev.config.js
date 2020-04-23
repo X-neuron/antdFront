@@ -206,6 +206,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'BuildFolder'), // 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到"build"目录）
     compress: true,
     hot: true,
+    historyApiFallback: true,
     overlay: {
       errors: true
     },

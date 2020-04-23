@@ -1,4 +1,9 @@
 {
+  "menu-welcome": "welcome",
+  "sideMenu-usual": "usualFun",
+  "sideMenu-from1": "form1",
+  "sideMenu-from2": "form2",
+  "sideMenu-from3": "form3",
   "SIMPLE": "Simple Sentence",
   "HELLO": "Hello, {name}. Welcome to {where}!",
   "TIP": "This is <span style='color:red'>HTML</span>",

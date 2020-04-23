@@ -5,25 +5,25 @@ import React, { lazy, Suspense } from 'react';
 // import loadable from '@loadable/component'
 
 import { Router } from '@reach/router';
-import { Spin } from 'antd';
-
+// import { Spin } from 'antd';
+import Pageloading from '@/component/Pageloading'
 // const Form1 = loadable(() => import('./test1/1'));
 // const Form2 = loadable(() => import('./test2/2'));
 // const DateLocales = loadable(() => import('./test3/date'));
 
-const Form1 = lazy(() => import('./test1/1'));
-const Form2 = lazy(() => import('./test2/2'));
-const DateLocales = lazy(() => import('./test3/date'));
 
+const Form1 = lazy(() => import('./test1'));
+const Form2 = lazy(() => import('./test2'));
+const DateLocales = lazy(() => import('./test3'));
 function AppRoutes() {
   return (
     <>
       {/* @reach/router test */}
-      <Suspense fallback={<Spin />}>
+      <Suspense fallback={<Pageloading tip="loading" />}>
         <Router>
           <DateLocales path="/" />
-          <Form1 path="/a" />
-          <Form2 path="/b" />
+          <Form1 path="a" />
+          <Form2 path="b" />
         </Router>
       </Suspense>
     </>
