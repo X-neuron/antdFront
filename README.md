@@ -1,5 +1,6 @@
 # antdFront
 using hox data manager and webpack to building antd design pro project without umi, cra，dva or rematch
+<img src="https://i.loli.net/2020/04/26/GmucUWpFbEZ1LC6.gif" />
 
 为什么建这么项目，直接用umi 或者 craco 不好么？
 
