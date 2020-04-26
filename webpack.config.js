@@ -27,6 +27,7 @@ const HTMLTemplateFileName = 'index.html';
 const HTMLTemplateFileFolder = `${SrcFolder}`;
 const InputPublicFolder = `${SrcFolder}/public`;
 const OutPutAssertFolder = `static/assert`;
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const jsWorkerPool = {
   // the number of spawned workers, defaults to (number of cpus - 1) or
@@ -349,6 +350,11 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true
       }
+    }),
+    new CompressionPlugin({
+      algorithm: 'gzip',
+      cache: true,
+      threshold: 10240,
     }),
     // new BundleAnalyzerPlugin(),
     new FriendlyErrorsWebpackPlugin(),

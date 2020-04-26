@@ -1,5 +1,6 @@
 import { startsWith } from '@reach/router/es/lib/utils';
-import _ from 'lodash';
+// import _ from 'lodash';
+
 
 const mergePath = (path, curRootPath) => {
   if (curRootPath === '/') {
@@ -29,10 +30,11 @@ function getMenuRoutefromConfig(Rconfig) {
       }) : 0;
       // 加入menuConfig
       menuConfigArray.push({
-        title: conf.name,
+        name: conf.name,
         // root目录中，path 不带 / 则自动加上。但在子menu中，则使用根root+path
         key: conf.subs ? curPath + count : curPath,
         icon: conf.icon,
+        page: conf.page,
         authority: conf.authority,
         subs: generMenuRouteConfigFromArray(conf.subs, curPath)
       });

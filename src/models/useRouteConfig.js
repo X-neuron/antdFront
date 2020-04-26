@@ -9,16 +9,16 @@ import { usePersistFn } from '@umijs/hooks';
 // 需要重config中，解析出 @reach/router的config 和 sidemenu and Router用于单页面
 // 这个应该是提供给 相关的组件，避免每次生成。
 // 支持route 动态调整。
-function useRouteConfig(routeConfig = route) {
+function useRouteConfig() {
   // useCreation 避免重复计算。
   // const config = useCreation(() => loadRouteConfig(routeConfig), routeConfig);
-  const [config, setConfig] = useState(() => loadRouteConfig(routeConfig));
-  const changeRoute = usePersistFn((newConfig) => {
-    setConfig(loadRouteConfig(newConfig))
+  const [routeConfig, setRouteConfig] = useState(() => loadRouteConfig(route));
+  const changeRouteConfig = usePersistFn((newRouteConfig) => {
+    setRouteConfig(loadRouteConfig(newRouteConfig))
   });
 
-  return { config, changeRoute }
+  return [routeConfig, changeRouteConfig]
 }
 
-
+// export default useRouteConfig;
 export default createModel(useRouteConfig);

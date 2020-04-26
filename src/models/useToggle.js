@@ -5,9 +5,9 @@ import { useBoolean } from '@umijs/hooks';
 
 function useToggle(defValue) {
   const { state, toggle, setTrue, setFalse } = useBoolean(defValue ?? true);
-  return { state, toggle, setTrue, setFalse }
+  const set = (bool) => (bool ? setTrue : setFalse)
+  return { state, toggle, set }
 }
 
 
 export const useSiderMenuToggleModel = createModel(useToggle);
-export const useSigOrTabsToggleModel = createModel(useToggle);

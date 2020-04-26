@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-// import Menu, { Slider, Layout } from 'antd';
+
 import { Menu, Layout } from 'antd';
 import { Link } from '@reach/router';
-import useLocalesModel from '@/models/useLocales';
-// import { HomeOutlined, AppstoreOutlined, CompassOutlined } from '@ant-design/icons';
-import useRouteConfigModel from '@/models/useRouteConfig';
 import { useCreation, usePersistFn } from '@umijs/hooks';
-// import { InfoCircleFilled } from '@ant-design/icons';
 import getAntdIcon from '@/config/icons';
-import styles from './index.less';
 
+import useLocalesModel from '@/models/useLocales';
+import useRouteConfigModel from '@/models/useRouteConfig';
+import useTabsModel from '@/models/useTabs';
+import styles from './index.less';
 // import './index.less';
 // const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -18,7 +17,8 @@ const { Sider } = Layout;
 function SiderMenu(props) {
   const { logo, collapsed, menuToggle } = props;
   const { intl, curLocale } = useLocalesModel();
-  const { config } = useRouteConfigModel();
+  const [routeConfig] = useRouteConfigModel();
+  const { activeKey, openRoute } = useTabsModel();
   // config 为menu的配置 形如：
   // config = [
   //   {
@@ -36,7 +36,6 @@ function SiderMenu(props) {
   //   icon: 'http://demo.com/icon.png',
   //   icon: <Icon type="setting" />,
   const getIcon = usePersistFn(iconStr => {
-    console.log('menuRefresh')
     if (typeof iconStr === 'string' && iconStr.indexOf('http') === 0) {
       return <img src={iconStr} alt="icon" className={`${styles.icon} sider-menu-item-img`} />;
     }
@@ -48,40 +47,42 @@ function SiderMenu(props) {
   });
 
   const getSubMenu = (menuConfig) => menuConfig.map(item => {
+    const cprops = {
+      name: item.name,
+      title: item.icon ? (
+        <span>
+          {/* {getIcon(item.icon)} */}
+          {getIcon(item.icon)}
+          <span>{intl.get(item.name)}</span>
+        </span>
+      ) : (
+          <>
+            {intl.get(item.name)}
+          </>
+        )
+    }
+
     if (item.subs) {
       return (
-        <SubMenu
-          title={
-            item.icon ? (
-              <span>
-                {/* {getIcon(item.icon)} */}
-                {getIcon(item.icon)}
-                <span>{intl.get(item.title)}</span>
-              </span>
-            ) : (
-                <>
-                  {intl.get(item.title)}
-                </>
-              )
-          }
-          key={item.key}
-        >
+        <SubMenu {...cprops} key={item.key}>
           {getSubMenu(item.subs)}
         </SubMenu>
       )
     }
     return (
       <Menu.Item
+        {...cprops}
+        page={item.page}
         key={item.key}
       >
         <Link to={item.key}>
-          {intl.get(item.title)}
+          {intl.get(item.name)}
         </Link>
       </Menu.Item>
     )
   });
 
-  const subMenu = useCreation(() => getSubMenu(config.menuConfig), [config, curLocale]);
+  const subMenu = useCreation(() => getSubMenu(routeConfig.menuConfig), [routeConfig, curLocale]);
   // const subMenu = getSubMenu(config.menuConfig);
   return (
     <Sider
@@ -103,36 +104,12 @@ function SiderMenu(props) {
         key="sliderMenu"
         theme="dark"
         mode="inline"
-        // selectKeys={selectKeys}
+        multiple={false}
+        selectedKeys={[activeKey]}
+        onClick={({ item, key }) => openRoute(key, item.props.page, item.props.name)}
         style={{ padding: '16px 0', width: '100%' }}
       >
         {subMenu}
-        {/* <SubMenu title={(
-          <span>
-            <HomeOutlined />
-            <span>{intl.get('T1')}</span>
-          </span>
-        )}
-        >
-          <Menu.Item>
-            <Link to="/">
-              <HomeOutlined />
-              {intl.get('ST1')}
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to="/a">
-              <AppstoreOutlined />
-              {intl.get('ST2')}
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to="/b">
-              <CompassOutlined />
-              {intl.get('ST3')}
-            </Link>
-          </Menu.Item>
-        </SubMenu> */}
       </Menu>
     </Sider>
   );

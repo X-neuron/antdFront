@@ -1,4 +1,7 @@
 {
+  "Micro-front": "MicroFrontTest",
+  "react16": "React 16 core",
+  "vue2": "Vue 2.0 core",
   "menu-welcome": "welcome",
   "sideMenu-usual": "usualFun",
   "sideMenu-from1": "form1",

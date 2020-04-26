@@ -40,7 +40,6 @@ const intl = {
 
 function useLocales() {
   // 缓存json 防止重复请求
-  console.log('useLocales running');
   const localeList = useRef(new Map());
 
   const [localeLoaded, setLocaleLoaded] = useState(false);
@@ -90,7 +89,6 @@ function useLocales() {
   };
 
   useMount(() => {
-    console.log(defLocale);
     loadLocale(defLocale);
   });
 

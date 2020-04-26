@@ -3,7 +3,6 @@ import { HomeOutlined, AppstoreOutlined, CompassOutlined, FormOutlined, PieChart
 import _ from 'lodash';
 import memoized from 'nano-memoize';
 // 需要 引入 react jsx parser么？ 好像有点大。就这几个图标，还是 用函数代替吧。
-
 const getAntdIcon = memoized((iconStr) => {
   const str = _.upperFirst(iconStr);
   switch (str) {

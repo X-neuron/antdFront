@@ -21,7 +21,7 @@ import styles from './index.less';
 
 function GlobalHeader(props) {
   // const { avatar } = props
-  const sider = useSiderMenuToggleModel();
+  const menuCollapsed = useSiderMenuToggleModel();
   const isMobile = useMediaModel();
   const { logo } = props;
   return (
@@ -34,9 +34,9 @@ function GlobalHeader(props) {
       ]}
       <span className={styles.triggle}>
         {
-          sider.state
-            ? <MenuUnfoldOutlined onClick={sider.setFalse} />
-            : <MenuFoldOutlined onClick={sider.setTrue} />
+          menuCollapsed.state
+            ? <MenuUnfoldOutlined onClick={menuCollapsed.set(false)} />
+            : <MenuFoldOutlined onClick={menuCollapsed.set(true)} />
         }
       </span>
       <div className={styles.right}>

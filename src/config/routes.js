@@ -5,17 +5,17 @@
 // 尽量配置为字符串，以支持json动态生成。
 // icon/page 首字母大小写没关系，生成sidermenu的时候会自动该成大写并找到对应的组件
 // name 默认微locales目录下语言.json的 配置翻译值，如无法找到，则 使用name值。
-
+// 不直接代组件 为了支持动态权限
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'menu-welcome',
+  //   icon: 'HomeOutlined',
+  //   authority: ['admin', 'user'],
+  //   page: 'dashboard'
+  // },
   {
-    path: '/',
-    name: 'menu-welcome',
-    icon: 'HomeOutlined',
-    authority: ['admin', 'user'],
-    page: 'dashboard'
-  },
-  {
-    // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由
+    // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
     name: 'sideMenu-usual',
     path: '/',
     icon: 'AppstoreOutlined',
@@ -39,6 +39,27 @@ const routes = [
         authority: ['admin', 'user'],
         page: 'test3'
       }
+    ]
+  },
+  {
+    // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
+    name: 'Micro-front',
+    path: '/',
+    icon: 'PaperClipOutlined',
+    subs: [
+      {
+        name: 'react16',
+        path: 'react16',
+        authority: ['admin', 'user'],
+        page: '//127.0.0.1:8002'
+      },
+      {
+        name: 'vue2',
+        path: 'vue2',
+        authority: ['admin', 'user'],
+        page: '//127.0.0.1:8001',
+        // redirect: '/',
+      },
     ]
   },
   // {

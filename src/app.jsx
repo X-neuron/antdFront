@@ -12,7 +12,7 @@ import Layout from './layout/BasicLayout';
 // });
 
 function App() {
-  console.log('app refresh')
+  // console.log('app refresh')
   return (
     // <Locale>
     <Layout />
