@@ -3,8 +3,8 @@
 import React from 'react';
 import _ from 'lodash';
 import memoized from 'nano-memoize';
-import MicroApp from '@/component/MicroApp'
-import Pageloading from '@/component/Pageloading'
+import MicroApp from '@/components/MicroApp'
+import Pageloading from '@/components/Pageloading'
 import loadable from '@loadable/component';
 // 需要 引入 react jsx parser么？ 好像有点大。就这几个功能，还是 用函数代替吧。
 // umi 这种类似的文件可以自动生成。减少手工配置的工作量，但我想一般的应用也就十几二十个功能好像也不复杂..
@@ -18,8 +18,6 @@ import loadable from '@loadable/component';
 //     </Suspense>
 //   )
 // }
-
-
 
 // const Dashboard = lazy(() => import('../pages/dashboard'));
 // const Test1 = lazy(() => import('../pages/test1'));

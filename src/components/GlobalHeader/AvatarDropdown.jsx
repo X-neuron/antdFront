@@ -1,33 +1,13 @@
 import React from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu, Spin } from 'antd';
+import { Avatar, Menu } from 'antd';
 
-import HeaderDropdown from '@/component/HeaderDropdown';
-import useRouteConfigModel from '@/models/useRouteConfig';
+import HeaderDropdown from '@/components/HeaderDropdown';
+// import useRouteConfigModel from '@/models/useRouteConfig';
+import useTabRouteModel from '@/models/useTabRoute';
 import styles from './index.less';
 
-const menuHeaderDropdown = (
-  <Menu className={styles.menu}>
 
-    <Menu.Item key="center">
-      <UserOutlined />
-      切换角色
-    </Menu.Item>
-
-
-    <Menu.Item key="settings">
-      <SettingOutlined />
-      个人设置
-    </Menu.Item>
-
-    <Menu.Divider />
-
-    <Menu.Item key="logout">
-      <LogoutOutlined />
-      退出登录
-    </Menu.Item>
-  </Menu>
-);
 
 const newRoutes = [
   {
@@ -62,7 +42,7 @@ const newRoutes = [
 ]
 
 function AvatarDropdown(props) {
-  const [, changeRouteConfig] = useRouteConfigModel();
+  const { changeTabRouteConfig } = useTabRouteModel();
   // const {
   //   currentUser = {
   //     avatar: '',
@@ -74,7 +54,7 @@ function AvatarDropdown(props) {
     <HeaderDropdown overlay={(
       <Menu className={styles.menu}>
 
-        <Menu.Item key="center" onClick={() => changeRouteConfig(newRoutes)}>
+        <Menu.Item key="center" onClick={() => changeTabRouteConfig(newRoutes)}>
           <UserOutlined />
           切换角色
         </Menu.Item>

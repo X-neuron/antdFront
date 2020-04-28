@@ -117,7 +117,10 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              javascriptEnabled: true // 恶心 bug一般的代码 来支持 antd
+              // lessOptions: {
+              //   javascriptEnabled: true
+              // } // less loader 6.0.0 支持antd
+              javascriptEnabled: true
             }
           }
         ]
@@ -160,7 +163,10 @@ module.exports = {
               // importLoaders: 2,
               // modules: true,
               // getLocalIdent: getCSSModuleLocalIdent,
-              javascriptEnabled: true // 恶心 bug一般的代码 来支持 antd
+              // lessOptions: {
+              //   javascriptEnabled: true
+              // } // less loader 6.0.0 支持antd
+              javascriptEnabled: true
             }
           }
         ]
@@ -206,7 +212,6 @@ module.exports = {
     contentBase: path.join(__dirname, 'BuildFolder'), // 默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到"build"目录）
     compress: true,
     hot: true,
-    progress: true, //显示打包的进度
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
       "/api": {

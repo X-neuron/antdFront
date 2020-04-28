@@ -4,7 +4,7 @@ import { Menu } from 'antd';
 import React from 'react';
 // import classNames from 'classnames';
 import useLocalesModel from '@/models/useLocales';
-import HeaderDropdown from '@/component/HeaderDropdown';
+import HeaderDropdown from '@/components/HeaderDropdown';
 import styles from './index.less';
 
 // Locales datas like this

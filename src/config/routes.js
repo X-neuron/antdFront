@@ -6,6 +6,9 @@
 // icon/page 首字母大小写没关系，生成sidermenu的时候会自动该成大写并找到对应的组件
 // name 默认微locales目录下语言.json的 配置翻译值，如无法找到，则 使用name值。
 // 不直接代组件 为了支持动态权限
+// 支持 '../' 路径的方式配置路由
+// 要不要支持 hidemenu 也就是动态路由，我觉得前端的东西，多数能用参数解决。 后端对资源的描述才需要用 /user/:useid/book 之类的路由来描述资源。
+// 当配置为动态路由 /user/:id/book 不会显示在menu列表中，但是可以通过openRoute('/user/1/book')匹配到该路由，自动打开。
 const routes = [
   // {
   //   path: '/',
@@ -48,16 +51,16 @@ const routes = [
     icon: 'PaperClipOutlined',
     subs: [
       {
-        name: 'react16',
-        path: 'react16',
+        name: 'pureHtml',
+        path: 'pureHtml',
         authority: ['admin', 'user'],
-        page: '//127.0.0.1:8002'
+        page: 'http://localhost:8002'
       },
       {
         name: 'vue2',
         path: 'vue2',
         authority: ['admin', 'user'],
-        page: '//127.0.0.1:8001',
+        page: 'http://localhost:8001',
         // redirect: '/',
       },
     ]

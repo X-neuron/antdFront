@@ -17,6 +17,7 @@ const postcssNormalize = require('postcss-normalize');
 const threadLoader = require('thread-loader');
 const CopyPlugin = require('copy-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const CompressionPlugin = require('compression-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
@@ -27,7 +28,6 @@ const HTMLTemplateFileName = 'index.html';
 const HTMLTemplateFileFolder = `${SrcFolder}`;
 const InputPublicFolder = `${SrcFolder}/public`;
 const OutPutAssertFolder = `static/assert`;
-const CompressionPlugin = require('compression-webpack-plugin');
 
 const jsWorkerPool = {
   // the number of spawned workers, defaults to (number of cpus - 1) or
@@ -127,7 +127,10 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              javascriptEnabled: true // 恶心 bug一般的代码 来支持 antd
+              // lessOptions: {
+              //   javascriptEnabled: true
+              // } // 用来支持 antd
+              javascriptEnabled: true
             }
           }
         ]
@@ -213,7 +216,11 @@ module.exports = {
               // importLoaders: 2,
               // modules: true,
               // getLocalIdent: getCSSModuleLocalIdent,
-              javascriptEnabled: true // 恶心 bug一般的代码 来支持 antd
+              // less loader 6.0.0 配置 但是mincssextract 插件遇到hash无法读取问题。暂不更新
+              // lessOptions: {
+              //   javascriptEnabled: true
+              // } // 用来支持 antd
+              javascriptEnabled: true
             }
           }
 

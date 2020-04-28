@@ -7,11 +7,11 @@ const Authorized = ({
   authority,
   noMatch = (
     <Result
-      status={403}
+      status="403"
       title="403"
       subTitle="Sorry, you are not authorized to access this page."
     />
-  )
+  ),
 }) => {
   const childrenRender = typeof children === 'undefined' ? null : children;
   const dom = check(authority, childrenRender, noMatch);

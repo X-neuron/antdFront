@@ -1,5 +1,4 @@
-// import { Redirect, Route } from 'umi';
-import { Route, Redirect } from '@reach/router'
+import { Redirect, Route } from '@reach/router';
 import React from 'react';
 import Authorized from './Authorized';
 
@@ -12,7 +11,7 @@ const AuthorizedRoute = ({ component: Component, render, authority, redirectPath
         render={() => (
           <Redirect
             to={{
-              pathname: redirectPath
+              pathname: redirectPath,
             }}
           />
         )}

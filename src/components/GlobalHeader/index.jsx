@@ -10,7 +10,7 @@ import {
   Tooltip
 } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import SelectLang from '@/component/SelectLang';
+import SelectLang from '@/components/SelectLang';
 import { Link } from '@reach/router';
 import { useSiderMenuToggleModel } from '@/models/useToggle';
 import useMediaModel from '@/models/useMedia';
