@@ -11,13 +11,17 @@
 // 支持 '../' 路径的方式配置路由
 // 要不要支持 hidemenu 也就是动态路由，我觉得前端的东西，多数能用参数解决。 后端对资源的描述才需要用 /user/:useid/book 之类的路由来描述资源。
 // 当配置为动态路由 /user/:id/book 不会显示在menu列表中，但是可以通过openRoute('/user/1/book')匹配到该路由，自动打开。
+
+// admin 和 user的 功能区 可在 access里配置，前端直接请求该route的json。
+// 需要提高安全性的话，可以闭包下 同时修改@/models/useTabRoute 里初始化函数即可。
+// function routeConfig() {
 const routes = [
   {
     path: '/',
-    name: 'menu-welcome',
-    icon: 'HomeOutlined',
-    access: 'dashboard/open',
-    page: 'dashboard'
+    name: 'menu-welcome', // 翻译失败后 则采用name,无需全球化直接使用中文即可。
+    icon: 'HomeOutlined', // @/config/icons里配置图图标
+    access: 'dashboard/open', // @/config/access里可配置静态策略。权限入口在@/config/pages里。
+    page: 'dashboard' // 非动态的 有page属性的 路由 会默认显示在menu里。
   },
   {
     // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
@@ -87,8 +91,14 @@ const routes = [
     ]
   }
 ]
+//   return function config() {
+//     return routes
+//   };
+// }
 
 export default routes;
+
+// export default routeConfig;
 
 // const menus = [
 //   {

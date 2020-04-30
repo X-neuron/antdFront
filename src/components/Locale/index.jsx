@@ -1,6 +1,6 @@
 
 import React from 'react';
-import useLocalesModel from '@/models/useLocales';
+import useLocaleModel from '@/models/useLocale';
 import { useSize } from '@umijs/hooks';
 import { Spin } from 'antd';
 
@@ -8,8 +8,8 @@ import { Spin } from 'antd';
 function Locale({ children }) {
   console.log('main Refreshing')
   const [body] = useSize(document.querySelector('body'));
-  // const { curLocale, loadLocale } = useLocalesModel();
-  const { localeLoaded } = useLocalesModel();
+  // const { curLocale, loadLocale } = useLocaleModel();
+  const { localeLoaded } = useLocaleModel();
 
   return (
     localeLoaded ? children

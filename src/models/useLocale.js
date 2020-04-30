@@ -38,7 +38,7 @@ const intl = {
 };
 // console.log(intl);
 
-function useLocales() {
+function useLocale() {
   // 缓存json 防止重复请求
   const localeList = useRef(new Map());
 
@@ -102,4 +102,4 @@ function useLocales() {
   return { Locales, curLocale, localeLoaded, changeCurLocale, intl }
 }
 
-export default createModel(useLocales);
+export default createModel(useLocale);

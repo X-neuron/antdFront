@@ -5,9 +5,10 @@ import { Tabs } from 'antd';
 
 import getPage from '@/config/pages';
 
-import useLocalesModel from '@/models/useLocales';
+import useLocaleModel from '@/models/useLocale';
 import useTabRouteModel from '@/models/useTabRoute';
 
+// 这里可以配tabpane的 样式。
 
 const { TabPane } = Tabs;
 
@@ -17,7 +18,8 @@ const { TabPane } = Tabs;
 const renderTabBar = (props, DefaultTabBar) => (
   <Sticky bottomOffset={80}>
     {({ style }) => (
-      <DefaultTabBar {...props} className="site-custom-tab-bar" style={{ ...style }} />
+      // <DefaultTabBar {...props} className="site-custom-tab-bar" style={{ ...style }} />
+      <DefaultTabBar {...props} style={{ ...style }} />
     )}
   </Sticky>
 );
@@ -25,7 +27,7 @@ const renderTabBar = (props, DefaultTabBar) => (
 
 const TabRoute = (props) => {
   const { activeKey, tabList, selectTab, closeTab } = useTabRouteModel();
-  const { intl } = useLocalesModel();
+  const { intl } = useLocaleModel();
 
   return (
     <StickyContainer>
@@ -45,7 +47,7 @@ const TabRoute = (props) => {
         {/* <Suspense fallback={<Pageloading tip="loading" />}> */}
         {tabList.map(item => (
           <TabPane tab={intl.get(item.name)} key={item.key}>
-            {getPage(item.page)}
+            {getPage(item.page, item.access)}
           </TabPane>
         ))}
         {/* </Suspense> */}

@@ -8,15 +8,18 @@ import { navigate } from '@reach/router'
 import { pick, resolve } from '@reach/router/es/lib/utils';
 import { isHttp } from '@/utils/is'
 import Lru from '@/utils/lru';
-import menuRouteConfig from '@/config/routes';
+import memoized from 'nano-memoize';
+// 获取静态的配置。
+import routesConfig from '@/config/routes';
 
 // const id = nanoid(10);
+const memoizedPickRoute = memoized((routeConfig, route) => pick(routeConfig, route).route);
 
 function useTabRoute() {
   // 25个记忆标签已经改足够了吧。LRU算法，更人性点，仅此而已
   // 一个 route 可以对应很多页面
   // const location = useLocation();
-  const [tabRouteConfig, setTabRouteConfig] = useState(() => getTabsRouterfromConfig(menuRouteConfig));
+  const [tabRouteConfig, setTabRouteConfig] = useState(() => getTabsRouterfromConfig(routesConfig));
 
   const [tabList, setTabList] = useState([]);
   // activkey，即为当前选中的key
@@ -40,33 +43,54 @@ function useTabRoute() {
   // 有key一般是menu的方式，key为页面的路由配置 比如/dist/:user/role
   // 其他组件的调用，一般采用openRoute('/test');
   // 服务器渲染和 mobile的话 得改此处 目前暂只考虑 浏览器情况，使用window.location.pathname
+  // access属性不应该存在具体的组件中..
+  // const openRoute = usePersistFn((route, name, page) => {
+  //   const apickRoute = pick(tabRouteConfig.routeConfig, route).route
+  //   console.log('pick the route:', apickRoute);
+  //   if (route) {
+  //     // menu方式
+  //     if (keyLruSquence.get(route)) {
+  //       setActiveKey(route);
+  //     } else {
+  //       // 调用@reach/router的匹配函数，获取匹配的路由
+  //       // menu中有page。其他组件激活 则没有page。
+  //       const { curPage, curName } = page ? { curPage: page, curName: name } : pick(tabRouteConfig.routeConfig, route).route;
+  //       keyLruSquence.set(route, {
+  //         page: curPage,
+  //         name: curName,
+  //         curRoute: route
+  //       });
+  //       setActiveKey(route);
+  //       setTabList([...tabList, {
+  //         name,
+  //         key: route,
+  //         page: curPage
+  //       }]);
+  //     }
+  //     navigate(route);
+  //   }
+  // });
 
-  const openRoute = usePersistFn((route, name, page) => {
-    const apickRoute = pick(tabRouteConfig.routeConfig, route).route
-    console.log('pick the route:', apickRoute);
-    if (route) {
-      // menu方式
-      if (keyLruSquence.get(route)) {
-        setActiveKey(route);
-      } else {
-        // 调用@reach/router的匹配函数，获取匹配的路由
-        // menu中有page。其他组件激活 则没有page。
-        const { curPage, curName } = page ? { curPage: page, curName: name } : pick(tabRouteConfig.routeConfig, route).route;
-        keyLruSquence.set(route, {
-          page: curPage,
-          name: curName,
-          curRoute: route
-        });
-        setActiveKey(route);
-        setTabList([...tabList, {
-          name,
-          key: route,
-          page: curPage,
-        }]);
-      }
-      navigate(route);
+  const openRoute = (route) => {
+    // 调用@reach/router的匹配函数，获取匹配的路由，
+    const pickRoute = memoizedPickRoute(tabRouteConfig.routeConfig, route);
+    console.log(pickRoute);
+    if (keyLruSquence.get(route)) {
+      setActiveKey(route);
+    } else {
+      const tab = {
+        name: pickRoute.name,
+        key: route,
+        page: pickRoute.value,
+        access: pickRoute.access
+      };
+      setTabList([...tabList, tab]);
+      keyLruSquence.set(route, tab);
+      setActiveKey(route);
     }
-  });
+    navigate(route);
+  }
+
 
   const closeTab = usePersistFn((selectKey) => {
     keyLruSquence.delete(selectKey)
@@ -95,7 +119,9 @@ function useTabRoute() {
 
   // 返回当前路由路径，已供切换使用。
   const closeAllTab = usePersistFn(() => {
-
+    memoizedPickRoute.clear();
+    keyLruSquence.clear();
+    setTabList([]);
   });
 
   const refreshTab = usePersistFn(() => {
@@ -138,7 +164,8 @@ function getTabsRouterfromConfig(Rconfig) {
         value: conf.page,
         path: curPath,
         // authority: conf.authority,
-        name: conf.name
+        name: conf.name,
+        access: conf.access
       }) : 0;
       // 加入menuConfig 过滤动态路由
       isHttp(conf.page) || !conf.page?.includes(':') ? menuConfigArray.push({
@@ -146,8 +173,7 @@ function getTabsRouterfromConfig(Rconfig) {
         // root目录中，path 不带 / 则自动加上。但在子menu中，则使用根root+path
         key: conf.subs ? curPath + count : curPath,
         icon: conf.icon,
-        page: conf.page,
-        // authority: conf.authority,
+        // page: conf.page,  page 统一放在openRoute里防止泄露页面。
         subs: generMenuRouteConfigFromConfig(conf.subs, curPath)
       }) : 0;
       count++;

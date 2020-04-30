@@ -5,7 +5,7 @@ import { Link } from '@reach/router';
 import { useCreation, usePersistFn } from '@umijs/hooks';
 import getAntdIcon from '@/config/icons';
 
-import useLocalesModel from '@/models/useLocales';
+import useLocaleModel from '@/models/useLocale';
 import useTabRouteModel from '@/models/useTabRoute';
 import styles from './index.less';
 
@@ -14,7 +14,7 @@ const { Sider } = Layout;
 
 function SiderMenu(props) {
   const { logo, collapsed, menuToggle } = props;
-  const { intl, curLocale } = useLocalesModel();
+  const { intl, curLocale } = useLocaleModel();
   const { activeKey, openRoute, tabRouteConfig } = useTabRouteModel();
 
   const getIcon = usePersistFn(iconStr => {
@@ -54,7 +54,6 @@ function SiderMenu(props) {
     return (
       <Menu.Item
         {...cprops}
-        page={item.page}
         key={item.key}
       >
         <Link to={item.key}>
@@ -87,7 +86,7 @@ function SiderMenu(props) {
         mode="inline"
         multiple={false}
         selectedKeys={[activeKey]}
-        onClick={({ item, key }) => openRoute(key, item.props.name, item.props.page)}
+        onClick={({ key }) => openRoute(key)}
         style={{ padding: '16px 0', width: '100%' }}
       >
         {subMenu}

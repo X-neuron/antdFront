@@ -3,7 +3,7 @@ import { Menu } from 'antd';
 // import { getLocale, setLocale } from 'umi-plugin-react/locale';
 import React from 'react';
 // import classNames from 'classnames';
-import useLocalesModel from '@/models/useLocales';
+import useLocaleModel from '@/models/useLocale';
 import HeaderDropdown from '@/components/HeaderDropdown';
 import styles from './index.less';
 
@@ -22,7 +22,7 @@ import styles from './index.less';
 // ]
 
 const SelectLang = () => {
-  const { Locales, curLocale, changeCurLocale } = useLocalesModel();
+  const { Locales, curLocale, changeCurLocale } = useLocaleModel();
   const langMenu = (
     <Menu
       className={styles.menu}

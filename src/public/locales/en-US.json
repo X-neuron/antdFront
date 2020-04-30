@@ -1,4 +1,7 @@
 {
+  "access404": "Sorry, the page you visited does not exist.",
+  "access403": "Sorry, you are not authorized to access this page",
+  "access500": "Sorry, something went wrong.",
   "material-ui": "material-ui",
   "Micro-front": "MicroFrontTest",
   "react16": "React 16 core",
