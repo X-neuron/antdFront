@@ -4,14 +4,13 @@ import React from 'react';
 import _ from 'lodash';
 import memoized from 'nano-memoize';
 import MicroApp from '@/components/MicroApp'
-import Pageloading from '@/components/Pageloading'
+import Pageloading from '@/components/PageLoading'
 import loadable from '@loadable/component';
 // 需要 引入 react jsx parser么？ 好像有点大。就这几个功能，还是 用函数代替吧。
 // umi 这种类似的文件可以自动生成。减少手工配置的工作量，但我想一般的应用也就十几二十个功能好像也不复杂..
 // 微前端的加载也放这合适..
 
 // function SuspenseComp({ component }) {
-//   console.log(component)
 //   return (
 //     <Suspense fallback={<Pageloading tip="loading" />}>
 //       {component}
@@ -23,6 +22,8 @@ import loadable from '@loadable/component';
 // const Test1 = lazy(() => import('../pages/test1'));
 // const Test2 = lazy(() => import('../pages/test2'));
 // const Test3 = lazy(() => import('../pages/test3'));
+
+
 const Dashboard = loadable(() => import('@/pages/dashboard'), {
   fallback: <Pageloading tip="组件加载中..." />,
 });
@@ -53,7 +54,7 @@ const getPage = memoized((apageStr) => {
   }
 
 
-  // switch (pageStr) {
+  // switch (apageStr) {
   //   case 'Test3':
   //     return <SuspenseComp component={Test3} />
   //   case 'Test2':

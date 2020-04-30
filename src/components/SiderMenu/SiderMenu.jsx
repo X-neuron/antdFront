@@ -31,17 +31,17 @@ function SiderMenu(props) {
   const getSubMenu = (menuConfig) => menuConfig.map(item => {
     const cprops = {
       name: item.name,
-      title: item.icon ? (
-        <span>
-          {/* {getIcon(item.icon)} */}
-          {getIcon(item.icon)}
-          <span>{intl.get(item.name)}</span>
-        </span>
+      icon: getIcon(item.icon),
+      title: item.page ? (
+        <>
+          {intl.get(item.name)}
+        </>
       ) : (
-          <>
-            {intl.get(item.name)}
-          </>
-        )
+          <span>
+            <span>{intl.get(item.name)}</span>
+          </span>
+        ),
+
     }
 
     if (item.subs) {
@@ -60,6 +60,7 @@ function SiderMenu(props) {
         <Link to={item.key}>
           {intl.get(item.name)}
         </Link>
+
       </Menu.Item>
     )
   });
@@ -76,11 +77,9 @@ function SiderMenu(props) {
       width={256}
     >
       <div className={styles.logo} key="appLogo">
-        <Link to="/">
-          {/* <AppLogo /> */}
-          <img src={logo} alt="logo" />
-          <h1>X-Plat Antd Front</h1>
-        </Link>
+        {/* <AppLogo /> */}
+        <img src={logo} alt="logo" />
+        <h1>X-Plat Antd Front</h1>
       </div>
       <Menu
         key="sliderMenu"

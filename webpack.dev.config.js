@@ -187,7 +187,6 @@ module.exports = {
 
     ]
   },
-
   cache: true,
   entry: [
     // "core-js/modules/es6.promise",
@@ -197,6 +196,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, BuildFolder),
+    publicPath: '/',
     filename: 'static/js/[name].[hash].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js'
   },

@@ -1,4 +1,6 @@
 
+// route 拆成 icon和page route 三文件，只为了实现 纯字符串的 route 配置。
+// 如无需要，整合到一块即可
 // 构造sider menu
 // 构造@reach/router 的 核心的pick(route,uri) 函数自动生成。
 // 为支持  多标签页 和 单标签页 切换，通知生成 组件。
@@ -10,79 +12,80 @@
 // 要不要支持 hidemenu 也就是动态路由，我觉得前端的东西，多数能用参数解决。 后端对资源的描述才需要用 /user/:useid/book 之类的路由来描述资源。
 // 当配置为动态路由 /user/:id/book 不会显示在menu列表中，但是可以通过openRoute('/user/1/book')匹配到该路由，自动打开。
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'menu-welcome',
-  //   icon: 'HomeOutlined',
-  //   authority: ['admin', 'user'],
-  //   page: 'dashboard'
-  // },
+  {
+    path: '/',
+    name: 'menu-welcome',
+    icon: 'HomeOutlined',
+    access: 'dashboard/open',
+    page: 'dashboard'
+  },
   {
     // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
     name: 'sideMenu-usual',
-    path: '/',
+    path: '/ab',
     icon: 'AppstoreOutlined',
     subs: [
       {
         name: 'sideMenu-from1',
         path: 'test1',
-        authority: ['admin', 'user'],
-        page: 'test1'
+        page: 'test1',
+        access: 'test1/open',
       },
       {
         name: 'sideMenu-from2',
         path: 'test2',
-        authority: ['admin', 'user'],
         page: 'test2',
+        access: 'test2/open',
         // redirect: '/',
       },
       {
         name: 'sideMenu-from3',
         path: 'test3',
-        authority: ['admin', 'user'],
-        page: 'test3'
+        page: 'test3',
+        access: 'test3/open',
       }
     ]
   },
   {
     // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
     name: 'Micro-front',
-    path: '/',
+    path: '/micro',
     icon: 'PaperClipOutlined',
     subs: [
       {
-        name: 'pureHtml',
-        path: 'pureHtml',
-        authority: ['admin', 'user'],
+        name: 'material-ui',
+        path: 'material',
+        access: 'microMaterial/open',
         page: 'http://localhost:8002'
       },
       {
         name: 'vue2',
         path: 'vue2',
-        authority: ['admin', 'user'],
+        access: 'microVue2/open',
         page: 'http://localhost:8001',
         // redirect: '/',
       },
     ]
   },
-  // {
-  //   name: 'sideMenu-mutiNavigate',
-  //   path: '/one',
-  //   icon: 'BarsOutlined',
-  //   subs: [
-  //     {
-  //       name: 'sideMenu-mutiNavigate1',
-  //       path: 'two',
-  //       subs: [
-  //         {
-  //           name: 'sideMenu-mutiNavigate2',
-  //           path: 'three',
-  //           authority: ['admin', 'user'],
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // }
+  {
+    name: 'sideMenu-mutiNavigate',
+    path: '/one',
+    icon: 'BarsOutlined',
+    subs: [
+      {
+        name: 'sideMenu-mutiNavigate1',
+        path: 'two',
+        subs: [
+          {
+            name: 'sideMenu-mutiNavigate2',
+            path: 'three',
+            // authority: ['admin', 'user'],
+            page: 'test3',
+          }
+        ]
+      }
+    ]
+  }
 ]
 
 export default routes;

@@ -8,6 +8,7 @@ import getPage from '@/config/pages';
 import useLocalesModel from '@/models/useLocales';
 import useTabRouteModel from '@/models/useTabRoute';
 
+
 const { TabPane } = Tabs;
 
 // tabpane 单独抽离出来，减少多余渲染。优化性能。
@@ -25,6 +26,7 @@ const renderTabBar = (props, DefaultTabBar) => (
 const TabRoute = (props) => {
   const { activeKey, tabList, selectTab, closeTab } = useTabRouteModel();
   const { intl } = useLocalesModel();
+
   return (
     <StickyContainer>
       <Tabs

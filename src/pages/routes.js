@@ -6,7 +6,7 @@ import React, { lazy, Suspense } from 'react';
 // import loadable from '@loadable/component';
 import { Router } from '@reach/router';
 // import { Spin } from 'antd';
-import Pageloading from '@/components/Pageloading'
+import Pageloading from '@/components/PageLoading'
 // const Form1 = loadable(() => import('./test1/1'));
 // const Form2 = loadable(() => import('./test2/2'));
 // const DateLocales = loadable(() => import('./test3/date'));

@@ -257,7 +257,6 @@ module.exports = {
       // },
     ]
   },
-
   cache: true,
   entry: [
     // "core-js/modules/es6.promise",
@@ -267,6 +266,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, BuildFolder),
+    publicPath: '/',
     // filename: 'banble.js',
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js'
