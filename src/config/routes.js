@@ -31,22 +31,21 @@ const routes = [
     subs: [
       {
         name: 'sideMenu-from1',
-        path: 'test1',
-        page: 'test1',
-        access: 'test1/open',
+        path: 'a',
+        page: 'test1', // page 建议使用小写，内部会转换成大写,对应到组件上。权限配置中与此保持一致
+        access: 'open',  //具体权限配置 请查看@/models/useAccess
       },
       {
         name: 'sideMenu-from2',
-        path: 'test2',
+        path: 'b',
         page: 'test2',
-        access: 'test2/open',
-        // redirect: '/',
+        access: 'open',
       },
       {
         name: 'sideMenu-from3',
-        path: 'test3',
+        path: '/c',
         page: 'test3',
-        access: 'test3/open',
+        access: 'test3Open',
       }
     ]
   },
@@ -59,13 +58,13 @@ const routes = [
       {
         name: 'material-ui',
         path: 'material',
-        access: 'microMaterial/open',
+        access: 'microOpen',
         page: 'http://localhost:8002'
       },
       {
         name: 'vue2',
         path: 'vue2',
-        access: 'microVue2/open',
+        access: 'microOpen',
         page: 'http://localhost:8001',
         // redirect: '/',
       },
@@ -83,7 +82,7 @@ const routes = [
           {
             name: 'sideMenu-mutiNavigate2',
             path: 'three',
-            // authority: ['admin', 'user'],
+            access: 'open',
             page: 'test3',
           }
         ]

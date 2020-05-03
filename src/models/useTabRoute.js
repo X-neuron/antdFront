@@ -6,12 +6,10 @@ import { createModel } from 'hox';
 import { usePersistFn, useCreation } from '@umijs/hooks';
 import { navigate } from '@reach/router'
 import { pick, resolve } from '@reach/router/es/lib/utils';
-import { isHttp } from '@/utils/is'
 import Lru from '@/utils/lru';
 import memoized from 'nano-memoize';
-// 获取静态的配置。
+import { isHttp } from '@/utils/is';
 import routesConfig from '@/config/routes';
-
 // const id = nanoid(10);
 const memoizedPickRoute = memoized((routeConfig, route) => pick(routeConfig, route).route);
 
