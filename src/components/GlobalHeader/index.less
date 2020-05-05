@@ -2,11 +2,9 @@
 
 @pro-header-hover-bg: rgba(0, 0, 0, 0.025);
 
-@import '~antd/lib/style/themes/default.less';
-
 .header {
   height: 64px;
-  padding: 0 12px 0 0;
+  // padding: 0 12px 0 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   position: relative;
@@ -59,16 +57,11 @@
   float: right;
   height: 100%;
   .action {
-    cursor: pointer;
-    padding: 0 12px;
     display: inline-block;
-    transition: all 0.3s;
     height: 100%;
-    > i {
-      font-size: 16px;
-      vertical-align: middle;
-      color: @text-color;
-    }
+    padding: 0 12px;
+    cursor: pointer;
+    transition: all 0.3s;
     &:hover,
     &:global(.ant-popover-open) {
       background: @primary-1;
@@ -83,7 +76,7 @@
   }
   .account {
     .avatar {
-      margin: 20px 8px 20px 0;
+      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
       color: @primary-color;
       background: rgba(255, 255, 255, 0.85);
       vertical-align: middle;
@@ -99,7 +92,7 @@
     .name {
       display: none;
     }
-    i.trigger {
+    .trigger {
       padding: 0 12px;
     }
     .logo {
@@ -108,13 +101,15 @@
     }
     .right {
       position: absolute;
-      right: 12px;
       top: 0;
-      background: #fff;
+      right: 12px;
       .account {
         .avatar {
           margin-right: 0;
         }
+      }
+      .search {
+        display: none;
       }
     }
   }

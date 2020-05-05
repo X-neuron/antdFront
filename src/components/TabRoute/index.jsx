@@ -8,7 +8,8 @@ import getPage from '@/config/pages';
 import useLocaleModel from '@/models/useLocale';
 import useTabRouteModel from '@/models/useTabRoute';
 
-// 这里可以配tabpane的 样式。
+// 这里可以配tabpane的 样式
+
 
 const { TabPane } = Tabs;
 
@@ -47,7 +48,7 @@ const TabRoute = (props) => {
         {/* <Suspense fallback={<Pageloading tip="loading" />}> */}
         {tabList.map(item => (
           <TabPane tab={intl.get(item.name)} key={item.key}>
-            {getPage(item.page, item.access)}
+            {getPage(item.page, item.access, item.params)}
           </TabPane>
         ))}
         {/* </Suspense> */}

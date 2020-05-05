@@ -11,23 +11,26 @@
 // 如果回到useSysInit的设计，似乎又回到了中心化管理的redux。这样使用hox的意义在哪？
 import { useState } from 'react';
 import { createModel } from 'hox';
-import useLoginModel from '@/models/useLogin';
-import _ from 'lodash';
+// import useLoginModel from '@/models/useLogin';
+// import _ from 'lodash';
 
 const useAccess = () => {
   // const { isLogin, role, user, userId } = useLoginModel();
 
   const [access, setAccess] = useState({
-    test1: {
-      open: true,
-      deleteUserList: false,
-      adduserList: true
-    },
-    test2: {
-      open: false, // 可后端返回
-    },
-    'microOpen': true,
-    'test3Open': true,
+    // 放弃了这个设计，因为命名易冲突，导致优先获取access.key下的权限。
+    // test1: {
+    //   open: true,
+    //   deleteUserList: false,
+    //   adduserList: true
+    // },
+    // test2: {
+    //   open: false, // 可后端返回
+    // },
+    test1open: true,
+    test2Open: true,
+    microOpen: true,
+    test3Open: true,
     // 'example': role === 'admin',
     // 'example2': some => some.prop === 'test'
   });

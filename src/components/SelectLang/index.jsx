@@ -4,6 +4,7 @@ import { Menu } from 'antd';
 import React from 'react';
 // import classNames from 'classnames';
 import useLocaleModel from '@/models/useLocale';
+import classNames from 'classnames';
 import HeaderDropdown from '@/components/HeaderDropdown';
 import styles from './index.less';
 
@@ -21,7 +22,8 @@ import styles from './index.less';
 //   }
 // ]
 
-const SelectLang = () => {
+const SelectLang = (props) => {
+  const { className } = props;
   const { Locales, curLocale, changeCurLocale } = useLocaleModel();
   const langMenu = (
     <Menu
@@ -41,7 +43,7 @@ const SelectLang = () => {
   );
   return (
     <HeaderDropdown overlay={langMenu} placement="bottomRight">
-      <span className={styles.dropDown}>
+      <span className={classNames(styles.dropDown, className)}>
         <GlobalOutlined title="语言" />
       </span>
     </HeaderDropdown>

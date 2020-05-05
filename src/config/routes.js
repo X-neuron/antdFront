@@ -21,7 +21,8 @@ const routes = [
     name: 'menu-welcome', // 翻译失败后 则采用name,无需全球化直接使用中文即可。
     icon: 'HomeOutlined', // @/config/icons里配置图图标
     access: 'dashboard/open', // @/config/access里可配置静态策略。权限入口在@/config/pages里。
-    page: 'dashboard' // 非动态的 有page属性的 路由 会默认显示在menu里。
+    page: 'dashboard', // 非动态的 有page属性的 路由 会默认显示在menu里。
+    describe: '', // 默认在public/locales 相应的语言文件里，默认使用 {page}-{describe} 格式。
   },
   {
     // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
@@ -33,13 +34,13 @@ const routes = [
         name: 'sideMenu-from1',
         path: 'a',
         page: 'test1', // page 建议使用小写，内部会转换成大写,对应到组件上。权限配置中与此保持一致
-        access: 'open',  //具体权限配置 请查看@/models/useAccess
+        access: 'test1Open', // 具体权限配置 请查看@/models/useAccess
       },
       {
         name: 'sideMenu-from2',
         path: 'b',
         page: 'test2',
-        access: 'open',
+        access: 'test2Open',
       },
       {
         name: 'sideMenu-from3',

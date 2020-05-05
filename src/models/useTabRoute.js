@@ -5,13 +5,14 @@ import { createModel } from 'hox';
 
 import { usePersistFn, useCreation } from '@umijs/hooks';
 import { navigate } from '@reach/router'
-import { pick, resolve } from '@reach/router/es/lib/utils';
+import { pick, resolve, match } from '@reach/router/es/lib/utils';
 import Lru from '@/utils/lru';
 import memoized from 'nano-memoize';
 import { isHttp } from '@/utils/is';
 import routesConfig from '@/config/routes';
 // const id = nanoid(10);
 const memoizedPickRoute = memoized((routeConfig, route) => pick(routeConfig, route).route);
+
 
 function useTabRoute() {
   // 25个记忆标签已经改足够了吧。LRU算法，更人性点，仅此而已
@@ -72,7 +73,15 @@ function useTabRoute() {
   const openRoute = (route) => {
     // 调用@reach/router的匹配函数，获取匹配的路由，
     const pickRoute = memoizedPickRoute(tabRouteConfig.routeConfig, route);
-    console.log(pickRoute);
+    const result = match(pickRoute.path, route);
+    // 参数作为组件的props输入?
+    const params = result
+      ? {
+        ...result.params,
+        uri: result.uri,
+        path: pickRoute.path
+      }
+      : null;
     if (keyLruSquence.get(route)) {
       setActiveKey(route);
     } else {
@@ -80,7 +89,9 @@ function useTabRoute() {
         name: pickRoute.name,
         key: route,
         page: pickRoute.value,
-        access: pickRoute.access
+        curRoute: route,
+        access: pickRoute.access,
+        params
       };
       setTabList([...tabList, tab]);
       keyLruSquence.set(route, tab);
@@ -99,16 +110,20 @@ function useTabRoute() {
     } else {
       // 可以默认打开个欢迎界面
       // openRoute('/');
+      setActiveKey(null);
+      memoizedPickRoute.clear();
+      setTabList([]);
+      navigate('/');
     }
   });
 
   const selectTab = usePersistFn((selectKey) => {
-    setActiveKey(selectKey);
     // 记录原真实路由
     keyLruSquence.newest.value.curRoute = window.location.pathname
-    keyLruSquence.get(selectKey);
-    // 导航至新路由中 先导航过去避免出现配置无效的问题
+    console.log(keyLruSquence.newest);
     navigate(keyLruSquence.get(selectKey).curRoute);
+    console.log(keyLruSquence.get(selectKey).curRoute);
+    setActiveKey(selectKey);
   });
 
   const closeOtherTab = usePersistFn((selectKey) => {

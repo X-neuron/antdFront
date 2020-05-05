@@ -71,6 +71,9 @@ function useLocale() {
       request.get(`public/locales/${currentLocale}.json`, {
         responseType: 'json'
       })
+        // const lang = require(`public/locales/${currentLocale}.js`);
+        // babel 还是webpack 目前暂不支持es2020的import。
+        // import(`../public/locales/${currentLocale}`)
         .then(res => {
           intl.init({
             currentLocale,

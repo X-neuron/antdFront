@@ -213,16 +213,16 @@ module.exports = {
     compress: true,
     hot: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    proxy: {
-      "/api": {
-        target: "http://localhost:8001",
-        changeOrigin: true,
-      },
-      "/api2": {
-        target: "http://localhost:8002",
-        changeOrigin: true,
-      }
-    },
+    // proxy: {
+    //   "/api": {
+    //     target: "http://localhost:8001",
+    //     changeOrigin: true,
+    //   },
+    //   "/api2": {
+    //     target: "http://localhost:8002",
+    //     changeOrigin: true,
+    //   }
+    // },
     historyApiFallback: true,
     overlay: {
       errors: true

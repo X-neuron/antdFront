@@ -9,7 +9,9 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 }
 };
 
-const LoginForm = () => {
+const LoginForm = (props) => {
+  // const { params } = props;
+  // console.log(params);
   const onFinish = values => {
     console.log('Success:', values);
   };

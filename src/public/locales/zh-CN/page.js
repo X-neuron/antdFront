@@ -1,0 +1,16 @@
+export default {
+  access404: '对不起，您访问的页面不存在。',
+  access403: '对不起, 您没有权限访问这个页面。',
+  access500: '对不起, 服务器错误。',
+  'material-ui': 'material-UI测试',
+  'Micro-front': '微前端测试',
+  backhome: '返回首页',
+  react16: 'React 16 内核',
+  vue2: 'Vue 2.0 内核',
+  pureHtml: '纯网页',
+  'menu-welcome': '欢迎首页',
+  'sideMenu-usual': '通用功能',
+  'sideMenu-from1': '表单1',
+  'sideMenu-from2': '表单2',
+  'sideMenu-from3': '表单3',
+};

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Menu, Layout } from 'antd';
-import { Link } from '@reach/router';
 import { useCreation, usePersistFn } from '@umijs/hooks';
 import getAntdIcon from '@/config/icons';
 
@@ -56,10 +55,7 @@ function SiderMenu(props) {
         {...cprops}
         key={item.key}
       >
-        <Link to={item.key}>
-          {intl.get(item.name)}
-        </Link>
-
+        {intl.get(item.name)}
       </Menu.Item>
     )
   });
