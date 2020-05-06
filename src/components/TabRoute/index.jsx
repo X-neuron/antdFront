@@ -40,6 +40,7 @@ const TabRoute = (props) => {
         // tabBarExtraContent={operations}
         tabBarStyle={{ background: '#fff' }}
         tabPosition="top"
+        animated
         tabBarGutter={-1}
         hideAdd
         type="editable-card"

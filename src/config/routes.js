@@ -18,8 +18,8 @@
 const routes = [
   {
     path: '/',
-    name: 'menu-welcome', // 翻译失败后 则采用name,无需全球化直接使用中文即可。
-    icon: 'HomeOutlined', // @/config/icons里配置图图标
+    name: 'menu-welcome', // 翻译失败后 则采用name,如无需全球化直接使用中文即可。
+    icon: 'HomeOutlined', // @/config/icons里配置图图标,小写也可以
     access: 'dashboard/open', // @/config/access里可配置静态策略。权限入口在@/config/pages里。
     page: 'dashboard', // 非动态的 有page属性的 路由 会默认显示在menu里。
     describe: '', // 默认在public/locales 相应的语言文件里，默认使用 {page}-{describe} 格式。
@@ -32,19 +32,19 @@ const routes = [
     subs: [
       {
         name: 'sideMenu-from1',
-        path: 'a',
+        path: 'a', // 解析为/ab/a
         page: 'test1', // page 建议使用小写，内部会转换成大写,对应到组件上。权限配置中与此保持一致
         access: 'test1Open', // 具体权限配置 请查看@/models/useAccess
       },
       {
         name: 'sideMenu-from2',
-        path: 'b',
+        path: 'b', // 解析为/ab/b
         page: 'test2',
         access: 'test2Open',
       },
       {
         name: 'sideMenu-from3',
-        path: '/c',
+        path: '/c', // 解析为/c
         page: 'test3',
         access: 'test3Open',
       }
@@ -82,7 +82,7 @@ const routes = [
         subs: [
           {
             name: 'sideMenu-mutiNavigate2',
-            path: 'three',
+            path: 'three', // 解析为 /one/two/threee
             access: 'open',
             page: 'test3',
           }
