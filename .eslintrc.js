@@ -40,6 +40,7 @@ module.exports = {
   },
   "rules": {
     // "compat/compat": 2,
+    "no-nested-ternary": 0,
     "no-bitwise": 0,
     "prefer-promise-reject-errors": 1,
     "react/jsx-props-no-spreading": 0,

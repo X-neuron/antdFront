@@ -3,7 +3,7 @@
 import React from 'react';
 import memoized from 'nano-memoize';
 import MicroApp from '@/components/MicroApp';
-import Pageloading from '@/components/PageLoading';
+import PageLoading from '@/components/PageLoading';
 import loadable from '@loadable/component';
 import _ from 'lodash';
 import { isHttp } from '@/utils/is';
@@ -17,7 +17,7 @@ import AccessResult from '@/components/AccessResult';
 
 // function SuspenseComp({ component }) {
 //   return (
-//     <Suspense fallback={<Pageloading tip="loading" />}>
+//     <Suspense fallback={<PageLoading tip="loading" />}>
 //       {component}
 //     </Suspense>
 //   )
@@ -30,16 +30,22 @@ import AccessResult from '@/components/AccessResult';
 
 // const jsx = litjsx({ React });
 const Dashboard = loadable(() => import('@/pages/dashboard'), {
-  fallback: <Pageloading tip="组件加载中..." />,
+  fallback: <PageLoading tip="组件加载中..." />,
 });
 const Test1 = loadable(() => import('@/pages/test1'), {
-  fallback: <Pageloading tip="组件加载中..." />,
+  fallback: <PageLoading tip="组件加载中..." />,
 });
 const Test2 = loadable(() => import('@/pages/test2'), {
-  fallback: <Pageloading tip="组件加载中..." />,
+  fallback: <PageLoading tip="组件加载中..." />,
 });
 const Test3 = loadable(() => import('@/pages/test3'), {
-  fallback: <Pageloading tip="组件加载中..." />,
+  fallback: <PageLoading tip="组件加载中..." />,
+});
+const BasicLayout = loadable(() => import('@/layout/BasicLayout'), {
+  fallback: <PageLoading tip="组件加载中..." />,
+});
+const UserLayout = loadable(() => import('@/layout/UserLayout'), {
+  fallback: <PageLoading tip="组件加载中..." />,
 });
 
 

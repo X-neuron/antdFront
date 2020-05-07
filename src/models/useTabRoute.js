@@ -1,6 +1,4 @@
 import { useState } from 'react';
-// 分离出来主要为了test
-// import loadRouteConfig from '@/utils/loadRouteConfig';
 import { createModel } from 'hox';
 
 import { usePersistFn, useCreation } from '@umijs/hooks';
@@ -120,9 +118,7 @@ function useTabRoute() {
   const selectTab = usePersistFn((selectKey) => {
     // 记录原真实路由
     keyLruSquence.newest.value.curRoute = window.location.pathname
-    console.log(keyLruSquence.newest);
     navigate(keyLruSquence.get(selectKey).curRoute);
-    console.log(keyLruSquence.get(selectKey).curRoute);
     setActiveKey(selectKey);
   });
 

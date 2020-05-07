@@ -16,13 +16,36 @@
 // 需要提高安全性的话，可以闭包下 同时修改@/models/useTabRoute 里初始化函数即可。
 // function routeConfig() {
 const routes = [
+  // {
+  //   route: '/user',
+  //   page: 'userLayout',
+  //   children: [
+  //     {
+  //       name: 'login',
+  //       route: 'login',
+  //       page: 'userlogin',
+  //     },
+  //     {
+  //       name: 'register',
+  //       route: 'register',
+  //       page: 'userRegister',
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/',
+  //   page: 'securityLayout',
+  //   children: [
+  //     {
+  //       path: '/',
+  //       page: 'basicLayout',
+  //       children: [
   {
     path: '/',
     name: 'menu-welcome', // 翻译失败后 则采用name,如无需全球化直接使用中文即可。
     icon: 'HomeOutlined', // @/config/icons里配置图图标,小写也可以
-    access: 'dashboard/open', // @/config/access里可配置静态策略。权限入口在@/config/pages里。
+    access: 'dashboardOpen', // @/config/access里可配置静态策略。权限入口在@/config/pages里。
     page: 'dashboard', // 非动态的 有page属性的 路由 会默认显示在menu里。
-    describe: '', // 默认在public/locales 相应的语言文件里，默认使用 {page}-{describe} 格式。
   },
   {
     // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
@@ -90,7 +113,21 @@ const routes = [
       }
     ]
   }
-]
+],
+//     },
+//     {
+//       component: './404',
+//     },
+//   ],
+// },
+// {
+//   component: './404',
+// },
+// ]
+
+
+
+
 //   return function config() {
 //     return routes
 //   };
