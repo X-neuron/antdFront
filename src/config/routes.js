@@ -14,116 +14,120 @@
 
 // admin 和 user的 功能区 可在 access里配置，前端直接请求该route的json。
 // 需要提高安全性的话，可以闭包下 同时修改@/models/useTabRoute 里初始化函数即可。
+
+// 默认一个app里只包含一个menuTabs。减轻解析的心智负担。一般的应用不会出现 其他layout 包含 submenu / tab的情况。
+// 遇到@/hooks/useAppRoute 遇到menuTabs则终止嵌套解析。并将第一个遇到的menuTabs作为rmtConfig.menuTabs值输出。用于@/models/useTabRoute
 // function routeConfig() {
 const routes = [
-  // {
-  //   route: '/user',
-  //   page: 'userLayout',
-  //   children: [
-  //     {
-  //       name: 'login',
-  //       route: 'login',
-  //       page: 'userlogin',
-  //     },
-  //     {
-  //       name: 'register',
-  //       route: 'register',
-  //       page: 'userRegister',
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: '/',
-  //   page: 'securityLayout',
-  //   children: [
-  //     {
-  //       path: '/',
-  //       page: 'basicLayout',
-  //       children: [
+  {
+    path: '/user',
+    page: 'userLayout',
+    routes: [
+      {
+        name: 'login',
+        path: 'login',
+        page: 'userlogin',
+      },
+      {
+        name: 'register',
+        path: 'register',
+        page: 'userRegister',
+      },
+    ],
+  },
   {
     path: '/',
-    name: 'menu-welcome', // 翻译失败后 则采用name,如无需全球化直接使用中文即可。
-    icon: 'HomeOutlined', // @/config/icons里配置图图标,小写也可以
-    access: 'dashboardOpen', // @/config/access里可配置静态策略。权限入口在@/config/pages里。
-    page: 'dashboard', // 非动态的 有page属性的 路由 会默认显示在menu里。
-  },
-  {
-    // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
-    name: 'sideMenu-usual',
-    path: '/ab',
-    icon: 'AppstoreOutlined',
-    subs: [
+    page: 'securityLayout',
+    routes: [
       {
-        name: 'sideMenu-from1',
-        path: 'a', // 解析为/ab/a
-        page: 'test1', // page 建议使用小写，内部会转换成大写,对应到组件上。权限配置中与此保持一致
-        access: 'test1Open', // 具体权限配置 请查看@/models/useAccess
-      },
-      {
-        name: 'sideMenu-from2',
-        path: 'b', // 解析为/ab/b
-        page: 'test2',
-        access: 'test2Open',
-      },
-      {
-        name: 'sideMenu-from3',
-        path: '/c', // 解析为/c
-        page: 'test3',
-        access: 'test3Open',
-      }
-    ]
-  },
-  {
-    // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
-    name: 'Micro-front',
-    path: '/micro',
-    icon: 'PaperClipOutlined',
-    subs: [
-      {
-        name: 'material-ui',
-        path: 'material',
-        access: 'microOpen',
-        page: 'http://localhost:8002'
-      },
-      {
-        name: 'vue2',
-        path: 'vue2',
-        access: 'microOpen',
-        page: 'http://localhost:8001',
-        // redirect: '/',
-      },
-    ]
-  },
-  {
-    name: 'sideMenu-mutiNavigate',
-    path: '/one',
-    icon: 'BarsOutlined',
-    subs: [
-      {
-        name: 'sideMenu-mutiNavigate1',
-        path: 'two',
-        subs: [
+        path: '/',
+        page: 'basicLayout',
+        access: 'validUser',
+        menuTabs: [
           {
-            name: 'sideMenu-mutiNavigate2',
-            path: 'three', // 解析为 /one/two/threee
-            access: 'open',
-            page: 'test3',
+            path: '/',
+            name: 'menu-welcome', // 翻译失败后 则采用name,如无需全球化直接使用中文即可。
+            icon: 'HomeOutlined', // @/config/icons里配置图图标,小写也可以
+            access: 'dashboardOpen', // @/config/access里可配置静态策略。权限入口在@/config/pages里。
+            page: 'dashboard', // 非动态的 有page属性的 路由 会默认显示在menu里。
+          },
+          {
+            // 带subs的 为下拉列表，无需路由，自动忽略page属性。 但会作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
+            name: 'sideMenu-usual',
+            path: '/ab',
+            icon: 'AppstoreOutlined',
+            subs: [
+              {
+                name: 'sideMenu-from1',
+                path: 'a', // 解析为/ab/a
+                page: 'test1', // page 建议使用小写，内部会转换成大写,对应到组件上。权限配置中与此保持一致
+                access: 'test1Open', // 具体权限配置 请查看@/models/useAccess
+              },
+              {
+                name: 'sideMenu-from2',
+                path: 'b', // 解析为/ab/b
+                page: 'test2',
+                access: 'test2Open',
+              },
+              {
+                name: 'sideMenu-from3',
+                path: '/c', // 解析为/c
+                page: 'test3',
+                access: 'test3Open',
+              }
+            ]
+          },
+          {
+            // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
+            name: 'Micro-front',
+            path: '/micro',
+            icon: 'PaperClipOutlined',
+            subs: [
+              {
+                name: 'material-ui',
+                path: 'material',
+                access: 'microOpen',
+                page: 'http://localhost:8002'
+              },
+              {
+                name: 'vue2',
+                path: 'vue2',
+                access: 'microOpen',
+                page: 'http://localhost:8001',
+                // redirect: '/',
+              },
+            ]
+          },
+          {
+            name: 'sideMenu-mutiNavigate',
+            path: '/one',
+            icon: 'BarsOutlined',
+            subs: [
+              {
+                name: 'sideMenu-mutiNavigate1',
+                path: 'two',
+                subs: [
+                  {
+                    name: 'sideMenu-mutiNavigate2',
+                    path: 'three', // 解析为 /one/two/threee
+                    access: 'open',
+                    page: 'test3',
+                  }
+                ]
+              }
+            ]
           }
         ]
-      }
-    ]
-  }
-],
-//     },
-//     {
-//       component: './404',
-//     },
-//   ],
-// },
-// {
-//   component: './404',
-// },
-// ]
+      },
+      // {
+      //   component: './404',
+      // },
+    ],
+  },
+  // {
+  //   component: './404',
+  // },
+]
 
 
 

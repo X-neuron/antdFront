@@ -14,7 +14,7 @@ const { Sider } = Layout;
 function SiderMenu(props) {
   const { logo, collapsed, menuToggle } = props;
   const { intl, curLocale } = useLocaleModel();
-  const { activeKey, openRoute, tabRouteConfig } = useTabRouteModel();
+  const { activeKey, openRoute, menuTabConfig } = useTabRouteModel();
 
   const getIcon = usePersistFn(iconStr => {
     if (typeof iconStr === 'string' && iconStr.indexOf('http') === 0) {
@@ -60,7 +60,7 @@ function SiderMenu(props) {
     )
   });
 
-  const subMenu = useCreation(() => getSubMenu(tabRouteConfig.menuConfig), [tabRouteConfig, curLocale]);
+  const subMenu = useCreation(() => getSubMenu(menuTabConfig.menus), [menuTabConfig, curLocale]);
   // const subMenu = getSubMenu(config.menuConfig);
   return (
     <Sider

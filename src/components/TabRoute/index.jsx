@@ -3,10 +3,9 @@ import React from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Tabs } from 'antd';
 
-import getPage from '@/config/pages';
-
 import useLocaleModel from '@/models/useLocale';
 import useTabRouteModel from '@/models/useTabRoute';
+import { getTabPage } from '@/config/pages';
 
 // 这里可以配tabpane的 样式
 
@@ -26,7 +25,7 @@ const renderTabBar = (props, DefaultTabBar) => (
 );
 
 
-const TabRoute = (props) => {
+const TabRoute = () => {
   const { activeKey, tabList, selectTab, closeTab } = useTabRouteModel();
   const { intl } = useLocaleModel();
 
@@ -49,7 +48,7 @@ const TabRoute = (props) => {
         {/* <Suspense fallback={<Pageloading tip="loading" />}> */}
         {tabList.map(item => (
           <TabPane tab={intl.get(item.name)} key={item.key}>
-            {getPage(item.page, item.access, item.params)}
+            {getTabPage(item.page, item.access, item.params)}
           </TabPane>
         ))}
         {/* </Suspense> */}

@@ -23,3 +23,5 @@ const SecurityLayout = (props) => {
 
   return children;
 }
+
+export default SecurityLayout;

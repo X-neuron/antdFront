@@ -11,18 +11,16 @@ const Access = (props) => {
   const { children, accessible, redirectPath, fallback = null } = props;
   const { access } = useAccessModel();
   const childrenRender = typeof children === 'undefined' ? null : children;
-  // access不存在的情况
-  if (!access) {
+  // access 和 accessible 不存在的情况
+  if (!access || !accessible) {
     return <>{childrenRender}</>;
   }
 
-  const checkResult = access[accessible];
-
   if (_.isFunction(children)) {
-    return <>{children(checkResult)}</>;
+    return <>{children(access[accessible])}</>;
   }
 
-  return <>{checkResult ? childrenRender : redirectPath ? (<Redirect from={window.location.href} to={redirectPath} />) : fallback}</>;
+  return <>{access[accessible] ? childrenRender : redirectPath ? (<Redirect from={window.location.href} to={redirectPath} />) : fallback}</>;
 };
 
 export default Access;

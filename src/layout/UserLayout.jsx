@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link, Redirect, Switch, Route } from '@reach/router';
-import { Copyright } from '@ant-design/icons'
-import GlobalFooter from '../components/GlobalFooter';
-import styles from './UserLayout.less';
+import { Link, } from '@reach/router';
+import GlobalFooter from '@/components/GlobalFooter';
+import SelectLang from '@/components/SelectLang';
+import { CopyrightOutlined } from '@ant-design/icons';
 import logo from '../assets/logo.svg';
-import { getRoutes } from '../utils/utils';
+import styles from './UserLayout.less';
 
 const links = [
   {
@@ -26,52 +26,54 @@ const links = [
 
 const copyright = (
   <>
-    Copyright <Copyright /> 2020 蚂蚁金服体验技术部出品
+    Copyright <CopyrightOutlined /> 2020 XX信息中心 信息系统组出品
   </>
 );
 
-class UserLayout extends React.PureComponent {
-  getPageTitle() {
-    const { routerData, location } = this.props;
-    const { pathname } = location;
-    let title = 'Ant Tabs';
-    if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - Ant Tabs`;
-    }
-    return title;
-  }
+const UserLayout = props => {
+  // const {
+  //   route = {
+  //     routes: [],
+  //   },
+  // } = props;
+  // const { routes = [] } = route;
+  const {
+    children,
+    // location = {
+    //   pathname: '',
+    // },
+  } = props;
+  // const { formatMessage } = useIntl();
+  // const { breadcrumb } = getMenuData(routes);
+  // const title = getPageTitle({
+  //   pathname: location.pathname,
+  //   formatMessage,
+  //   breadcrumb,
+  //   ...props,
+  // });
 
-  render() {
-    const { routerData, match } = this.props;
-    return (
+  return (
 
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <div className={styles.top}>
-            <div className={styles.header}>
-              <Link to="/">
-                <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>Ant Tabs</span>
-              </Link>
-            </div>
-            <div className={styles.desc}>Ant Tabs 是西湖区最具影响力的 Web 设计规范</div>
-          </div>
-          <Switch>
-            {getRoutes(match.path, routerData).map(item => (
-              <Route
-                key={item.key}
-                path={item.path}
-                component={item.component}
-                exact={item.exact}
-              />
-            ))}
-            <Redirect exact from="/user" to="/user/login" />
-          </Switch>
-        </div>
-        <GlobalFooter links={links} copyright={copyright} />
+
+    <div className={styles.container}>
+      <div className={styles.lang}>
+        <SelectLang />
       </div>
-    );
-  }
-}
+      <div className={styles.content}>
+        <div className={styles.top}>
+          <div className={styles.header}>
+            <Link to="/">
+              <img alt="logo" className={styles.logo} src={logo} />
+              <span className={styles.title}>Ant Design</span>
+            </Link>
+          </div>
+          <div className={styles.desc}>Xplat 遵循Ant Design Web 设计规范</div>
+        </div>
+        {children}
+      </div>
+      <GlobalFooter links={links} copyright={copyright} />
+    </div>
+  );
+};
 
 export default UserLayout;

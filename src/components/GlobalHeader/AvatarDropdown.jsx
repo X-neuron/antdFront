@@ -42,7 +42,7 @@ const newRoutes = [
 ]
 
 function AvatarDropdown(props) {
-  const { changeTabRouteConfig } = useTabRouteModel();
+  const { changeMenuTabConfig } = useTabRouteModel();
   // const {
   //   currentUser = {
   //     avatar: '',
@@ -54,7 +54,7 @@ function AvatarDropdown(props) {
     <HeaderDropdown overlay={(
       <Menu className={styles.menu}>
 
-        <Menu.Item key="center" onClick={() => changeTabRouteConfig(newRoutes)}>
+        <Menu.Item key="center" onClick={() => changeMenuTabConfig(newRoutes)}>
           <UserOutlined />
           切换角色
         </Menu.Item>

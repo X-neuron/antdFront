@@ -5,17 +5,25 @@ import React from 'react';
 import { hot } from 'react-hot-loader/root'
 // import Locale from '@/component/Locale';
 
-import BasicLayout from './layout/BasicLayout';
+// import BasicLayout from './layout/BasicLayout';
 
 // setConfig({
 //   reloadHooks: false
 // });
 
+import { Router } from '@reach/router';
+import useAppRoute from '@/hooks/useAppRoute';
+import { getRoutePage } from '@/config/pages';
+
+
 function App() {
-  // console.log('app refresh')
+  const rmtConfig = useAppRoute();
+
   return (
     // <Locale>
-    <BasicLayout />
+    <Router>
+      {getRoutePage(rmtConfig.routes)}
+    </Router>
     // </Locale>
   )
 }

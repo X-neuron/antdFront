@@ -7,7 +7,8 @@ import { pick, resolve, match } from '@reach/router/es/lib/utils';
 import Lru from '@/utils/lru';
 import memoized from 'nano-memoize';
 import { isHttp } from '@/utils/is';
-import routesConfig from '@/config/routes';
+// import rConfig from '@/config/routes';
+import useAppRoute from '@/hooks/useAppRoute';
 // const id = nanoid(10);
 const memoizedPickRoute = memoized((routeConfig, route) => pick(routeConfig, route).route);
 
@@ -16,7 +17,10 @@ function useTabRoute() {
   // 25个记忆标签已经改足够了吧。LRU算法，更人性点，仅此而已
   // 一个 route 可以对应很多页面
   // const location = useLocation();
-  const [tabRouteConfig, setTabRouteConfig] = useState(() => getTabsRouterfromConfig(routesConfig));
+  const rmtConfig = useAppRoute();
+
+  // route 分两个hook 主要支持 menu的动态设置。而不重复渲染。
+  const [menuTabConfig, setMenuTabConfig] = useState(() => getMenuTabfromConfig(rmtConfig.menuTabs));
 
   const [tabList, setTabList] = useState([]);
   // activkey，即为当前选中的key
@@ -41,36 +45,10 @@ function useTabRoute() {
   // 其他组件的调用，一般采用openRoute('/test');
   // 服务器渲染和 mobile的话 得改此处 目前暂只考虑 浏览器情况，使用window.location.pathname
   // access属性不应该存在具体的组件中..
-  // const openRoute = usePersistFn((route, name, page) => {
-  //   const apickRoute = pick(tabRouteConfig.routeConfig, route).route
-  //   console.log('pick the route:', apickRoute);
-  //   if (route) {
-  //     // menu方式
-  //     if (keyLruSquence.get(route)) {
-  //       setActiveKey(route);
-  //     } else {
-  //       // 调用@reach/router的匹配函数，获取匹配的路由
-  //       // menu中有page。其他组件激活 则没有page。
-  //       const { curPage, curName } = page ? { curPage: page, curName: name } : pick(tabRouteConfig.routeConfig, route).route;
-  //       keyLruSquence.set(route, {
-  //         page: curPage,
-  //         name: curName,
-  //         curRoute: route
-  //       });
-  //       setActiveKey(route);
-  //       setTabList([...tabList, {
-  //         name,
-  //         key: route,
-  //         page: curPage
-  //       }]);
-  //     }
-  //     navigate(route);
-  //   }
-  // });
 
   const openRoute = (route) => {
     // 调用@reach/router的匹配函数，获取匹配的路由，
-    const pickRoute = memoizedPickRoute(tabRouteConfig.routeConfig, route);
+    const pickRoute = memoizedPickRoute(menuTabConfig.tabRoutes, route);
     const result = match(pickRoute.path, route);
     // 参数作为组件的props输入?
     const params = result
@@ -137,39 +115,41 @@ function useTabRoute() {
 
   });
 
-  const changeTabRouteConfig = usePersistFn((newMenuRouteConfig) => {
-    setTabRouteConfig(getTabsRouterfromConfig(newMenuRouteConfig))
+  const changeMenuTabConfig = usePersistFn((newRouteConfig) => {
+    setMenuTabConfig(getMenuTabfromConfig(newRouteConfig))
   });
 
 
   return {
     activeKey,
     tabList,
-    tabRouteConfig,
+    menuTabConfig,
     closeTab,
     openRoute,
     selectTab,
     closeOtherTab,
     closeAllTab,
-    changeTabRouteConfig
+    changeMenuTabConfig
   }
 }
 
 
-// 读取routeConfig 配置。
-function getTabsRouterfromConfig(Rconfig) {
-  const routeConfig = [];
+// 读取 routeConfig 配置。s
+function getMenuTabfromConfig(aMenuTabConfig) {
+  console.log('menutab calc again')
+  const tabRoutes = [];
+  // const routes = [];
   // count用于 非页面的menu的key
   let count = 0;
   // 递归解析submenu
-  const generMenuRouteConfigFromConfig = (config, curRootPath) => {
+  const generMenuTabConfigFromConfig = (config, curRootPath) => {
     if (!config) return;
-    const menuConfigArray = [];
+    const menuArrays = [];
     config.forEach(conf => {
       const curPath = resolve(conf.path, curRootPath)
       // 有page说明是个路由，加到路由配置中
       // 未作配置正确性检测。有需要再加
-      conf.page && !conf.subs ? routeConfig.push({
+      conf.page && !conf.subs ? tabRoutes.push({
         value: conf.page,
         path: curPath,
         // authority: conf.authority,
@@ -177,25 +157,23 @@ function getTabsRouterfromConfig(Rconfig) {
         access: conf.access
       }) : 0;
       // 加入menuConfig 过滤动态路由
-      isHttp(conf.page) || !conf.page?.includes(':') ? menuConfigArray.push({
+      isHttp(conf.page) || !conf.page?.includes(':') ? menuArrays.push({
         name: conf.name,
         // root目录中，path 不带 / 则自动加上。但在子menu中，则使用根root+path
         key: conf.subs ? curPath + count : curPath,
         icon: conf.icon,
         // page: conf.page,  page 统一放在openRoute里防止泄露页面。
-        subs: generMenuRouteConfigFromConfig(conf.subs, curPath)
+        subs: generMenuTabConfigFromConfig(conf.subs, curPath)
       }) : 0;
       count++;
     });
-    return menuConfigArray
+    return menuArrays
   }
 
-  const menuConfig = generMenuRouteConfigFromConfig(Rconfig, '/');
+  const menus = generMenuTabConfigFromConfig(aMenuTabConfig, '/');
 
-  return { menuConfig, routeConfig }
+  return { menus, tabRoutes }
 }
-
-
 
 
 export default createModel(useTabRoute);

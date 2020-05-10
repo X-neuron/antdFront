@@ -9,7 +9,8 @@ import GlobalHeader from '@/components/GlobalHeader';
 import SiderMenu from '@/components/SiderMenu';
 import applogo from '@/assets/logo.svg';
 
-import TabRoute from '@/components/TabRoute'
+import TabRoute from '@/components/TabRoute';
+import { CopyrightOutlined } from '@ant-design/icons';
 // import AppRoutes from '@/pages/routes';
 
 const { Header, Content, Footer } = Layout;
@@ -38,8 +39,7 @@ const BasicLayout = (props) => (
             },
             {
               key: 'github',
-              // title: <Icon type="github" />,
-              href: 'https://github.com/kuhami/react-ant-pro',
+              href: ' ',
               blankTarget: true
             },
             {
@@ -49,11 +49,11 @@ const BasicLayout = (props) => (
               blankTarget: true
             }
           ]}
-        // copyright={(
-        //   <>
-        //     Copyright <Copyright /> 2020 XX信息中心 信息系统组出品
-        //   </>
-        // )}
+          copyright={(
+            <>
+              Copyright <CopyrightOutlined /> 2020 XX信息中心 信息系统组出品
+            </>
+          )}
         />
       </Footer>
     </Layout>
