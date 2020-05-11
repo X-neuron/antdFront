@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import routesConfig from '@/config/routes';
 import { resolve } from '@reach/router/es/lib/utils';
+import _ from 'lodash';
 
 const useAppRoute = (defRoutes = routesConfig) => {
   const [rmtConfig] = useState(() => loadRoutes(defRoutes));
@@ -18,7 +19,9 @@ function loadRoutes(rConfig) {
       const resolvePath = resolve(conf.path, curRootPath);
       // 有routes说明是个路由，加到路由配置中
       // 未作配置正确性检测。有需要再加
-      const curPath = conf.routes ? `${resolvePath}/*` : resolvePath;
+      const curPath = conf.routes || conf.menuTabs? (resolvePath + (_.endsWith(resolvePath, '/') ? '*' : '/*')) : resolvePath;
+      // const curPath =  resolvePath + (_.endsWith(resolvePath, '/') ? '*' : '/*');
+      // console.log('resolvePath:', resolvePath, 'curPath:', curPath);
       conf.page && conf.path ? routeArrary.push({
         value: conf.page,
         path: curPath,

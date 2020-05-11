@@ -112,7 +112,7 @@ const Login = props => {
           <TaobaoCircleOutlined className={styles.icon} />
           <WeiboCircleOutlined className={styles.icon} />
           <Link className={styles.register} to="/user/register">
-            注册账户
+            APP/账户注册
           </Link>
         </div>
       </LoginFrom>
@@ -124,3 +124,4 @@ const Login = props => {
 //   userLogin: login,
 //   submitting: loading.effects['login/login'],
 // }))(Login);
+export default Login;

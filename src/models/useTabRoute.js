@@ -21,7 +21,7 @@ function useTabRoute() {
 
   // route 分两个hook 主要支持 menu的动态设置。而不重复渲染。
   const [menuTabConfig, setMenuTabConfig] = useState(() => getMenuTabfromConfig(rmtConfig.menuTabs));
-
+  console.log(menuTabConfig);
   const [tabList, setTabList] = useState([]);
   // activkey，即为当前选中的key
   // 默认的key为 首页key '/'

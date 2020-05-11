@@ -28,8 +28,8 @@ const useAccess = () => {
     // test2: {
     //   open: false, // 可后端返回
     // },
-    test1open: true,
-    test2Open: true,
+    test1Open: true,
+    test2Open: false,
     microOpen: true,
     test3Open: true,
     // 'example': role === 'admin',

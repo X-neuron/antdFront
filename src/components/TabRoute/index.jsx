@@ -5,7 +5,7 @@ import { Tabs } from 'antd';
 
 import useLocaleModel from '@/models/useLocale';
 import useTabRouteModel from '@/models/useTabRoute';
-import { getTabPage } from '@/config/pages';
+import getPage from '@/config/pages';
 
 // 这里可以配tabpane的 样式
 
@@ -48,7 +48,7 @@ const TabRoute = () => {
         {/* <Suspense fallback={<Pageloading tip="loading" />}> */}
         {tabList.map(item => (
           <TabPane tab={intl.get(item.name)} key={item.key}>
-            {getTabPage(item.page, item.access, item.params)}
+            {getPage(item.page, item.access, item.params)}
           </TabPane>
         ))}
         {/* </Suspense> */}

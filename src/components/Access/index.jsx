@@ -20,6 +20,7 @@ const Access = (props) => {
     return <>{children(access[accessible])}</>;
   }
 
+  console.log(access, accessible, access[accessible]);
   return <>{access[accessible] ? childrenRender : redirectPath ? (<Redirect from={window.location.href} to={redirectPath} />) : fallback}</>;
 };
 
