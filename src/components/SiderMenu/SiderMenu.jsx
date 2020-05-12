@@ -40,9 +40,7 @@ function SiderMenu(props) {
             <span>{intl.get(item.name)}</span>
           </span>
         ),
-
     }
-
     if (item.subs) {
       return (
         <SubMenu {...cprops} key={item.key}>
@@ -59,7 +57,6 @@ function SiderMenu(props) {
       </Menu.Item>
     )
   });
-
   const subMenu = useCreation(() => getSubMenu(menuTabConfig.menus), [menuTabConfig, curLocale]);
   // const subMenu = getSubMenu(config.menuConfig);
   return (
@@ -90,5 +87,4 @@ function SiderMenu(props) {
     </Sider>
   );
 }
-
 export default SiderMenu;

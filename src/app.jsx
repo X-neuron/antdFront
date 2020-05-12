@@ -10,7 +10,7 @@ import { hot } from 'react-hot-loader/root'
 // });
 import { Router } from '@reach/router';
 import PageLoading from '@/components/PageLoading';
-import useLocaleModel from '@/models/useLocale';
+// import useLocaleModel from '@/models/useLocale';
 // reach/router 动态嵌套，测试失败...尝试过 jsx parser lit-jsx 均无法解决
 // const generRoutePage = (routes) => routes.map((route) => {
 //       if (route.routes) {
@@ -32,15 +32,14 @@ const UserLayout = lazy(() => import('@/layout/UserLayout'));
 
 function App() {
   // const rmtConfig = useAppRoute();
-  const { localeLoaded } = useLocaleModel();
+  // const { localeLoaded } = useLocaleModel();
+  const localeLoaded = true;
 
   return localeLoaded ? (
     // <Locale>
     <Suspense fallback={<PageLoading tip="loading" />}>
       <Router>
         <UserLayout path="/user/*" />
-
-
         {/* <SecurityLayout path="/"> */}
         <BasicLayout path="/*" />
         {/* </SecurityLayout> */}

@@ -33,4 +33,3 @@ export default props => {
       : <SiderMenu {...props} menuToggle={menuCollapsed.state} />
   )
 }
-
