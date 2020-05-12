@@ -7,14 +7,16 @@ const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz', 10);
 
 const MicroApp = ({ entry, params }) => {
   const container = useRef(null);
-  const id = nanoid(10);
+  const containerID = useRef(nanoid(10));
+  // const id = nanoid(10);
   const microApp = useRef(null);
 
   useMount(() => {
     microApp.current = loadMicroApp({
-      name: `app${id}`,
+      name: `app${containerID.current}`,
       entry,
-      container: `#${id}`,
+      // container: `#${id}`,
+      container: `#${containerID.current}`,
     }, {
       sandbox: { strictStyleIsolation: true },
       singular: false
@@ -26,7 +28,7 @@ const MicroApp = ({ entry, params }) => {
   })
   // if (isUrl(entry)) { return (<NotFound />) }
   return (
-    <div ref={container} id={id} />
+    <div ref={container} id={containerID.current} />
   )
 }
 

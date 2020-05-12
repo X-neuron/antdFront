@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { Link, Router, Redirect } from '@reach/router';
+import { Link, Router } from '@reach/router';
 import GlobalFooter from '@/components/GlobalFooter';
 import SelectLang from '@/components/SelectLang';
 import { CopyrightOutlined } from '@ant-design/icons';

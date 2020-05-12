@@ -8,9 +8,9 @@ import { hot } from 'react-hot-loader/root'
 // setConfig({
 //   reloadHooks: false
 // });
-import { Router, Redirect } from '@reach/router';
+import { Router } from '@reach/router';
 import PageLoading from '@/components/PageLoading';
-
+import useLocaleModel from '@/models/useLocale';
 // reach/router 动态嵌套，测试失败...尝试过 jsx parser lit-jsx 均无法解决
 // const generRoutePage = (routes) => routes.map((route) => {
 //       if (route.routes) {
@@ -32,8 +32,9 @@ const UserLayout = lazy(() => import('@/layout/UserLayout'));
 
 function App() {
   // const rmtConfig = useAppRoute();
+  const { localeLoaded } = useLocaleModel();
 
-  return (
+  return localeLoaded ? (
     // <Locale>
     <Suspense fallback={<PageLoading tip="loading" />}>
       <Router>
@@ -46,7 +47,7 @@ function App() {
       </Router>
     </Suspense>
     // </Locale>
-  )
+  ) : <PageLoading tip="loading" />
 }
 
 

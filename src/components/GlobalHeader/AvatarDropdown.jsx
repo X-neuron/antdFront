@@ -5,6 +5,7 @@ import { Avatar, Menu } from 'antd';
 import HeaderDropdown from '@/components/HeaderDropdown';
 // import useRouteConfigModel from '@/models/useRouteConfig';
 import useTabRouteModel from '@/models/useTabRoute';
+import { navigate  } from '@reach/router';
 import styles from './index.less';
 
 
@@ -39,10 +40,13 @@ const newRoutes = [
     ]
   },
 
-]
+];
+
+
 
 function AvatarDropdown(props) {
   const { changeMenuTabConfig } = useTabRouteModel();
+  // const location = useLocation();
   // const {
   //   currentUser = {
   //     avatar: '',
@@ -50,6 +54,9 @@ function AvatarDropdown(props) {
   //   },
   //   menu
   // } = props;
+  const logout = () => {
+    navigate('/user/login');
+  }
   return (
     <HeaderDropdown overlay={(
       <Menu className={styles.menu}>
@@ -63,7 +70,7 @@ function AvatarDropdown(props) {
           个人设置
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item key="logout">
+        <Menu.Item key="logout" onClick={() => logout()}>
           <LogoutOutlined />
           退出登录
         </Menu.Item>
