@@ -24,9 +24,9 @@ import PageLoading from '@/components/PageLoading';
 //           return (<CompContainer component={getPage(route.page, route.path, route.access)} key={route.path} path={route.path} />);
 //   })
 
-const SecurityLayout = lazy(() => import('@/layout/SecurityLayout'));
-const BasicLayout = lazy(() => import('@/layout/BasicLayout'));
-const UserLayout = lazy(() => import('@/layout/UserLayout'));
+const SecurityLayout = lazy(() => import('@/layouts/SecurityLayout'));
+const BasicLayout = lazy(() => import('@/layouts/BasicLayout'));
+const UserLayout = lazy(() => import('@/layouts/UserLayout'));
 // const Login = lazy(() => import('@/pages/user/login'));
 // const Register = lazy(() => import('@/pages/user/login/Register'));
 

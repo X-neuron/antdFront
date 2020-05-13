@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Link, Router } from '@reach/router';
 import GlobalFooter from '@/components/GlobalFooter';
-import SelectLang from '@/components/SelectLang';
+// import SelectLang from '@/components/SelectLang';
 import { CopyrightOutlined } from '@ant-design/icons';
 import PageLoading from '@/components/PageLoading';
 import logo from '../assets/logo.svg';
@@ -10,7 +10,7 @@ import styles from './UserLayout.less';
 
 
 const Login = lazy(() => import('@/pages/user/login'));
-const Register = lazy(() => import('@/pages/user/login/Register'));
+const Register = lazy(() => import('@/pages/user/Register'));
 
 const links = [
   {
@@ -61,7 +61,7 @@ const UserLayout = props => {
   return (
     <div className={styles.container}>
       <div className={styles.lang}>
-        <SelectLang />
+        {/* <SelectLang /> */}
       </div>
       <div className={styles.content}>
         <div className={styles.top}>

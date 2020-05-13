@@ -3,7 +3,7 @@ import { Link } from '@reach/router';
 import { Form, Input, Button, Select, Row, Col, Popover, Progress } from 'antd';
 import { usePersistFn } from '@umijs/hooks';
 import CountDownButton from '@/components/CountDownButton'
-import styles from './Register.less';
+import styles from './index.less';
 // const FormItem = Form.Item;
 const { Option } = Select;
 const InputGroup = Input.Group;
@@ -196,27 +196,32 @@ const Register = (props) => {
             <Input size="large" placeholder="11位手机号" />
           </Form.Item>
         </InputGroup>
-        <Form.Item
-          rules={[
-            {
-              required: true,
-              message: '请输入验证码！',
-            },
-          ]}
-        >
-          <Input size="large" placeholder="验证码" />
-        </Form.Item>
-
-        <CountDownButton
-          start={captCha}
-          second={15}
-          initText="获取验证码"
-          runText="剩余{%s}秒"
-          onClick={() => setCaptCha(true)}
-          resetText="重新发送"
-          onEnd={() => setCaptCha(false)}
-        />
-
+        <Row gutter={8}>
+          <Col span={16}>
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: '请输入验证码！',
+                },
+              ]}
+            >
+              <Input size="large" placeholder="验证码" />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <CountDownButton
+              start={captCha}
+              size="large"
+              second={5}
+              initText="获取验证码"
+              runText="剩余{%s}秒"
+              onClick={() => setCaptCha(true)}
+              resetText=" 重新发送 "
+              onEnd={() => setCaptCha(false)}
+            />
+          </Col>
+        </Row>
         <Form.Item>
           <Button
             size="large"

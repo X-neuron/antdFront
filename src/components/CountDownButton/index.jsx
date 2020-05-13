@@ -21,14 +21,12 @@ import { usePersistFn, useCounter } from '@umijs/hooks'
 const getTemplateText = (runText, second) => runText.replace(/\{([^{]*?)%s(.*?)\}/g, second.toString())
 
 const CountDownButton = ({ start, second, initText, resetText, runText, onEnd, ...rest }) => {
-  // const { loading, countStatus } = ;
   const [count, {
     dec,
     reset
   }] = useCounter(second, { min: 0, max: second });
 
   const [delay] = useState(1000);
-  const [loading, toggleLoading] = useBoolean(start);
   const [done, toggleDone] = useBoolean(false);
 
   const timeout = usePersistFn(() => {
@@ -37,30 +35,28 @@ const CountDownButton = ({ start, second, initText, resetText, runText, onEnd, .
     onEnd && onEnd();
   });
 
-
   useInterval(
     () => {
       dec();
-      if (count === 0) {
-        toggleLoading;
+      if (count === 1) {
         reset();
         timeout();
         toggleDone(true);
       }
     },
-    loading ? delay : null
+    start ? delay : null
   );
 
 
   const buttonText = () => {
-    console.log(done, start, count, second)
-    if (done) return resetText;
+    // console.log(done, start, count, second)
+    if (done && !start) return resetText;
     if (!start && !done) return initText;
     if (start && count <= second) return getTemplateText(runText, count);
   };
 
   return (
-    <Button loading={start} {...rest}>
+    <Button loading={start} {...rest} block={true}>
       {buttonText()}
     </Button>
   );
