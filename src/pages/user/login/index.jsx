@@ -2,6 +2,8 @@ import { AlipayCircleOutlined, TaobaoCircleOutlined, WeiboCircleOutlined } from 
 import { Alert, Checkbox } from 'antd';
 import React, { useState } from 'react';
 import { Link } from '@reach/router';
+import { accountLogin } from '@/services/login';
+import useLoginModel from '@/models/useLogin';
 import LoginFrom from './components/Login';
 import styles from './style.less';
 
@@ -23,13 +25,17 @@ const Login = props => {
   const { status, type: loginType } = userLogin;
   const [autoLogin, setAutoLogin] = useState(true);
   const [type, setType] = useState('account');
+  const [, setLogin] = useLoginModel();
 
   const handleSubmit = values => {
-    const { dispatch } = props;
-    dispatch({
-      type: 'login/login',
-      payload: { ...values, type },
-    });
+    // const { dispatch } = props;
+    // dispatch({
+    //   type: 'login/login',
+    //   payload: { ...values, type },
+    // });
+    accountLogin(values).then((res) => setLogin({
+      ...res
+    }));
   };
 
   return (
@@ -39,7 +45,6 @@ const Login = props => {
           {status === 'error' && loginType === 'account' && !submitting && (
             <LoginMessage content="账户或密码错误（admin/ant.design）" />
           )}
-
           <UserName
             name="userName"
             placeholder="用户名: admin or user"

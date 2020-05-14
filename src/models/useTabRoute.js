@@ -47,7 +47,7 @@ function useTabRoute() {
   // access属性不应该存在具体的组件中..
 
   const openRoute = (route) => {
-    // 调用@reach/router的匹配函数，获取匹配的路由，
+    // 调用@reach/router的匹配函数，获取匹配路由的组件
     const pickRoute = memoizedPickRoute(menuTabConfig.tabRoutes, route);
     const result = match(pickRoute.path, route);
     // 参数作为组件的props输入?

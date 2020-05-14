@@ -5,6 +5,10 @@ import ReactDom from 'react-dom';
 import { start } from 'qiankun';
 import App from './app';
 
+import mock from '../mock';
+
+mock();
+
 const initalContainer = document.getElementById('root');
 
 
@@ -74,4 +78,3 @@ start();
 //   singular: true,
 //   fetch: window.fetch
 // });
-

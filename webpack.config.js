@@ -26,7 +26,7 @@ const SrcFolder = 'src';
 const EntryJS = `${SrcFolder}/index.jsx`;
 const HTMLTemplateFileName = 'index.html';
 const HTMLTemplateFileFolder = `${SrcFolder}`;
-const InputPublicFolder = `${SrcFolder}/public`;
+const InputPublicFolder = '/public';
 const OutPutAssertFolder = `static/assert`;
 
 const jsWorkerPool = {

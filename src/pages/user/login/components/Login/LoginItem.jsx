@@ -1,7 +1,7 @@
 import { Button, Col, Input, Row, Form, message } from 'antd';
 import React, { useState, useCallback, useEffect } from 'react';
 import omit from 'omit.js';
-import { getFakeCaptcha } from '@/services/login';
+import { getCaptcha } from '@/services/login';
 import ItemMap from './map';
 import LoginContext from './LoginContext';
 import styles from './index.less';
@@ -43,7 +43,7 @@ const LoginItem = props => {
     ...restProps
   } = props;
   const onGetCaptcha = useCallback(async mobile => {
-    const result = await getFakeCaptcha(mobile);
+    const result = await getCaptcha(mobile);
 
     if (result === false) {
       return;

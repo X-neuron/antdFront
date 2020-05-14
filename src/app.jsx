@@ -10,6 +10,7 @@ import { hot } from 'react-hot-loader/root'
 // });
 import { Router } from '@reach/router';
 import PageLoading from '@/components/PageLoading';
+
 // import useLocaleModel from '@/models/useLocale';
 // reach/router 动态嵌套，测试失败...尝试过 jsx parser lit-jsx 均无法解决
 // const generRoutePage = (routes) => routes.map((route) => {
@@ -40,9 +41,9 @@ function App() {
     <Suspense fallback={<PageLoading tip="loading" />}>
       <Router>
         <UserLayout path="/user/*" />
-        {/* <SecurityLayout path="/"> */}
-        <BasicLayout path="/*" />
-        {/* </SecurityLayout> */}
+        <SecurityLayout path="/*">
+          <BasicLayout path="/*" />
+        </SecurityLayout>
       </Router>
     </Suspense>
     // </Locale>
