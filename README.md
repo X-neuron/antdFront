@@ -1,6 +1,6 @@
 # antdFront
 using hox data manager and webpack to building antd design pro project without umi, cra，dva or rematch
-<img src="https://i.loli.net/2020/04/26/GmucUWpFbEZ1LC6.gif" />
+<img src="https://i.loli.net/2020/05/14/mhsfuNKOw1GxpRb.gif" >
 
 该项目有什么特点？
 
