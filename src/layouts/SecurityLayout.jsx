@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Redirect } from '@reach/router';
+
 // import PageLoading from '@/components/PageLoading';
 import { stringify } from 'qs';
-import  useLoginModel  from '@/models/useLogin';
+import useLoginModel from '@/models/useLogin';
 
 const SecurityLayout = ({ children }) => {
   // const [isReady] = useState(false);
@@ -11,7 +12,7 @@ const SecurityLayout = ({ children }) => {
 
 
   // const isLogin = currentUser && currentUser.userid;
-  const [Login] = useLoginModel();
+  const { login } = useLoginModel();
   const queryString = stringify({
     redirect: window.location.href,
   });
@@ -19,10 +20,10 @@ const SecurityLayout = ({ children }) => {
   // if ((Login.isLogin && loading) || !isReady) {
   //   return <PageLoading />;
   // }
-  console.log(Login);
 
-  if (!Login.isLogin && window.location.pathname !== '/user/login') {
+  if (!login.isLogin && window.location.pathname !== '/user/login') {
     return <Redirect to={`/user/login?${queryString}`} />;
+    // redirectTo(`/user/login?${queryString}`);
   }
 
 

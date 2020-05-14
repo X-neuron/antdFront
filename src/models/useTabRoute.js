@@ -136,7 +136,6 @@ function useTabRoute() {
 
 // 读取 routeConfig 配置。s
 function getMenuTabfromConfig(aMenuTabConfig) {
-  console.log('menutab calc again')
   const tabRoutes = [];
   // const routes = [];
   // count用于 非页面的menu的key

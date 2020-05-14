@@ -3,7 +3,7 @@ import React, { lazy, Suspense } from 'react';
 
 
 import { hot } from 'react-hot-loader/root'
-// import Locale from '@/component/Locale';
+import Locale from '@/components/Locale';
 
 // setConfig({
 //   reloadHooks: false
@@ -34,20 +34,32 @@ const UserLayout = lazy(() => import('@/layouts/UserLayout'));
 function App() {
   // const rmtConfig = useAppRoute();
   // const { localeLoaded } = useLocaleModel();
-  const localeLoaded = true;
+  // const localeLoaded = true;
 
-  return localeLoaded ? (
-    // <Locale>
-    <Suspense fallback={<PageLoading tip="loading" />}>
-      <Router>
-        <UserLayout path="/user/*" />
-        <SecurityLayout path="/*">
-          <BasicLayout path="/*" />
-        </SecurityLayout>
-      </Router>
-    </Suspense>
-    // </Locale>
-  ) : <PageLoading tip="loading" />
+  return (
+    <Locale>
+      <Suspense fallback={<PageLoading tip="loading" />}>
+        <Router>
+          <UserLayout path="/user/*" />
+          <SecurityLayout path="/*">
+            <BasicLayout path="/*" />
+          </SecurityLayout>
+        </Router>
+      </Suspense>
+    </Locale>
+  )
+  // return localeLoaded ? (
+  //   // <Locale>
+  //   <Suspense fallback={<PageLoading tip="loading" />}>
+  //     <Router>
+  //       <UserLayout path="/user/*" />
+  //       <SecurityLayout path="/*">
+  //         <BasicLayout path="/*" />
+  //       </SecurityLayout>
+  //     </Router>
+  //   </Suspense>
+  //   // </Locale>
+  // ) : <PageLoading tip="loading" />
 }
 
 

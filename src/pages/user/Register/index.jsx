@@ -217,7 +217,7 @@ const Register = (props) => {
               initText="获取验证码"
               runText="剩余{%s}秒"
               onClick={() => setCaptCha(true)}
-              resetText=" 重新发送 "
+              resetText=" 重新获取 "
               onEnd={() => setCaptCha(false)}
             />
           </Col>

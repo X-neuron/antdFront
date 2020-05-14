@@ -6,7 +6,6 @@ import { Spin } from 'antd';
 
 // 这个组件好像容易引起 二次刷新
 function Locale({ children }) {
-  console.log('main Refreshing')
   const [body] = useSize(document.querySelector('body'));
   // const { curLocale, loadLocale } = useLocaleModel();
   const { localeLoaded } = useLocaleModel();

@@ -68,7 +68,8 @@ function useLocale() {
         setLocaleLoaded(true);
       });
     } else {
-      request.get(`public/locales/${currentLocale}.json`, {
+      console.log(window.location.origin);
+      request.get(`${window.location.origin}/public/locales/${currentLocale}.json`, {
         responseType: 'json'
       })
         // const lang = require(`public/locales/${currentLocale}.js`);

@@ -1,25 +1,25 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { createModel } from 'hox';
 
 
 const useLogin = () => {
-  const login = useRef({
-    role:null,
-    userId:null,
-    userName:null,
-    isLogin:false,
-    token:null,
-    ssKey:null
+  const [login, setLogin] = useState({
+    role: null,
+    userId: null,
+    userName: null,
+    isLogin: false,
+    token: null,
+    ssKey: null
   }); // 可默认读取cookie 或者localStorage
 
-  const setLogin = (newState) => {
-    login.current = {
+  const changeLogin = (newState) => {
+    setLogin({
       ...login.current,
       ...newState
-    }
+    })
   }
 
-  return [login.current, setLogin];
+  return { login, changeLogin };
 }
 
 export default createModel(useLogin);

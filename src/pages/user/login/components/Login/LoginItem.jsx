@@ -1,7 +1,8 @@
 import { Button, Col, Input, Row, Form, message } from 'antd';
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, } from 'react';
 import omit from 'omit.js';
 import { getCaptcha } from '@/services/login';
+import CountDownButton from '@/components/CountDownButton';
 import ItemMap from './map';
 import LoginContext from './LoginContext';
 import styles from './index.less';
@@ -25,8 +26,7 @@ const getFormItemOptions = ({ onChange, defaultValue, customProps = {}, rules })
 };
 
 const LoginItem = props => {
-  const [count, setCount] = useState(props.countDown || 0);
-  const [timing, setTiming] = useState(false);
+  const [captCha, setCaptCha] = useState(false);
   // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil
 
   const {
@@ -43,36 +43,15 @@ const LoginItem = props => {
     ...restProps
   } = props;
   const onGetCaptcha = useCallback(async mobile => {
-    const result = await getCaptcha(mobile);
+    const res = await getCaptcha(mobile);
 
-    if (result === false) {
+    if (res === false) {
       return;
     }
 
-    message.success('获取验证码成功！验证码为：1234');
-    setTiming(true);
+    message.success(`获取验证码成功！验证码为：${res.data.code}`);
+    setCaptCha(false)
   }, []);
-  useEffect(() => {
-    let interval = 0;
-    const { countDown } = props;
-
-    if (timing) {
-      interval = window.setInterval(() => {
-        setCount(preSecond => {
-          if (preSecond <= 1) {
-            setTiming(false);
-            clearInterval(interval); // 重置秒数
-
-            return countDown || 60;
-          }
-
-          return preSecond - 1;
-        });
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [timing]);
 
   if (!name) {
     return null;
@@ -93,17 +72,21 @@ const LoginItem = props => {
               </FormItem>
             </Col>
             <Col span={8}>
-              <Button
-                disabled={timing}
+              <CountDownButton
                 className={styles.getCaptcha}
                 size="large"
+                start={captCha}
+                second={20}
+                initText="获取验证码"
+                runText="剩余{%s}秒"
+                resetText=" 重新获取 "
+                onEnd={() => setCaptCha(false)}
                 onClick={() => {
                   const value = getFieldValue('mobile');
+                  setCaptCha(true)
                   onGetCaptcha(value);
                 }}
-              >
-                {timing ? `${count} 秒` : '获取验证码'}
-              </Button>
+              />
             </Col>
           </Row>
         )}

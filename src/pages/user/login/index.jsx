@@ -1,9 +1,10 @@
 import { AlipayCircleOutlined, TaobaoCircleOutlined, WeiboCircleOutlined } from '@ant-design/icons';
 import { Alert, Checkbox } from 'antd';
 import React, { useState } from 'react';
-import { Link } from '@reach/router';
+import { Link, navigate } from '@reach/router';
 import { accountLogin } from '@/services/login';
 import useLoginModel from '@/models/useLogin';
+import { getPageQuery } from '@/utils/utils';
 import LoginFrom from './components/Login';
 import styles from './style.less';
 
@@ -25,17 +26,46 @@ const Login = props => {
   const { status, type: loginType } = userLogin;
   const [autoLogin, setAutoLogin] = useState(true);
   const [type, setType] = useState('account');
-  const [, setLogin] = useLoginModel();
+  const { login, changeLogin } = useLoginModel();
 
   const handleSubmit = values => {
-    // const { dispatch } = props;
-    // dispatch({
-    //   type: 'login/login',
-    //   payload: { ...values, type },
+    accountLogin(values).then((res) => {
+      if (res.status === 200) {
+        const urlParams = new URL(window.location.href);
+        const params = getPageQuery();
+        let { redirect } = params;
+
+        if (redirect) {
+          const redirectUrlParams = new URL(redirect);
+
+          if (redirectUrlParams.origin === urlParams.origin) {
+            redirect = redirect.substr(urlParams.origin.length);
+
+            if (redirect.match(/^\/.*#/)) {
+              redirect = redirect.substr(redirect.indexOf('#') + 1);
+            }
+          } else {
+            window.location.href = '/';
+            return;
+          }
+        }
+        // history.replace(redirect || '/');
+        changeLogin({
+          ...res.data
+        });
+
+        navigate(redirect || '/');
+      }
+    });
+    // changeLogin({
+    //   role: 'user',
+    //   userId: '323',
+    //   token: 'fafaf',
+    //   ssKey: '24234',
+    //   userName: 'fafa',
+    //   isLogin:true,
     // });
-    accountLogin(values).then((res) => setLogin({
-      ...res
-    }));
+    // navigate('/');
   };
 
   return (

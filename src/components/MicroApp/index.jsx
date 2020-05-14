@@ -24,7 +24,7 @@ const MicroApp = ({ entry, params }) => {
   });
 
   useUnmount(() => {
-    microApp.current ? microApp.current.unmount() : 0;
+    microApp.current.getStatus() === 'MOUNTED' ? microApp.current.unmount() : 0;
   })
   // if (isUrl(entry)) { return (<NotFound />) }
   return (

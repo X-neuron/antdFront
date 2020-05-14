@@ -5,7 +5,8 @@ import { Avatar, Menu } from 'antd';
 import HeaderDropdown from '@/components/HeaderDropdown';
 // import useRouteConfigModel from '@/models/useRouteConfig';
 import useTabRouteModel from '@/models/useTabRoute';
-import { navigate  } from '@reach/router';
+import useAccessModel from '@/models/useAccess';
+import { navigate } from '@reach/router';
 import styles from './index.less';
 
 
@@ -25,16 +26,16 @@ const newRoutes = [
     icon: 'BarsOutlined',
     subs: [
       {
-        name: 'react16',
-        path: 'react16',
-        authority: ['admin', 'user'],
-        page: '//127.0.0.1:8002'
+        name: 'React16',
+        path: 'reac16',
+        access: 'microOpen',
+        page: 'http://localhost:8002'
       },
       {
-        name: 'vue2',
-        path: 'vue2',
-        authority: ['admin', 'user'],
-        page: '//127.0.0.1:8001',
+        name: 'changeAname-vue2',
+        path: 'newpathvue2',
+        access: 'microOpen',
+        page: 'http://localhost:8001',
         // redirect: '/',
       },
     ]
@@ -46,6 +47,7 @@ const newRoutes = [
 
 function AvatarDropdown(props) {
   const { changeMenuTabConfig } = useTabRouteModel();
+  const { updateAccess } = useAccessModel()
   // const location = useLocation();
   // const {
   //   currentUser = {
@@ -55,13 +57,25 @@ function AvatarDropdown(props) {
   //   menu
   // } = props;
   const logout = () => {
+    // 省略注销状态。
     navigate('/user/login');
+  }
+
+  const handleChangeRole = () => {
+    updateAccess({
+      test1Open: true,
+      test3Open: false,
+      adminSubmit: true,
+      // 'example': role === 'admin',
+      // 'example2': some => some.prop === 'test'
+    });
+    changeMenuTabConfig(newRoutes)
   }
   return (
     <HeaderDropdown overlay={(
       <Menu className={styles.menu}>
 
-        <Menu.Item key="center" onClick={() => changeMenuTabConfig(newRoutes)}>
+        <Menu.Item key="center" onClick={() => handleChangeRole()}>
           <UserOutlined />
           切换角色
         </Menu.Item>
