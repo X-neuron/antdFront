@@ -23,7 +23,7 @@ using hox data manager and webpack to building antd design pro project without u
 9、代码量小，完整的开发环境，适合作为欲接轨React Hook时代小伙伴参考。
 
 项目说明：
-https://editor.csdn.net/md/?articleId=106184603
+https://blog.csdn.net/u012736939/article/details/106184603
     
 
 ## Installation
