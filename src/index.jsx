@@ -5,6 +5,7 @@ import ReactDom from 'react-dom';
 import { start } from 'qiankun';
 import App from './app';
 
+// 生产环境 请注释掉mock
 import mock from '../mock';
 
 mock();

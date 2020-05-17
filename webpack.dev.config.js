@@ -235,9 +235,14 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpackbar(),
-    new CopyPlugin([
-      { from: path.join(__dirname, InputPublicFolder), to: path.join(__dirname, `${BuildFolder}/public`) }
-    ]),
+    new CopyPlugin({
+      patterns: [
+        { from: path.join(__dirname, InputPublicFolder), to: path.join(__dirname, `${BuildFolder}/public`) }
+      ],
+      options: {
+        concurrency: 100,
+      }
+    }),
 
     new HtmlWebpackPlugin({
       // filename: 'index.html', // 生成的html存放路径，相对于 output.path

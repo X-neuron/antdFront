@@ -1,8 +1,9 @@
-import { Button, Col, Input, Row, Form, message } from 'antd';
+
 import React, { useState, useCallback, } from 'react';
 import omit from 'omit.js';
 import { getCaptcha } from '@/services/login';
 import CountDownButton from '@/components/CountDownButton';
+import { Col, Input, Row, Form, message } from 'antd';
 import ItemMap from './map';
 import LoginContext from './LoginContext';
 import styles from './index.less';
@@ -48,6 +49,7 @@ const LoginItem = props => {
     if (res === false) {
       return;
     }
+    console.log(res);
 
     message.success(`获取验证码成功！验证码为：${res.data.code}`);
     setCaptCha(false)

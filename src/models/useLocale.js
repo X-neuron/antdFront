@@ -68,7 +68,6 @@ function useLocale() {
         setLocaleLoaded(true);
       });
     } else {
-      console.log(window.location.origin);
       request.get(`${window.location.origin}/public/locales/${currentLocale}.json`, {
         responseType: 'json'
       })

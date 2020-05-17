@@ -57,15 +57,6 @@ const Login = props => {
         navigate(redirect || '/');
       }
     });
-    // changeLogin({
-    //   role: 'user',
-    //   userId: '323',
-    //   token: 'fafaf',
-    //   ssKey: '24234',
-    //   userName: 'fafa',
-    //   isLogin:true,
-    // });
-    // navigate('/');
   };
 
   return (

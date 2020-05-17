@@ -1,4 +1,6 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
+// import React, { lazy, Suspense } from 'react';
+import loadable from '@loadable/component';
 import { Link, Router } from '@reach/router';
 import GlobalFooter from '@/components/GlobalFooter';
 // import SelectLang from '@/components/SelectLang';
@@ -9,9 +11,14 @@ import styles from './UserLayout.less';
 
 
 
-const Login = lazy(() => import('@/pages/user/login'));
-const Register = lazy(() => import('@/pages/user/Register'));
-
+// const Login = lazy(() => import('@/pages/user/login'));
+// const Register = lazy(() => import('@/pages/user/Register'));
+const Login = loadable(() => import('@/pages/user/login'), {
+  fallback: <PageLoading tip="组件加载中..." />,
+});
+const Register = loadable(() => import('@/pages/user/Register'), {
+  fallback: <PageLoading tip="组件加载中..." />,
+});
 const links = [
   {
     key: 'help',
@@ -68,17 +75,17 @@ const UserLayout = props => {
           <div className={styles.header}>
             <Link to="/">
               <img alt="logo" className={styles.logo} src={logo} />
-              <span className={styles.title}>X-Plat 开 放 平 台</span>
+              <span className={styles.title}>  AntdFront  </span>
             </Link>
           </div>
-          <div className={styles.desc}>Xplat 遵循Ant Design Web 设计规范</div>
+          <div className={styles.desc}>AntdFront 遵循Ant Design Web 设计规范</div>
         </div>
-        <Suspense fallback={<PageLoading tip="loading" />}>
-          <Router>
-            <Login path="login" />
-            <Register path="register" />
-          </Router>
-        </Suspense>
+        {/* <Suspense fallback={<PageLoading tip="loading" />}> */}
+        <Router>
+          <Login path="login" default />
+          <Register path="register" />
+        </Router>
+        {/* </Suspense> */}
 
         {/* {children} */}
       </div>

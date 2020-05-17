@@ -7,7 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackbar = require('webpackbar');
 // const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -76,7 +76,6 @@ threadLoader.warmup(jsWorkerPool, ['babel-loader']);
 // threadLoader.warmup(cssWorkerPool, ['css-loader', 'less-loader', 'postcss-loader', 'file-loader']);
 
 module.exports = {
-  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -196,7 +195,7 @@ module.exports = {
                 // Adds PostCSS Normalize as the reset css with default options,
                 // so that it honors browserslist config in package.json
                 // which in turn let's users customize the target behavior as per their needs.
-                postcssNormalize()
+                postcssNormalize({ browsers: 'last 2 versions' })
               ]
             }
           },
@@ -282,9 +281,9 @@ module.exports = {
     minimize: true,
     minimizer: [
       new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true, // Must be set to true if using source-maps in production
+        test: /\.js(\?.*)?$/i,
+        parallel: require('os').cpus().length,
+        // sourceMap: true, // Must be set to true if using source-maps in production
         terserOptions: {
           // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
           parse: {
@@ -322,21 +321,18 @@ module.exports = {
           }
         }
       }),
-      new OptimizeCssAssetsPlugin({
-        assetNameRegExp: /\.optimize\.css$/g,
-        cssProcessor: require('cssnano'),
-        cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }]
-        },
-        canPrint: true
-      })
     ]
   },
   plugins: [
     new webpackbar(),
-    new CopyPlugin([
-      { from: path.join(__dirname, InputPublicFolder), to: path.join(__dirname, `${BuildFolder}/public`) }
-    ]),
+    new CopyPlugin({
+      patterns: [
+        { from: path.join(__dirname, InputPublicFolder), to: path.join(__dirname, `${BuildFolder}/public`) }
+      ],
+      options: {
+        concurrency: 100,
+      }
+    }),
 
     new HtmlWebpackPlugin({
       // filename: 'index.html', // 生成的html存放路径，相对于 output.path
@@ -376,39 +372,60 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: 'static/css/[name].[contenthash:8].css',
-      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      filename: 'static/css/[name].[contenthash].css',
+      chunkFilename: 'static/css/[name].[contenthash].chunk.css',
       ignoreOrder: false // Enable to remove warnings about conflicting order
     }),
-    // new OptimizeCssAssetsPlugin({
-    //   assetNameRegExp: /\.optimize\.css$/g,
-    //   cssProcessor: require('cssnano'),
-    //   cssProcessorPluginOptions: {
-    //     preset: ['default', { discardComments: { removeAll: true } }],
-    //   },
-    //   canPrint: true
-    // }),
-    new HardSourceWebpackPlugin({
-      // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
-      // 果清除了node_modules，则缓存也是如此
-      cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
-      // Either an absolute path or relative to webpack's options.context.
-      // Sets webpack's recordsPath if not already set.
-      recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
-      // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配
-      // 置构建不同的缓存
-      configHash: function (webpackConfig) {
-        // node-object-hash on npm can be used to build this.
-        return require('node-object-hash')({ sort: false }).hash(webpackConfig);
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.optimize\.css$/g,
+      cssProcessor: require('cssnano'),
+      cssProcessorPluginOptions: {
+        preset: ['default', { discardComments: { removeAll: true } }]
       },
-      // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输
-      // 出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-      environmentHash: {
-        root: process.cwd(),
-        directories: [],
-        files: ['package-lock.json', 'yarn.lock']
-      }
+      canPrint: true
     }),
+
+    // new HardSourceWebpackPlugin({
+    //   // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
+    //   // 果清除了node_modules，则缓存也是如此
+    //   cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+    //   // Either an absolute path or relative to webpack's options.context.
+    //   // Sets webpack's recordsPath if not already set.
+    //   recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
+    //   // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配
+    //   // 置构建不同的缓存
+    //   configHash: function (webpackConfig) {
+    //     // node-object-hash on npm can be used to build this.
+    //     return require('node-object-hash')({ sort: false }).hash(webpackConfig);
+    //   },
+    //   // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输
+    //   // 出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
+    //   environmentHash: {
+    //     root: process.cwd(),
+    //     directories: [],
+    //     files: ['package-lock.json', 'yarn.lock']
+    //   },
+    //   cachePrune: {
+    //     // Caches younger than `maxAge` are not considered for deletion. They must
+    //     // be at least this (default: 2 days) old in milliseconds.
+    //     maxAge: 2 * 24 * 60 * 60 * 1000,
+    //     // All caches together must be larger than `sizeThreshold` before any
+    //     // caches will be deleted. Together they must be at least this
+    //     // (default: 50 MB) big in bytes.
+    //     sizeThreshold: 50 * 1024 * 1024
+    //   },
+    // }),
+    // new HardSourceWebpackPlugin.ExcludeModulePlugin([
+    //   {
+    //     // HardSource works with mini-css-extract-plugin but due to how
+    //     // mini-css emits assets, assets are not emitted on repeated builds with
+    //     // mini-css and hard-source together. Ignoring the mini-css loader
+    //     // modules, but not the other css loader modules, excludes the modules
+    //     // that mini-css needs rebuilt to output assets every time.
+    //     test: /mini-css-extract-plugin[\\/]build[\\/]loader/,
+    //   },
+    // ]),
+
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
       publicPath: BuildFolder,

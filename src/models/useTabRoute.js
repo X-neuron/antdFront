@@ -21,19 +21,21 @@ function useTabRoute() {
 
   // route 分两个hook 主要支持 menu的动态设置。而不重复渲染。
   const [menuTabConfig, setMenuTabConfig] = useState(() => getMenuTabfromConfig(rmtConfig.menuTabs));
-  console.log(menuTabConfig);
+
   const [tabList, setTabList] = useState([]);
   // activkey，即为当前选中的key
   // 默认的key为 首页key '/'
   const [activeKey, setActiveKey] = useState();
 
   // value { path,page } path为真是路由。因为存在动态路由配置,虽然感觉基本用不到。
-  /* Lru缓存记录的信息为：
-  // menu激活route时，key为config/routes里配置的page 路由。可为动态。 当组件激活时，为系统nanoid自动分配
+  // Lru缓存记录的信息为：
+  /* menu激活route时，key为@/config/routes里配置的page 路由。可为动态路由写法。
     key: {
-      page: //显示route的 component
-      name: // 页面的 title
+      page: //显示route的 component eg:'test'
+      name: // 页面的 title eg:'pageTitile'
       curRoute: // 微端可能修改当前的route。  默认curRoute=Key
+      access: pickRoute.access, // 为@/config/routes里配置的组件对应权限
+      params  // 动态路由与当前页面路径解析出的参数
    }
   */
   const keyLruSquence = useCreation(() => new Lru(25));
@@ -104,7 +106,7 @@ function useTabRoute() {
 
   });
 
-  // 返回当前路由路径，已供切换使用。
+  // 返回当前路由路径，供切换使用。
   const closeAllTab = usePersistFn(() => {
     memoizedPickRoute.clear();
     keyLruSquence.clear();
