@@ -5,7 +5,6 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackbar = require('webpackbar');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const threadLoader = require('thread-loader');
@@ -253,6 +252,6 @@ module.exports = {
       inject: true, // 是否将js放在body的末尾
     }),
     // new BundleAnalyzerPlugin(),
-    new FriendlyErrorsWebpackPlugin(),
+    // new FriendlyErrorsWebpackPlugin(),
   ]
 };
