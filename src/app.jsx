@@ -4,15 +4,22 @@ import React from 'react';
 import loadable from '@loadable/component';
 
 
-import { hot } from 'react-hot-loader/root'
+// import { hot } from 'react-hot-loader/root';
+// import { setConfig } from 'react-hot-loader';
+// import { hot } from 'react-hot-loader';
 import Locale from '@/components/Locale';
+import { Router } from '@reach/router';
+import PageLoading from '@/components/PageLoading';
+import { useFavicon } from 'react-use';
 
 // setConfig({
 //   reloadHooks: false
 // });
-import { Router } from '@reach/router';
-import PageLoading from '@/components/PageLoading';
-import { useFavicon } from 'react-use';
+// setConfig({
+//   trackTailUpdates: false, // 添加这个配置才能热更新 lazy 组件
+//   logLevel: 'debug',
+//   reloadHooks: true
+// });
 // import useLocaleModel from '@/models/useLocale';
 // reach/router 动态嵌套，测试失败...尝试过 jsx parser lit-jsx 均无法解决
 // const generRoutePage = (routes) => routes.map((route) => {
@@ -59,4 +66,5 @@ function App() {
 }
 
 
-export default hot(App);
+// export default hot(App);
+export default App;

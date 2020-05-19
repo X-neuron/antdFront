@@ -88,12 +88,17 @@ module.exports = {
               presets: ['@babel/preset-env'],
               plugins: [
                 'lodash',
-                'react-hot-loader/babel',
+                // 'react-hot-loader/babel',
                 // '@babel/plugin-proposal-object-rest-spread',
-                '@babel/plugin-transform-runtime'
               ]
-            }
+            },
           },
+          {
+            loader: 'react-hot-export-loader',
+            options: {
+              plugins: ['classProperties'],
+            },
+          }
 
         ]
       },
@@ -190,7 +195,7 @@ module.exports = {
   entry: [
     // "core-js/modules/es6.promise",
     // "core-js/modules/es6.array.iterator",
-    "react-hot-loader/patch",
+    // "react-hot-loader/patch",
     path.resolve(__dirname, EntryJS)
   ],
   output: {
