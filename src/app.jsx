@@ -4,9 +4,8 @@ import React from 'react';
 import loadable from '@loadable/component';
 
 
-// import { hot } from 'react-hot-loader/root';
+import { hot } from 'react-hot-loader/root';
 // import { setConfig } from 'react-hot-loader';
-// import { hot } from 'react-hot-loader';
 import Locale from '@/components/Locale';
 import { Router } from '@reach/router';
 import PageLoading from '@/components/PageLoading';
@@ -66,5 +65,5 @@ function App() {
 }
 
 
-// export default hot(App);
-export default App;
+export default hot(App);
+// export default App;
