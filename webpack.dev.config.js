@@ -2,7 +2,7 @@
 /* eslint-disable */
 const webpack = require('webpack');
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackbar = require('webpackbar');
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
@@ -88,7 +88,7 @@ module.exports = {
               presets: ['@babel/preset-env'],
               plugins: [
                 'lodash',
-                'react-hot-loader/babel',
+                // 'react-hot-loader/babel',
                 // '@babel/plugin-proposal-object-rest-spread',
               ]
             },
@@ -194,7 +194,7 @@ module.exports = {
   entry: [
     // "core-js/modules/es6.promise",
     // "core-js/modules/es6.array.iterator",
-    "react-hot-loader/patch",
+    // "react-hot-loader/patch",
     path.resolve(__dirname, EntryJS)
   ],
   output: {
@@ -207,7 +207,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       "@": path.resolve(__dirname, 'src'),
-      'react-dom': '@hot-loader/react-dom',
+      // 'react-dom': '@hot-loader/react-dom',
     }
   },
 

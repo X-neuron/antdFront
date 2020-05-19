@@ -12,6 +12,7 @@ import PageLoading from '@/components/PageLoading';
 import { useFavicon } from 'react-use';
 
 // setConfig({
+//   trackTailUpdates:false,
 //   reloadHooks: false
 // });
 // setConfig({
@@ -65,5 +66,6 @@ function App() {
 }
 
 
+// export default hot(App);
 export default hot(App);
 // export default App;
