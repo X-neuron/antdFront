@@ -22,6 +22,10 @@ AntdFront 是一套基于 Ant Design Pro ，拥抱纯 react hook ，实现按钮
 
 ```
 
+## 动机介绍
+
+https://zhuanlan.zhihu.com/p/141738683
+
 ## 常见问题
 
 **1、为什么用 antd design?**
