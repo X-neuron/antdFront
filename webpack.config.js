@@ -118,7 +118,10 @@ module.exports = {
           //   options: cssWorkerPool
           // },
           {
-            loader: MiniCssExtractPlugin.loader
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              esModule: true,
+            },
           },
           {
             loader: 'css-loader'
@@ -153,7 +156,10 @@ module.exports = {
           //   options: cssWorkerPool
           // },
           {
-            loader: MiniCssExtractPlugin.loader
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              esModule: true,
+            },
             // options: {
             //   hmr: process.env.NODE_ENV === 'development',
             // },
@@ -196,6 +202,7 @@ module.exports = {
                 // so that it honors browserslist config in package.json
                 // which in turn let's users customize the target behavior as per their needs.
                 postcssNormalize({ browsers: 'last 2 versions' })
+                // postcssNormalize()
               ]
             }
           },
@@ -357,7 +364,7 @@ module.exports = {
     new CompressionPlugin({
       algorithm: 'gzip',
       cache: true,
-      threshold: 10240,
+      // threshold: 10240,
     }),
     // new BundleAnalyzerPlugin(),
     // new FriendlyErrorsWebpackPlugin(),
