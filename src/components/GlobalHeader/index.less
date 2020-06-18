@@ -1,9 +1,13 @@
 @import '~antd/es/style/themes/default.less';
 
+@ant-layout-header:{
+  height: 48px;
+  line-height: 48px;
+}
 @pro-header-hover-bg: rgba(0, 0, 0, 0.025);
 
 .header {
-  height: 64px;
+  height: 48px;
   // padding: 0 12px 0 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -12,19 +16,24 @@
 
 :global {
   .ant-layout {
+    height: 48px;
     min-height: 100vh;
     overflow-x: hidden;
+  }
+  .ant-layout-header {
+    height: 48px;
+    line-height: 48px;
   }
 }
 
 .logo {
-  height: 64px;
-  line-height: 58px;
+  height: 48px;
+  line-height: 4px;
   vertical-align: top;
   display: inline-block;
-  padding: 0 0 0 24px;
+  padding: 0 0 0 12px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   img {
     display: inline-block;
     vertical-align: middle;
@@ -41,8 +50,7 @@
 }
 
 .triggle {
-  height: 64px;
-  padding: 0 24px;
+  padding: 10px;
   font-size: 20px;
   cursor: pointer;
   transition: all .3s,padding 0s;
@@ -54,63 +62,72 @@
 }
 
 .right {
+  display: flex;
   float: right;
-  height: 100%;
+  height: 48px;
+  margin-left: auto;
+  overflow: hidden;
   .action {
-    display: inline-block;
-    height: 100%;
+    display: flex;
+    align-items: center;
+    height: 48px;
     padding: 0 12px;
     cursor: pointer;
     transition: all 0.3s;
-    &:hover,
-    &:global(.ant-popover-open) {
-      background: @primary-1;
+
+    &:hover {
+      background: @pro-header-hover-bg;
+    }
+    &:global(.opened) {
+      background: @pro-header-hover-bg;
     }
   }
   .search {
-    padding: 0;
-    margin: 0 12px;
+    padding: 0 12px;
     &:hover {
       background: transparent;
     }
   }
   .account {
     .avatar {
-      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
+      margin-right: 8px;
       color: @primary-color;
+      vertical-align: top;
       background: rgba(255, 255, 255, 0.85);
-      vertical-align: middle;
+    }
+  }
+}
+
+.dark {
+  .action {
+    &:hover {
+      background: #252a3d;
+    }
+    &:global(.opened) {
+      background: #252a3d;
     }
   }
 }
 
 @media only screen and (max-width: @screen-md) {
-  .header {
-    :global(.ant-divider-vertical) {
-      vertical-align: unset;
+  :global(.ant-divider-vertical) {
+    vertical-align: unset;
+  }
+  .name {
+    display: none;
+  }
+  .right {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    .account {
+      .avatar {
+        margin-right: 0;
+      }
     }
-    .name {
+    .search {
       display: none;
-    }
-    .trigger {
-      padding: 0 12px;
-    }
-    .logo {
-      padding-right: 12px;
-      position: relative;
-    }
-    .right {
-      position: absolute;
-      top: 0;
-      right: 12px;
-      .account {
-        .avatar {
-          margin-right: 0;
-        }
-      }
-      .search {
-        display: none;
-      }
     }
   }
 }
+
