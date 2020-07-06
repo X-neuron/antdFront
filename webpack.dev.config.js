@@ -120,10 +120,10 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              lessOptions: {
-                javascriptEnabled: true
-              } // less loader 6.0.0 支持antd
-              // javascriptEnabled: true
+              // lessOptions: {
+              //   javascriptEnabled: true
+              // } // less loader 6.0.0 支持antd
+              javascriptEnabled: true
             }
           }
         ]
@@ -166,10 +166,10 @@ module.exports = {
               // importLoaders: 2,
               // modules: true,
               // getLocalIdent: getCSSModuleLocalIdent,
-              lessOptions: {
-                javascriptEnabled: true
-              } // less loader 6.0.0 支持antd
-              // javascriptEnabled: true
+              // lessOptions: {
+              //   javascriptEnabled: true
+              // } // less loader 6.0.0 支持antd
+              javascriptEnabled: true
             }
           }
         ]

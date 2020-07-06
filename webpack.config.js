@@ -129,10 +129,10 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              lessOptions: {
-                javascriptEnabled: true
-              } // 用来支持 antd
-              // javascriptEnabled: true
+              // lessOptions: {
+              //   javascriptEnabled: true
+              // } // 用来支持 antd
+              javascriptEnabled: true
             }
           }
         ]
@@ -223,10 +223,10 @@ module.exports = {
               // modules: true,
               // getLocalIdent: getCSSModuleLocalIdent,
               // less loader 6.0.0 配置 但是mincssextract 插件遇到hash无法读取问题。暂不更新
-              lessOptions: {
-                javascriptEnabled: true
-              } // 用来支持 antd
-              // javascriptEnabled: true
+              // lessOptions: {
+              //   javascriptEnabled: true
+              // } // 用来支持 antd
+              javascriptEnabled: true
             }
           }
 
