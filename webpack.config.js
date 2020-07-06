@@ -17,7 +17,7 @@ const postcssNormalize = require('postcss-normalize');
 const threadLoader = require('thread-loader');
 const CopyPlugin = require('copy-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const CompressionPlugin = require('compression-webpack-plugin');
+// const CompressionPlugin = require('compression-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
@@ -129,10 +129,10 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              // lessOptions: {
-              //   javascriptEnabled: true
-              // } // 用来支持 antd
-              javascriptEnabled: true
+              lessOptions: {
+                javascriptEnabled: true
+              } // 用来支持 antd
+              // javascriptEnabled: true
             }
           }
         ]
@@ -201,8 +201,8 @@ module.exports = {
                 // Adds PostCSS Normalize as the reset css with default options,
                 // so that it honors browserslist config in package.json
                 // which in turn let's users customize the target behavior as per their needs.
-                postcssNormalize({ browsers: 'last 2 versions' })
-                // postcssNormalize()
+                // postcssNormalize({ browsers: 'last 2 versions' })
+                postcssNormalize()
               ]
             }
           },
@@ -223,10 +223,10 @@ module.exports = {
               // modules: true,
               // getLocalIdent: getCSSModuleLocalIdent,
               // less loader 6.0.0 配置 但是mincssextract 插件遇到hash无法读取问题。暂不更新
-              // lessOptions: {
-              //   javascriptEnabled: true
-              // } // 用来支持 antd
-              javascriptEnabled: true
+              lessOptions: {
+                javascriptEnabled: true
+              } // 用来支持 antd
+              // javascriptEnabled: true
             }
           }
 
@@ -361,11 +361,11 @@ module.exports = {
         minifyURLs: true
       }
     }),
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      cache: true,
-      // threshold: 10240,
-    }),
+    // new CompressionPlugin({
+    //   algorithm: 'gzip',
+    //   cache: true,
+    //   // threshold: 10240,
+    // }),
     // new BundleAnalyzerPlugin(),
     // new FriendlyErrorsWebpackPlugin(),
     // new LodashModuleReplacementPlugin({
@@ -385,7 +385,7 @@ module.exports = {
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.optimize\.css$/g,
-      cssProcessor: require('cssnano'),
+      // cssProcessor: require('cssnano'),
       cssProcessorPluginOptions: {
         preset: ['default', { discardComments: { removeAll: true } }]
       },

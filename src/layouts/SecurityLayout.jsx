@@ -27,7 +27,7 @@ const SecurityLayout = ({ children }) => {
   // }
 
   if (!login.isLogin && window.location.pathname !== '/user/login') {
-    return <Redirect to={`/user/login?${queryString}`} noThrow />;
+    return <Redirect from="window.location.href" to={`/user/login?${queryString}`} noThrow />;
     // return <Redirect from="window.location.href" to="/user/login" />;
     // redirectTo(`/user/login?${queryString}`);
   }
