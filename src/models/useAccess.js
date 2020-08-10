@@ -13,7 +13,7 @@
 import { useState } from 'react';
 import { createModel } from 'hox';
 // import useLoginModel from '@/models/useLogin';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 const useAccess = () => {
   // const { isLogin, role, user, userId } = useLoginModel();
@@ -39,7 +39,7 @@ const useAccess = () => {
 
   // 已存在则覆盖。
   const updateAccess = (newAccess) => {
-    setAccess(_.merge(access, newAccess))
+    setAccess({ ...access, ...newAccess });
   }
 
   return { access, updateAccess }
