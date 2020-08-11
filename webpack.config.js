@@ -7,7 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackbar = require('webpackbar');
 // const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -129,10 +129,10 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              // lessOptions: {
-              //   javascriptEnabled: true
-              // } // 用来支持 antd
-              javascriptEnabled: true
+              lessOptions: {
+                javascriptEnabled: true
+              } // 用来支持 antd
+              // javascriptEnabled: true
             }
           }
         ]
@@ -223,10 +223,10 @@ module.exports = {
               // modules: true,
               // getLocalIdent: getCSSModuleLocalIdent,
               // less loader 6.0.0 配置 但是mincssextract 插件遇到hash无法读取问题。暂不更新
-              // lessOptions: {
-              //   javascriptEnabled: true
-              // } // 用来支持 antd
-              javascriptEnabled: true
+              lessOptions: {
+                javascriptEnabled: true
+              } // 用来支持 antd
+              // javascriptEnabled: true
             }
           }
 
@@ -392,36 +392,36 @@ module.exports = {
       canPrint: true
     }),
 
-    // new HardSourceWebpackPlugin({
-    //   // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
-    //   // 果清除了node_modules，则缓存也是如此
-    //   cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
-    //   // Either an absolute path or relative to webpack's options.context.
-    //   // Sets webpack's recordsPath if not already set.
-    //   recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
-    //   // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配
-    //   // 置构建不同的缓存
-    //   configHash: function (webpackConfig) {
-    //     // node-object-hash on npm can be used to build this.
-    //     return require('node-object-hash')({ sort: false }).hash(webpackConfig);
-    //   },
-    //   // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输
-    //   // 出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-    //   environmentHash: {
-    //     root: process.cwd(),
-    //     directories: [],
-    //     files: ['package-lock.json', 'yarn.lock']
-    //   },
-    //   cachePrune: {
-    //     // Caches younger than `maxAge` are not considered for deletion. They must
-    //     // be at least this (default: 2 days) old in milliseconds.
-    //     maxAge: 2 * 24 * 60 * 60 * 1000,
-    //     // All caches together must be larger than `sizeThreshold` before any
-    //     // caches will be deleted. Together they must be at least this
-    //     // (default: 50 MB) big in bytes.
-    //     sizeThreshold: 50 * 1024 * 1024
-    //   },
-    // }),
+    new HardSourceWebpackPlugin({
+      // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
+      // 果清除了node_modules，则缓存也是如此
+      cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+      // Either an absolute path or relative to webpack's options.context.
+      // Sets webpack's recordsPath if not already set.
+      recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
+      // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配
+      // 置构建不同的缓存
+      configHash: function (webpackConfig) {
+        // node-object-hash on npm can be used to build this.
+        return require('node-object-hash')({ sort: false }).hash(webpackConfig);
+      },
+      // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输
+      // 出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
+      environmentHash: {
+        root: process.cwd(),
+        directories: [],
+        files: ['package-lock.json', 'yarn.lock']
+      },
+      cachePrune: {
+        // Caches younger than `maxAge` are not considered for deletion. They must
+        // be at least this (default: 2 days) old in milliseconds.
+        maxAge: 2 * 24 * 60 * 60 * 1000,
+        // All caches together must be larger than `sizeThreshold` before any
+        // caches will be deleted. Together they must be at least this
+        // (default: 50 MB) big in bytes.
+        sizeThreshold: 50 * 1024 * 1024
+      },
+    }),
     // new HardSourceWebpackPlugin.ExcludeModulePlugin([
     //   {
     //     // HardSource works with mini-css-extract-plugin but due to how
@@ -455,7 +455,8 @@ module.exports = {
       clientsClaim: true, // 让浏览器立即 servece worker 被接管
       skipWaiting: true, // 更新 sw 文件后，立即插队到最前面
       exclude: [/\.map$/, /asset-manifest\.json$/],
-      navigateFallback: BuildFolder + '/index.html',
+      // navigateFallback: BuildFolder + '/index.html',
+      navigateFallback: '/index.html',
       navigateFallbackDenylist: [
         // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),
