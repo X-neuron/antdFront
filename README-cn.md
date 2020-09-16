@@ -2,16 +2,16 @@
 
 # AntdFront
 
-AntdFront 是一套基于 Ant Design Pro ，拥抱纯 react hook ，实现按钮级权限，整合下一代数据流 hox 的微前端多标签管理系统。
+AntdFront 是一套基于Ant Design 的实验性、拥抱react hook,纯函数,实现按钮级权限，使用下一代数据流 hox, 微前端框架qiankun的 多标签 React前端模板
 
 ## 特性
 
 - **原生:** 纯 hook，同时采用 webpack、babel、antd 等较为原生的配置和函数组件搭建，支持 pwa
-- **极简数据流:** 集成下一代 React 状态管理器 hox
+- **下一代数据流:** 集成下一代 React 状态管理器
 - **微前端:** 使用 qiankun 实现微前端架构
 
 <img src="https://i.loli.net/2020/05/18/sRX52JT4yxlkm8e.gif" >
-    
+
 
 ## 安装使用
 
@@ -40,7 +40,7 @@ Rsuite 是个很不错 UI，有着 Material 的水波效果，又贴近 antd 的
 
 **2、为什么没使用 umi?**
 
-“原生的,未必是最快的，但往往是最好的。” 当创建 React 的大牛们用面向对象的思维使用 JS 时，拥抱 class 语法糖，设计出了组件的生命周期、为解决组件复用，产生了高阶组件等等晦涩难懂的概念，当理解了JS，拥抱函数闭包时，就靠拢了函数组件，就有了 Hook… 
+“原生的,未必是最快的，但往往是最好的。” 当创建 React 的大牛们用面向对象的思维使用 JS 时，拥抱 class 语法糖，设计出了组件的生命周期、为解决组件复用，产生了高阶组件等等晦涩难懂的概念，当理解了JS，拥抱函数闭包时，就靠拢了函数组件，就有了 Hook…
 
 为什么 react 向函数靠拢，因为函数的闭包特性正好原生的切合了渲染帧状态保存的需求。
 
@@ -216,7 +216,7 @@ export default createModel(useAccess);
   // 其他组件的调用，一般采用openRoute('/test');
   // keyLruSquence 标签管理Lru算法列队，只为人性化。同时便于方便获取上一次历史路径。
   // Lru缓存记录的信息为：
-  /* menu激活route时，key为@/config/routes里配置的page 路由。可为动态路由写法。 
+  /* menu激活route时，key为@/config/routes里配置的page 路由。可为动态路由写法。
     key: {
       page: //显示route的 component eg:'test'
       name: // 页面的 title eg:'pageTitile'
@@ -254,7 +254,7 @@ export default createModel(useAccess);
         params
       };
       setTabList([...tabList, tab]); // 配置tabpane
-      keyLruSquence.set(route, tab); 
+      keyLruSquence.set(route, tab);
       setActiveKey(route);  // 同步下sidemenu
     }
     navigate(route); // 修改当前页面的url地址。
