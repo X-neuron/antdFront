@@ -20,3 +20,4 @@ Antdfront is a set of multi label react microfrontend template based on ant desi
 
 ## Documentation
 
+Recently, we are preparing to upgrade to webpack5, react17 and migrate the data stream to recoil. The current version does not recommend using
