@@ -21,11 +21,6 @@
     "> 1%",
     "IE 10"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
-  },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
@@ -45,11 +40,11 @@
     "hox",
     "admin",
     "pwa",
-    "react-hot-loader",
     "microfrontend",
     "qiankun",
     "webpack5",
-    "react"
+    "react",
+    "react17"
   ],
   "devDependencies": {
     "@babel/cli": "^7.12.1",
@@ -142,7 +137,6 @@
     "webpack": "^5.2.0",
     "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^4.1.0",
-    "webpack-dev-server": "^3.11.0",
     "webpack-manifest-plugin": "^3.0.0-rc.0",
     "webpackbar": "^4.0.0",
     "workbox-webpack-plugin": "^5.1.4"

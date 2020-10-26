@@ -65,7 +65,7 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== "false";
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 // Get the path to the uncompiled service worker (if it exists).
-const {swSrc} = paths;
+// const {swSrc} = paths;
 
 
 // const appPackageJson = require(paths.appPackageJson);
@@ -142,13 +142,13 @@ module.exports = function () {
             // Adds vendor prefixing based on your specified browser support in
             ident: "postcss",
             plugins: [
-              // require("postcss-flexbugs-fixes"),
-              // require("postcss-preset-env")({
-              //   autoprefixer: {
-              //     flexbox: "no-2009",
-              //   },
-              //   stage: 3,
-              // }),
+              require("postcss-flexbugs-fixes"),
+              require("postcss-preset-env")({
+                autoprefixer: {
+                  flexbox: "no-2009",
+                },
+                stage: 3,
+              }),
               // Adds PostCSS Normalize as the reset css with default options,
               // so that it honors browserslist config in package.json
               // which in turn let's users customize the target behavior as per their needs.

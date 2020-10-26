@@ -17,11 +17,11 @@
  *  removed  <--  <--  <--  <--  <--  <--  <--  <--  <--  <--  <--  added
  */
 
-const NEWER = Symbol('newer');
-const OLDER = Symbol('older');
+const NEWER = Symbol("newer");
+const OLDER = Symbol("older");
 
 function LRUMap(limit, entries) {
-  if (typeof limit !== 'number') {
+  if (typeof limit !== "number") {
     // called as (entries)
     entries = limit;
     limit = 0;
@@ -91,7 +91,7 @@ LRUMap.prototype.assign = function (entries) {
     }
     entry = e;
     if (limit-- === 0) {
-      throw new Error('overflow');
+      throw new Error("overflow");
     }
   }
   this.newest = entry;
@@ -261,7 +261,7 @@ LRUMap.prototype[Symbol.iterator] = function () {
 };
 
 LRUMap.prototype.forEach = function (fun, thisObj) {
-  if (typeof thisObj !== 'object') {
+  if (typeof thisObj !== "object") {
     thisObj = this;
   }
   let entry = this.oldest;
@@ -284,13 +284,13 @@ LRUMap.prototype.toJSON = function () {
 
 /** Returns a String representation */
 LRUMap.prototype.toString = function () {
-  let s = ''; let
+  let s = ""; let
     entry = this.oldest;
   while (entry) {
     s += `${String(entry.key)}:${entry.value}`;
     entry = entry[NEWER];
     if (entry) {
-      s += ' < ';
+      s += " < ";
     }
   }
   return s;

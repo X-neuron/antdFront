@@ -1,10 +1,10 @@
-import { Menu, Layout } from 'antd';
-import { useCreation, usePersistFn } from '@umijs/hooks';
-import getAntdIcon from '@/config/icons';
+import { Menu, Layout } from "antd";
+import { useCreation, usePersistFn } from "@umijs/hooks";
+import getAntdIcon from "@/config/icons";
 
-import useLocaleModel from '@/models/useLocale';
-import useTabRouteModel from '@/models/useTabRoute';
-import styles from './index.less';
+import useLocaleModel from "@/models/useLocale";
+import useTabRouteModel from "@/models/useTabRoute";
+import styles from "./index.less";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -15,10 +15,10 @@ function SiderMenu(props) {
   const { activeKey, openRoute, menuTabConfig } = useTabRouteModel();
 
   const getIcon = usePersistFn(iconStr => {
-    if (typeof iconStr === 'string' && iconStr.indexOf('http') === 0) {
+    if (typeof iconStr === "string" && iconStr.indexOf("http") === 0) {
       return <img src={iconStr} alt="icon" className={`${styles.icon} sider-menu-item-img`} />;
     }
-    if (typeof iconStr === 'string') {
+    if (typeof iconStr === "string") {
       // return <Icon component="caseIconStr" />;
       return getAntdIcon(iconStr);
     }
@@ -34,10 +34,10 @@ function SiderMenu(props) {
           {intl.get(item.name)}
         </>
       ) : (
-          <span>
-            <span>{intl.get(item.name)}</span>
-          </span>
-        ),
+        <span>
+          <span>{intl.get(item.name)}</span>
+        </span>
+      ),
     }
     if (item.subs) {
       return (
@@ -78,7 +78,7 @@ function SiderMenu(props) {
         multiple={false}
         selectedKeys={[activeKey]}
         onClick={({ key }) => openRoute(key)}
-        style={{ padding: '16px 0', width: '100%' }}
+        style={{ padding: "16px 0", width: "100%" }}
       >
         {subMenu}
       </Menu>

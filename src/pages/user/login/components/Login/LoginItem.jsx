@@ -1,12 +1,12 @@
 
-import { useState, useCallback } from 'react';
-import omit from 'omit.js';
-import { getCaptcha } from '@/services/login';
-import CountDownButton from '@/components/CountDownButton';
-import { Col, Input, Row, Form, message } from 'antd';
-import ItemMap from './map';
-import LoginContext from './LoginContext';
-import styles from './index.less';
+import { useState, useCallback } from "react";
+import omit from "omit.js";
+import { getCaptcha } from "@/services/login";
+import CountDownButton from "@/components/CountDownButton";
+import { Col, Input, Row, Form, message } from "antd";
+import ItemMap from "./map";
+import LoginContext from "./LoginContext";
+import styles from "./index.less";
 
 const FormItem = Form.Item;
 
@@ -62,8 +62,8 @@ const LoginItem = props => {
   const options = getFormItemOptions(props);
   const otherProps = restProps || {};
 
-  if (type === 'Captcha') {
-    const inputProps = omit(otherProps, ['onGetCaptcha', 'countDown']);
+  if (type === "Captcha") {
+    const inputProps = omit(otherProps, ["onGetCaptcha", "countDown"]);
     return (
       <FormItem shouldUpdate noStyle>
         {({ getFieldValue }) => (
@@ -84,7 +84,7 @@ const LoginItem = props => {
                 resetText=" 重新获取 "
                 onEnd={() => setCaptCha(false)}
                 onClick={() => {
-                  const value = getFieldValue('mobile');
+                  const value = getFieldValue("mobile");
                   setCaptCha(true)
                   onGetCaptcha(value);
                 }}

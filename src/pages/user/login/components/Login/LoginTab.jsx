@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import { Tabs } from 'antd';
-import LoginContext from './LoginContext';
+import { useEffect } from "react";
+import { Tabs } from "antd";
+import LoginContext from "./LoginContext";
 
 const { TabPane } = Tabs;
 
 const generateId = (() => {
   let i = 0;
-  return (prefix = '') => {
+  return (prefix = "") => {
     i += 1;
     return `${prefix}${i}`;
   };
@@ -14,7 +14,7 @@ const generateId = (() => {
 
 const LoginTab = props => {
   useEffect(() => {
-    const uniqueId = generateId('login-tab-');
+    const uniqueId = generateId("login-tab-");
     const { tabUtil } = props;
 
     if (tabUtil) {
@@ -31,5 +31,5 @@ const WrapContext = props => (
   </LoginContext.Consumer>
 ); // 标志位 用来判断是不是自定义组件
 
-WrapContext.typeName = 'LoginTab';
+WrapContext.typeName = "LoginTab";
 export default WrapContext;
