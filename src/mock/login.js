@@ -1,4 +1,4 @@
-import Mock from 'better-mock';
+import Mock from "mockjs";
 
 
 export default {
@@ -18,18 +18,18 @@ export default {
   //   data: {
   //     code: Mock.Random.string(4)
   //   },
-  'POST /api/login/account': {
+  "POST /api/login/account": {
     status: 200,
     data: {
-      role: 'user',
-      userId: '323',
-      token: 'fafaf',
-      ssKey: '24234',
-      userName: 'fafa',
+      role: "user",
+      userId: "323",
+      token: "fafaf",
+      ssKey: "24234",
+      userName: "fafa",
       isLogin: true
     }
   },
-  '/api/login/captcha': {
+  "/api/login/captcha": {
     status: 200,
     data: {
       code: Mock.Random.string(4)
@@ -37,14 +37,3 @@ export default {
   }
 
 }
-  // 近期支持这个写法
-  // 'POST /api/login/account': {
-  //   status: 200,
-  //   data: {
-  //     role: 'user',
-  //     userId: '323',
-  //     token: 'fafaf',
-  //     ssKey: '24234',
-  //     userName: 'fafa',
-  //   }
-  // }

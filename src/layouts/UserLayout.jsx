@@ -1,39 +1,37 @@
-import React from 'react';
-// import React, { lazy, Suspense } from 'react';
-import loadable from '@loadable/component';
-import { Link, Router } from '@reach/router';
-import GlobalFooter from '@/components/GlobalFooter';
+import loadable from "@loadable/component";
+import { Link, Router } from "@reach/router";
+import GlobalFooter from "@/components/GlobalFooter";
 // import SelectLang from '@/components/SelectLang';
-import { CopyrightOutlined } from '@ant-design/icons';
-import PageLoading from '@/components/PageLoading';
-import logo from '../assets/logo.svg';
-import styles from './UserLayout.less';
+import { CopyrightOutlined } from "@ant-design/icons";
+import PageLoading from "@/components/PageLoading";
+import logo from "../assets/logo.svg";
+import styles from "./UserLayout.less";
 
 
 
 // const Login = lazy(() => import('@/pages/user/login'));
 // const Register = lazy(() => import('@/pages/user/Register'));
-const Login = loadable(() => import('@/pages/user/login'), {
+const Login = loadable(() => import("@/pages/user/login"), {
   fallback: <PageLoading tip="组件加载中..." />,
 });
-const Register = loadable(() => import('@/pages/user/Register'), {
+const Register = loadable(() => import("@/pages/user/Register"), {
   fallback: <PageLoading tip="组件加载中..." />,
 });
 const links = [
   {
-    key: 'help',
-    title: '帮助',
-    href: '',
+    key: "help",
+    title: "帮助",
+    href: "",
   },
   {
-    key: 'privacy',
-    title: '隐私',
-    href: '',
+    key: "privacy",
+    title: "隐私",
+    href: "",
   },
   {
-    key: 'terms',
-    title: '条款',
-    href: '',
+    key: "terms",
+    title: "条款",
+    href: "",
   },
 ];
 

@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { createModel } from 'hox';
+import { useState } from "react";
+import { createModel } from "hox";
 
-import { usePersistFn, useCreation } from '@umijs/hooks';
-import { navigate } from '@reach/router'
-import { pick, resolve, match } from '@reach/router/es/lib/utils';
-import Lru from '@/utils/lru';
-import memoized from 'nano-memoize';
-import { isHttp } from '@/utils/is';
+import { usePersistFn, useCreation } from "@umijs/hooks";
+import { navigate } from "@reach/router"
+import { pick, resolve, match } from "@reach/router/es/lib/utils";
+import Lru from "@/utils/lru";
+import memoized from "nano-memoize";
+import { isHttp } from "@/utils/is";
 // import rConfig from '@/config/routes';
-import useAppRoute from '@/hooks/useAppRoute';
+import useAppRoute from "@/hooks/useAppRoute";
 // const id = nanoid(10);
 const memoizedPickRoute = memoized((routeConfig, route) => pick(routeConfig, route).route);
 
@@ -91,7 +91,7 @@ function useTabRoute() {
       setActiveKey(null);
       memoizedPickRoute.clear();
       setTabList([]);
-      navigate('/');
+      navigate("/");
     }
   });
 
@@ -158,7 +158,7 @@ function getMenuTabfromConfig(aMenuTabConfig) {
         access: conf.access
       }) : 0;
       // 加入menuConfig 过滤动态路由
-      isHttp(conf.page) || !conf.page?.includes(':') ? menuArrays.push({
+      isHttp(conf.page) || !conf.page?.includes(":") ? menuArrays.push({
         name: conf.name,
         // root目录中，path 不带 / 则自动加上。但在子menu中，则使用根root+path
         key: conf.subs ? curPath + count : curPath,
@@ -171,7 +171,7 @@ function getMenuTabfromConfig(aMenuTabConfig) {
     return menuArrays
   }
 
-  const menus = generMenuTabConfigFromConfig(aMenuTabConfig, '/');
+  const menus = generMenuTabConfigFromConfig(aMenuTabConfig, "/");
 
   return { menus, tabRoutes }
 }

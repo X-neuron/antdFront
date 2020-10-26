@@ -1,4 +1,3 @@
-import React from 'react';
 import { HomeOutlined, AppstoreOutlined, CompassOutlined, FormOutlined, PieChartOutlined, PaperClipOutlined, BarsOutlined, UserOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import memoized from 'nano-memoize';

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Redirect } from '@reach/router';
+import { useState } from "react";
+import { Redirect } from "@reach/router";
 // import { redirectTo } from '@reach/router';
 // import PageLoading from '@/components/PageLoading';
-import { stringify } from 'qs';
-import useLoginModel from '@/models/useLogin';
+import { stringify } from "qs";
+import useLoginModel from "@/models/useLogin";
 
 
 
@@ -26,7 +26,7 @@ const SecurityLayout = ({ children }) => {
   //   return <PageLoading />;
   // }
 
-  if (!login.isLogin && window.location.pathname !== '/user/login') {
+  if (!login.isLogin && window.location.pathname !== "/user/login") {
     return <Redirect from="window.location.href" to={`/user/login?${queryString}`} noThrow />;
     // return <Redirect from="window.location.href" to="/user/login" />;
     // redirectTo(`/user/login?${queryString}`);

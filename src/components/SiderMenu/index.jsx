@@ -1,11 +1,9 @@
-import React from 'react';
-
-import { Drawer } from 'antd'
+import { Drawer } from "antd"
 // import { useResponsive } from '@umijs/hooks'
 
-import { useSiderMenuToggleModel } from '@/models/useToggle';
-import useMediaModel from '@/models/useMedia';
-import SiderMenu from './SiderMenu'
+import { useSiderMenuToggleModel } from "@/models/useToggle";
+import useMediaModel from "@/models/useMedia";
+import SiderMenu from "./SiderMenu"
 
 export default props => {
   // const responsive = useResponsive();

@@ -1,15 +1,11 @@
 
-import React from 'react';
-// import React, { lazy, Suspense } from 'react';
-import loadable from '@loadable/component';
+import loadable from "@loadable/component";
 
-
-import { hot } from 'react-hot-loader/root';
 // import { setConfig } from 'react-hot-loader';
-import Locale from '@/components/Locale';
-import { Router } from '@reach/router';
-import PageLoading from '@/components/PageLoading';
-import { useFavicon } from 'react-use';
+import Locale from "@/components/Locale";
+import { Router } from "@reach/router";
+import PageLoading from "@/components/PageLoading";
+import { useFavicon } from "react-use";
 
 // setConfig({
 //   trackTailUpdates:false,
@@ -38,19 +34,19 @@ import { useFavicon } from 'react-use';
 // const BasicLayout = lazy(() => import('@/layouts/BasicLayout'));
 // const UserLayout = lazy(() => import('@/layouts/UserLayout'));
 
-const SecurityLayout = loadable(() => import('@/layouts/SecurityLayout'), {
+const SecurityLayout = loadable(() => import("@/layouts/SecurityLayout"), {
   fallback: <PageLoading tip="组件加载中..." />,
 });
-const BasicLayout = loadable(() => import('@/layouts/BasicLayout'), {
+const BasicLayout = loadable(() => import("@/layouts/BasicLayout"), {
   fallback: <PageLoading tip="组件加载中..." />,
 });
-const UserLayout = loadable(() => import('@/layouts/UserLayout'), {
+const UserLayout = loadable(() => import("@/layouts/UserLayout"), {
   fallback: <PageLoading tip="组件加载中..." />,
 });
 
 function App() {
   // const rmtConfig = useAppRoute();
-  useFavicon('./public/favicon.ico');
+  useFavicon("./public/favicon.ico");
   return (
     <Locale>
       {/* <Suspense fallback={<PageLoading tip="loading" />}> */}
@@ -77,5 +73,5 @@ function App() {
 
 
 // export default hot(App);
-export default hot(App);
+export default App;
 // export default App;

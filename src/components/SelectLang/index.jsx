@@ -1,12 +1,10 @@
-import { GlobalOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
-// import { getLocale, setLocale } from 'umi-plugin-react/locale';
-import React from 'react';
+import { GlobalOutlined } from "@ant-design/icons";
+import { Menu } from "antd";
 // import classNames from 'classnames';
-import useLocaleModel from '@/models/useLocale';
-import classNames from 'classnames';
-import HeaderDropdown from '@/components/HeaderDropdown';
-import styles from './index.less';
+import useLocaleModel from "@/models/useLocale";
+import classNames from "classnames";
+import HeaderDropdown from "@/components/HeaderDropdown";
+import styles from "./index.less";
 
 // Locales datas like this
 // const Locales = [
@@ -35,7 +33,7 @@ const SelectLang = (props) => {
         <Menu.Item key={locale.value}>
           <span role="img" aria-label={locale.name}>
             {locale.icons}
-          </span>{' '}
+          </span>{" "}
           {locale.name}
         </Menu.Item>
       ))}

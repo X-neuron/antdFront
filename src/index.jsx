@@ -1,16 +1,15 @@
-import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDom from "react-dom";
 // import { registerMicroApps, setDefaultMountApp, start } from 'qiankun';
 // "@alitajs/antd-plus": "^1.2.0", 这个组件居然没了。还好我下了
-import { start } from 'qiankun';
-import App from './app';
+// import { start } from "qiankun";
+import App from "./app";
 
 // 生产环境 请注释掉mock
-import mock from '../mock';
+import mock from "./mock";
 
 mock();
 
-const initalContainer = document.getElementById('root');
+const initalContainer = document.getElementById("root");
 
 
 ReactDom.render(
@@ -18,7 +17,7 @@ ReactDom.render(
   initalContainer
 );
 
-start();
+// start();
 
 
 

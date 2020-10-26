@@ -1,6 +1,5 @@
-import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import Access from '@/components/Access';
+import { Form, Input, Button, Checkbox } from "antd";
+import Access from "@/components/Access";
 
 const layout = {
   labelCol: { span: 8 },
@@ -14,11 +13,11 @@ const LoginForm = (props) => {
   // const { params } = props;
   // console.log(params);
   const onFinish = values => {
-    console.log('Success:', values);
+    console.log("Success:", values);
   };
 
   const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   return (
@@ -32,7 +31,7 @@ const LoginForm = (props) => {
       <Form.Item
         label="Username"
         name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: "Please input your username!" }]}
       >
         <Input />
       </Form.Item>
@@ -40,7 +39,7 @@ const LoginForm = (props) => {
       <Form.Item
         label="Password"
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: "Please input your password!" }]}
       >
         <Input.Password />
       </Form.Item>

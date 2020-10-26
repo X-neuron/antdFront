@@ -1,41 +1,40 @@
-import React from 'react';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu } from 'antd';
+import { LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Menu } from "antd";
 
-import HeaderDropdown from '@/components/HeaderDropdown';
+import HeaderDropdown from "@/components/HeaderDropdown";
 // import useRouteConfigModel from '@/models/useRouteConfig';
-import useTabRouteModel from '@/models/useTabRoute';
-import useAccessModel from '@/models/useAccess';
-import { navigate } from '@reach/router';
-import styles from './index.less';
+import useTabRouteModel from "@/models/useTabRoute";
+import useAccessModel from "@/models/useAccess";
+import { navigate } from "@reach/router";
+import styles from "./index.less";
 
 
 
 const newRoutes = [
   {
-    path: '/',
-    name: 'menu-welcome',
-    icon: 'HomeOutlined',
-    authority: ['admin', 'user'],
-    page: 'dashboard'
+    path: "/",
+    name: "menu-welcome",
+    icon: "HomeOutlined",
+    authority: ["admin", "user"],
+    page: "dashboard"
   },
   {
     // 带subs的 为下拉列表，无需路由，自动忽略page属性。 故允许配置为'/'，作为指定子路由的根路由,作为siderMenu的Key,内部计数+1
-    name: 'Micro-front',
-    path: '/',
-    icon: 'BarsOutlined',
+    name: "Micro-front",
+    path: "/",
+    icon: "BarsOutlined",
     subs: [
       {
-        name: 'React16',
-        path: 'reac16',
-        access: 'microOpen',
-        page: 'http://localhost:8002'
+        name: "React16",
+        path: "reac16",
+        access: "microOpen",
+        page: "http://localhost:8002"
       },
       {
-        name: 'changeAname-vue2',
-        path: 'newpathvue2',
-        access: 'microOpen',
-        page: 'http://localhost:8001',
+        name: "changeAname-vue2",
+        path: "newpathvue2",
+        access: "microOpen",
+        page: "http://localhost:8001",
         // redirect: '/',
       },
     ]
@@ -58,7 +57,7 @@ function AvatarDropdown(props) {
   // } = props;
   const logout = () => {
     // 省略注销状态。
-    navigate('/user/login');
+    navigate("/user/login");
   }
 
   const handleChangeRole = () => {

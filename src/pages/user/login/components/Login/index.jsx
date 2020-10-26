@@ -1,5 +1,5 @@
 import { Tabs, Form } from 'antd';
-import React, { useState } from 'react';
+import { Children, useState } from 'react';
 import useMergeValue from 'use-merge-value';
 import classNames from 'classnames';
 import LoginContext from './LoginContext';
@@ -18,7 +18,7 @@ const Login = props => {
   });
   const TabChildren = [];
   const otherChildren = [];
-  React.Children.forEach(props.children, child => {
+  Children.forEach(props.children, child => {
     if (!child) {
       return;
     }

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Menu, Layout } from 'antd';
 import { useCreation, usePersistFn } from '@umijs/hooks';
 import getAntdIcon from '@/config/icons';

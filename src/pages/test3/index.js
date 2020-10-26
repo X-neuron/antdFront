@@ -1,5 +1,4 @@
-import React from 'react';
-import useLocaleModel from '@/models/useLocale';
+import useLocaleModel from "@/models/useLocale";
 
 const DataLocales = () => {
   const { intl } = useLocaleModel();
@@ -8,9 +7,9 @@ const DataLocales = () => {
   const expires = new Date();
   return (
     <>
-      <div>{intl.get('SALE_START', { start })}</div>
-      <div>{intl.get('SALE_END', { end })}</div>
-      <div>{intl.get('COUPON', { expires })}</div>
+      <div>{intl.get("SALE_START", { start })}</div>
+      <div>{intl.get("SALE_END", { end })}</div>
+      <div>{intl.get("COUPON", { expires })}</div>
     </>
   )
 }

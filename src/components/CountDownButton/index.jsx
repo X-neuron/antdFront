@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Button } from 'antd';
-import { useInterval, useBoolean } from 'react-use';
-import { usePersistFn, useCounter } from '@umijs/hooks'
+import { useState } from "react";
+import { Button } from "antd";
+import { useInterval, useBoolean } from "react-use";
+import { usePersistFn, useCounter } from "@umijs/hooks"
 
 /* 是否开始倒计时
  start?: boolean;

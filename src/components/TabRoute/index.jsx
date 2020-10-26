@@ -1,11 +1,9 @@
-import React from 'react';
+import { StickyContainer, Sticky } from "react-sticky";
+import { Tabs } from "antd";
 
-import { StickyContainer, Sticky } from 'react-sticky';
-import { Tabs } from 'antd';
-
-import useLocaleModel from '@/models/useLocale';
-import useTabRouteModel from '@/models/useTabRoute';
-import getPage from '@/config/pages';
+import useLocaleModel from "@/models/useLocale";
+import useTabRouteModel from "@/models/useTabRoute";
+import getPage from "@/config/pages";
 
 // 这里可以配tabpane的 样式
 
@@ -37,7 +35,7 @@ const TabRoute = () => {
         renderTabBar={renderTabBar}
         onChange={(key) => selectTab(key)}
         // tabBarExtraContent={operations}
-        tabBarStyle={{ background: '#fff' }}
+        tabBarStyle={{ background: "#fff" }}
         tabPosition="top"
         animated
         tabBarGutter={-1}

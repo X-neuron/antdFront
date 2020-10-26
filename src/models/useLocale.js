@@ -1,24 +1,24 @@
-import { useState, useRef } from 'react';
-import loc from 'react-intl-universal';
-import request from 'umi-request';
-import { usePersistFn, useMount } from '@umijs/hooks';
+import { useState, useRef } from "react";
+import loc from "react-intl-universal";
+import request from "umi-request";
+import { usePersistFn, useMount } from "@umijs/hooks";
 
 // import _ from 'lodash';
 
 // import scope from 'babel-plugin-console/scope.macro';
 
-import { createModel } from 'hox';
+import { createModel } from "hox";
 
 const Locales = [
   {
-    name: '简体中文',
-    value: 'zh-CN',
-    icons: '🇨🇳'
+    name: "简体中文",
+    value: "zh-CN",
+    icons: "🇨🇳"
   },
   {
-    name: 'English',
-    value: 'en-US',
-    icons: '🇺🇸'
+    name: "English",
+    value: "en-US",
+    icons: "🇺🇸"
   }
 ];
 
@@ -45,14 +45,14 @@ function useLocale() {
   const [localeLoaded, setLocaleLoaded] = useState(false);
   const [defLocale] = useState(() => {
     const currentLocale = loc.determineLocale({
-      urlLocaleKey: 'lang',
-      cookieLocaleKey: 'lang',
-      localStorageLocaleKey: 'lang'
+      urlLocaleKey: "lang",
+      cookieLocaleKey: "lang",
+      localStorageLocaleKey: "lang"
     });
     const returnLocale = currentLocale ? Locales[0].value : currentLocale;
     return returnLocale;
   });
-  const [curLocale, setCurLocale] = useState('');
+  const [curLocale, setCurLocale] = useState("");
 
   const loadLocale = (currentLocale) => {
     // const currentLocale = alocale.current.lang;
@@ -69,7 +69,7 @@ function useLocale() {
       });
     } else {
       request.get(`${window.location.origin}/public/locales/${currentLocale}.json`, {
-        responseType: 'json'
+        responseType: "json"
       })
         // const lang = require(`public/locales/${currentLocale}.js`);
         // babel 还是webpack 目前暂不支持es2020的import。

@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
-import { loadMicroApp } from 'qiankun';
-import { useMount, useUnmount } from '@umijs/hooks';
-import { customAlphabet } from 'nanoid';
+import { useRef } from "react";
+import { loadMicroApp } from "qiankun";
+import { useMount, useUnmount } from "@umijs/hooks";
+import { customAlphabet } from "nanoid";
 
-const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz', 10);
+const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz", 10);
 
 const MicroApp = ({ entry, params }) => {
   const container = useRef(null);
@@ -24,7 +24,7 @@ const MicroApp = ({ entry, params }) => {
   });
 
   useUnmount(() => {
-    microApp.current.getStatus() === 'MOUNTED' ? microApp.current.unmount() : 0;
+    microApp.current.getStatus() === "MOUNTED" ? microApp.current.unmount() : 0;
   })
   // if (isUrl(entry)) { return (<NotFound />) }
   return (

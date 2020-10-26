@@ -1,6 +1,5 @@
 // import React, { lazy, Suspense } from 'react';
 // react lazy suspense 没成功，暂用loadable/component
-import React from 'react';
 import memoized from 'nano-memoize';
 import MicroApp from '@/components/MicroApp';
 import PageLoading from '@/components/PageLoading';

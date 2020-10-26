@@ -1,20 +1,18 @@
 // import React, { lazy, Suspense } from 'react';
-import React from 'react';
-// import { Layout, Tabs, Button, Dropdown, Menu } from 'antd';
-import { Layout } from 'antd';
+import { Layout } from "antd";
 
 // import classNames from 'classnames';
-import GlobalFooter from '@/components/GlobalFooter';
-import GlobalHeader from '@/components/GlobalHeader';
-import SiderMenu from '@/components/SiderMenu';
-import applogo from '@/assets/logo.svg';
+import GlobalFooter from "@/components/GlobalFooter";
+import GlobalHeader from "@/components/GlobalHeader";
+import SiderMenu from "@/components/SiderMenu";
+import applogo from "@/assets/logo.svg";
 
-import TabRoute from '@/components/TabRoute';
-import { CopyrightOutlined } from '@ant-design/icons';
+import TabRoute from "@/components/TabRoute";
+import { CopyrightOutlined } from "@ant-design/icons";
 // import AppRoutes from '@/pages/routes';
-import { useLocation } from '@reach/router';
-import { useMount } from '@umijs/hooks';
-import useTabRouteModel from '@/models/useTabRoute';
+import { useLocation } from "@reach/router";
+import { useMount } from "@umijs/hooks";
+import useTabRouteModel from "@/models/useTabRoute";
 
 const { Header, Content, Footer } = Layout;
 
@@ -35,7 +33,7 @@ const BasicLayout = (props) => {
         <Header style={{ padding: 0 }}>
           <GlobalHeader logo={applogo} />
         </Header>
-        <Content className="globalTabs" style={{ margin: '2px 0px 0px', height: '100%' }}>
+        <Content className="globalTabs" style={{ margin: "2px 0px 0px", height: "100%" }}>
           <TabRoute />
           {/* <AppRoutes /> */}
         </Content>
@@ -43,20 +41,20 @@ const BasicLayout = (props) => {
           <GlobalFooter
             links={[
               {
-                key: 'Pro 首页',
-                title: 'Pro 首页',
-                href: '',
+                key: "Pro 首页",
+                title: "Pro 首页",
+                href: "",
                 blankTarget: true
               },
               {
-                key: 'github',
-                href: ' ',
+                key: "github",
+                href: " ",
                 blankTarget: true
               },
               {
-                key: 'Ant X-plat',
-                title: 'Ant X-plat',
-                href: '',
+                key: "Ant X-plat",
+                title: "Ant X-plat",
+                href: "",
                 blankTarget: true
               }
             ]}

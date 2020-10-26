@@ -1,6 +1,6 @@
 
-import { createModel } from 'hox';
-import { useBoolean } from '@umijs/hooks'
+import { createModel } from "hox";
+import { useBoolean } from "@umijs/hooks"
 // import { useBoolean } from 'react-use';
 
 

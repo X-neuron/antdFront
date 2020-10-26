@@ -3,19 +3,19 @@ const Settings = {
   /**
    * theme for nav menu
    */
-  navTheme: 'dark',
+  navTheme: "dark",
   /**
    * primary color of ant design
    */
-  primaryColor: 'red',
+  primaryColor: "red",
   /**
    * nav menu position: `sidemenu` or `topmenu`
    */
-  layout: 'sidemenu',
+  layout: "sidemenu",
   /**
    * layout of content: `Fluid` or `Fixed`, only works when layout is topmenu
    */
-  contentWidth: 'Fixed',
+  contentWidth: "Fixed",
   /**
    * sticky header
    */

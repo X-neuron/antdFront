@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, } from 'react';
+import { useState, useCallback } from 'react';
 import omit from 'omit.js';
 import { getCaptcha } from '@/services/login';
 import CountDownButton from '@/components/CountDownButton';

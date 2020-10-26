@@ -1,6 +1,6 @@
 
-import { useResponsive } from '@umijs/hooks';
-import { createModel } from 'hox';
+import { useResponsive } from "@umijs/hooks";
+import { createModel } from "hox";
 
 function useMedia() {
   // 使用默认配置，如需修改

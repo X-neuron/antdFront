@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import {
   Menu,
   // Icon,
@@ -8,15 +8,15 @@ import {
   Avatar,
   Divider,
   Tooltip
-} from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import SelectLang from '@/components/SelectLang';
-import { Link } from '@reach/router';
-import { useSiderMenuToggleModel } from '@/models/useToggle';
-import useMediaModel from '@/models/useMedia';
-import AvatarMenu from './AvatarDropdown';
+} from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import SelectLang from "@/components/SelectLang";
+import { Link } from "@reach/router";
+import { useSiderMenuToggleModel } from "@/models/useToggle";
+import useMediaModel from "@/models/useMedia";
+import AvatarMenu from "./AvatarDropdown";
 // import HeaderSearch from "../HeaderSearch";
-import styles from './index.less';
+import styles from "./index.less";
 // import className from 'classnames';
 
 function GlobalHeader(props) {

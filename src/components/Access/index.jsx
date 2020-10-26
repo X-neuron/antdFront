@@ -1,7 +1,6 @@
-import React from 'react';
-import _ from 'lodash';
-import { Redirect } from '@reach/router';
-import useAccessModel from '@/models/useAccess';
+import _ from "lodash";
+import { Redirect } from "@reach/router";
+import useAccessModel from "@/models/useAccess";
 
 // const checkAccess = (access, accessible) => access[accessible]
 // return access[accessible] ?? (access[page] ? access[page][accessible] : false)
@@ -10,7 +9,7 @@ import useAccessModel from '@/models/useAccess';
 const Access = (props) => {
   const { children, accessible, redirectPath, fallback = null } = props;
   const { access } = useAccessModel();
-  const childrenRender = typeof children === 'undefined' ? null : children;
+  const childrenRender = typeof children === "undefined" ? null : children;
   // access 和 accessible 不存在的情况
   if (!access || !accessible) {
     return <>{childrenRender}</>;
