@@ -83,17 +83,17 @@ const routes = [
             icon: "PaperClipOutlined",
             subs: [
               {
-                name: "material-ui",
-                path: "material",
-                access: "microOpen",
-                page: "http://localhost:8002" // 微前端配置
-              },
-              {
                 name: "vue2",
                 path: "vue2",
                 access: "microOpen",
                 page: "http://localhost:8001", // 微前端配置
               },
+              {
+                name: "react16",
+                path: "react16",
+                access: "microOpen",
+                page: "http://localhost:8002", // 微前端配置
+              }
             ]
           }
         ]
