@@ -7,7 +7,8 @@ AntdFront 是一套基于Ant Design 的实验性、拥抱react hook,纯函数,�
 ## 特性
 
 - **原生:** 纯 hook，同时采用 webpack、babel、antd 等较为原生的配置和函数组件搭建，支持 pwa
-- **下一代数据流:** 集成下一代 React 状态管理器
+- **原生:** react route 和 原生组件实现react 多标签tab
+- **下一代数据流:** 集成下一代 react 状态管理器-recoil
 - **微前端:** 使用 qiankun 实现微前端架构
 
 <img src="https://i.loli.net/2020/05/18/sRX52JT4yxlkm8e.gif" >
@@ -35,7 +36,6 @@ https://zhuanlan.zhihu.com/p/268890371
 https://zhuanlan.zhihu.com/p/141738683
 
 ## 使用注意
-近期 正在准备数据流迁移至recoil,布局迁移至prolayout
-webpack5 react17 i18n(lingui.js) 已迁移完成
-
+recoil,webpack5 react17 i18n(lingui.js) prolayout react-router6 已迁移完成
+近期完成prolayout 修改
 
