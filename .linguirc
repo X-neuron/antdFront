@@ -1,0 +1,17 @@
+ {
+   "catalogs": [{
+   "path": "src/locales/{locale}",
+   "include": ["src"],
+   "exclude": ["**/node_modules/**"]
+ }],
+ "compileNamespace": "cjs",
+ "extractBabelOptions": {},
+ "fallbackLocales": {},
+ "format": "minimal",
+ "locales": [en-US,zh-CN],
+ "orderBy": "messageId",
+ "pseudoLocale": "",
+ "rootDir": ".",
+ "runtimeConfigModule": ["@lingui/core", "i18n"],
+ "sourceLocale": "",
+}
