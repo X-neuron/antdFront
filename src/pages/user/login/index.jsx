@@ -4,8 +4,7 @@ import {
   MailTwoTone,
   MobileTwoTone,
   TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
+  UserOutlined
 } from '@ant-design/icons';
 import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
@@ -18,7 +17,7 @@ import { t } from "@lingui/macro";
 import { Trans } from "@lingui/macro";
 
 import styles from './index.less';
-
+import { accountLogin } from '@/services/login'
 
 
 const LoginMessage = ({ content }) => (
@@ -39,8 +38,8 @@ const Login = (props) => {
   const [captCha, setCaptCha] = useState(false);
 
   const handleSubmit = (values) => {
-   
-
+    const res = accountLogin(values);
+    console.log('login res:',res);
   };
   return (
     <div className={styles.main}>
@@ -82,7 +81,7 @@ const Login = (props) => {
         {type === 'account' && (
           <>
             <ProFormText
-              name="userName"
+              name="account"
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,
@@ -186,10 +185,9 @@ const Login = (props) => {
         </div>
       </ProForm>
       <Space className={styles.other}>
-        <Trans> 其他登陆方式 </Trans>
+        <p className={styles.p}><Trans> 其他登陆方式 </Trans></p>
         <AlipayCircleOutlined className={styles.icon} />
         <TaobaoCircleOutlined className={styles.icon} />
-        <WeiboCircleOutlined className={styles.icon} />
         <Link className={styles.register} to="/user/register">
           <Trans> APP/账户注册 </Trans>
         </Link>

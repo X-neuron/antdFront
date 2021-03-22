@@ -38,10 +38,10 @@ const UserLayout = () => {
           <div className={styles.header}>
             <Link to="/">
               <img alt="logo" className={styles.logo} src={logo} />
-              <span className={styles.title}>  科研档案管理系统  </span>
+              <span className={styles.title}>  Antd Front  </span>
             </Link>
           </div>
-          <div className={styles.desc}>科研档案管理系统 遵循 Ant Design 及 开放平台 设计规范</div>
+          <div className={styles.desc}>Antd Front遵循 Ant Design 及 开放平台 设计规范</div>
         </div>
         <Outlet />
       </div>

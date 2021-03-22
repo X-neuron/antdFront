@@ -1,14 +1,20 @@
 @import '~antd/lib/style/themes/default.less';
 
 .main {
-  width: 368px;
+  width: 328px;
   margin: 0 auto;
+  @media screen and (max-width: @screen-sm) {
+    width: 95%;
+    max-width: 328px;
+  }
 
   :global {
-    .ant-form-item {
-      margin-bottom: 24px;
+    .@{ant-prefix}-tabs-nav-list {
+      margin: auto;
+      font-size: 16px;
     }
   }
+
 
   h3 {
     font-size: 16px;
@@ -27,6 +33,17 @@
   .login {
     float: right;
     line-height: @btn-height-lg;
+  }
+}
+
+.other {
+  margin-top: 24px;
+  line-height: 22px;
+  text-align: left;
+  display: block;
+  
+  .tologin {
+    float: right;
   }
 }
 

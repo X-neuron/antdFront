@@ -7,7 +7,7 @@ const Webpackbar = require("webpackbar");
 
 const CopyPlugin = require("copy-webpack-plugin");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+// const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 
 const PnpWebpackPlugin = require("pnp-webpack-plugin");
 
@@ -727,7 +727,7 @@ module.exports = function () {
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
       // See https://github.com/facebook/create-react-app/issues/240
-      isEnvDevelopment && new CaseSensitivePathsPlugin(),
+      // isEnvDevelopment && new CaseSensitivePathsPlugin(),
 
       new CircularDependencyPlugin({
         exclude: /a\.js|node_modules/, // exclude node_modules
@@ -779,10 +779,6 @@ module.exports = function () {
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
 
-      // Watcher doesn't work well if you mistype casing in a path so we use
-      // a plugin that prints an error when you attempt to do this.
-      // See https://github.com/facebook/create-react-app/issues/240
-      isEnvDevelopment && new CaseSensitivePathsPlugin(),
       // If you require a missing module and then `npm install` it, you still have
       // to restart the development server for webpack to discover it. This plugin
       // makes the discovery automatic so you don't have to restart.
