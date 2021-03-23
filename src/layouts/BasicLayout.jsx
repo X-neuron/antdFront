@@ -22,6 +22,7 @@ const BasicLayout = (props) => {
   const location = useLocation();
   const { openRoute } = useTabRouteModel();
   useMount(() => {
+    console.log(location);
     openRoute(location.pathname);
   })
   return (

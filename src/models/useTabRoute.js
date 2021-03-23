@@ -21,7 +21,7 @@ function useTabRoute() {
 
   // route 分两个hook 主要支持 menu的动态设置。而不重复渲染。
   const [menuTabConfig, setMenuTabConfig] = useState(() => getMenuTabfromConfig(rmtConfig.menuTabs));
-
+  console.log(menuTabConfig)
   const [tabList, setTabList] = useState([]);
   // activkey，即为当前选中的key
   // 默认的key为 首页key '/'
@@ -50,8 +50,11 @@ function useTabRoute() {
 
   const openRoute = (route) => {
     // 调用@reach/router的匹配函数，获取匹配路由的组件
+    console.log(route);
     const pickRoute = memoizedPickRoute(menuTabConfig.tabRoutes, route);
+    console.log(pickRoute);
     const result = match(pickRoute.path, route);
+    console.log(result);
     // 参数作为组件的props输入?
     const params = result
       ? {

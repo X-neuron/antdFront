@@ -2,7 +2,7 @@
 
 # AntdFront
 
-AntdFront 是一套基于Ant Design 的实验性、拥抱react hook,纯函数,实现按钮级权限，使用下一代数据流, 微前端框架qiankun的 多标签 React前端模板
+AntdFront 是一套基于 Ant Design 的实验性、拥抱 react hook,纯函数,实现按钮级权限，使用下一代数据流, 微前端框架 qiankun 的 多标签 React 前端模板
 
 ## 特性
 
@@ -11,7 +11,6 @@ AntdFront 是一套基于Ant Design 的实验性、拥抱react hook,纯函数,�
 - **微前端:** 使用 qiankun 实现微前端架构
 
 <img src="https://i.loli.net/2020/05/18/sRX52JT4yxlkm8e.gif" >
-
 
 ## 安装使用
 
@@ -23,6 +22,7 @@ AntdFront 是一套基于Ant Design 的实验性、拥抱react hook,纯函数,�
 ```
 
 ## 技术选型和动机介绍
+
 国际化
 
 https://zhuanlan.zhihu.com/p/291202582
@@ -32,10 +32,13 @@ https://zhuanlan.zhihu.com/p/291202582
 https://zhuanlan.zhihu.com/p/268890371
 
 动机：
+
 https://zhuanlan.zhihu.com/p/141738683
 
 ## 使用注意
-近期 正在准备数据流迁移至recoil,布局迁移至prolayout,国际化迁移至lingui.js
-webpack5 react17 已迁移完成
 
+recoil,webpack5 react17 i18n(lingui.js) prolayout react-router6 权限 已迁移完成
 
+近期完成 prolayout,qiankun 微前端路由 调优修改
+
+可切换至 v2 分支预览

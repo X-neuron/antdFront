@@ -26,11 +26,11 @@ const SecurityLayout = ({ children }) => {
   //   return <PageLoading />;
   // }
 
-  if (!login.isLogin && window.location.pathname !== "/user/login") {
-    return <Redirect from="window.location.href" to={`/user/login?${queryString}`} noThrow />;
-    // return <Redirect from="window.location.href" to="/user/login" />;
-    // redirectTo(`/user/login?${queryString}`);
-  }
+  // if (!login.isLogin && window.location.pathname !== "/user/login") {
+  //   return <Redirect from="window.location.href" to={`/user/login?${queryString}`} noThrow />;
+  //   // return <Redirect from="window.location.href" to="/user/login" />;
+  //   // redirectTo(`/user/login?${queryString}`);
+  // }
 
 
   return children;
