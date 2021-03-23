@@ -10,15 +10,15 @@ import styles from './index.less';
 
 const GlobalHeaderRight = (props) => {
   const { theme, layout } = props;
-  let className = styles.right;
+  // let className = styles.right;
 
-  if (theme === 'dark' && layout === 'top') {
-    className = `${styles.right}  ${styles.dark}`;
-  }
+  // if (theme === 'dark' && layout === 'top') {
+  const className = `${styles.right}  ${styles.dark}`;
+  // }
 
   return (
     <div className={className}>
-      
+
       <Tooltip title="使用文档">
         <a
           style={{

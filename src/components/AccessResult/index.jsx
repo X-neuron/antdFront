@@ -1,11 +1,10 @@
 import { Result, Button } from "antd";
 import { i18n } from "@lingui/core";
 import { t } from "@lingui/macro";
-
-// import useTabRouteModel from "@/models/useTabRoute"
+import { useNavigate } from "react-router-dom";
 
 const AccessResult = ({ code }) => {
-
+  const navigate = useNavigate();
   // const { openRoute } = useTabRouteModel();
   return (
     <>
@@ -13,8 +12,8 @@ const AccessResult = ({ code }) => {
         status={code}
         title={code}
         subTitle={i18n._(t`访问${code}`)}
-        // extra={<Button type="primary" onClick={() => openRoute("/")}>{i18n._(t`返回首页`)}</Button>}
-        extra={<Button type="primary" >{i18n._(t`返回首页`)}</Button>}
+        extra={<Button type="primary" onClick={() => navigate("/",{replace:true})}>{i18n._(t`返回首页`)}</Button>}
+        // extra={<Button type="primary" >{i18n._(t`返回首页`)}</Button>}
       />
     </>
   )

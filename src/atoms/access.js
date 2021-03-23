@@ -4,7 +4,7 @@ import { atom } from "recoil";
 
 export const accessAtom = atom({
   key:"accessAtom",
-  defalut:{
+  default:{
     // 放弃了这个设计，因为命名易冲突，导致优先获取access.key下的权限。
     // test1: {
     //   open: true,

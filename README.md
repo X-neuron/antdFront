@@ -2,11 +2,13 @@ English | [简体中文](./README-cn.md)
 
 # AntdFront
 
-Antdfront is a set of multi label react microfrontend template based on ant design, embracing react hook, pure function, realizing button level access, using the next generation of data flow  and micro front-end framework Qiankun
+Antdfront is a set of multi label experimental react microfrontend template based on ant design, embracing react hook, pure function, realizing button level access, using the next generation of data flow and micro front-end framework Qiankun
+
 <img src="https://i.loli.net/2020/05/18/sRX52JT4yxlkm8e.gif" >
 
 - **Native:** Built with react hook, webpack, babel, antd and other native components, supports PWA
-- **Minimal data flow:** Integrate the next-generation state manager for React
+- **Route:** React-route6 and pure Native components implement react multi tabs
+- **Minimal data flow:** Integrate the next-generation state manager recoil for React
 - **Micro Frontend:** Use qiankun to implement micro frontend
 
 ## Installation
@@ -19,6 +21,7 @@ Antdfront is a set of multi label react microfrontend template based on ant desi
 ```
 
 ## Technology choice and motivation
+
 i18n internationalization
 
 https://zhuanlan.zhihu.com/p/291202582
@@ -28,9 +31,11 @@ data-flow：
 https://zhuanlan.zhihu.com/p/268890371
 
 motivation：
+
 https://zhuanlan.zhihu.com/p/141738683
 
 ## Documentation
 
-Recently, we are preparing  migrate the data stream to recoil,layout migrate to the prolaytout.
-webpack5 ract17 i18n using lingui.js has already been Migrated complete
+recoil,webpack5 react17 i18n( lingui.js ）Prolayout react-router6 permission migration completed
+
+Recently, we have completed the optimization and modification of prolayout and Qiankun micro front-end routing

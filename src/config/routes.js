@@ -28,7 +28,7 @@
               {
               path: "/",
               component: "basicLayout",
-              access:'validUser',
+              // access:'validUser',
               menuTabs: [
                 {
                   path: "/",
