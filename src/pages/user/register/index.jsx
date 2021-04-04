@@ -6,7 +6,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { useState,useRef } from "react";
-import { Link } from "@reach/router";
+
 import { Popover, Progress,Tabs,Space,Form } from "antd";
 import ProForm, {ProFormCaptcha, ProFormCheckbox, ProFormText,ProFormSelect,ProFormGroup } from '@ant-design/pro-form';
 import Field from '@ant-design/pro-field';
@@ -14,7 +14,7 @@ import Field from '@ant-design/pro-field';
 import { usePersistFn } from "ahooks";
 
 import styles from "./index.less";
-
+import { Link } from 'react-router-dom';
 
 import { i18n } from "@lingui/core";
 import { t } from "@lingui/macro";
@@ -53,7 +53,7 @@ const Register = (props) => {
   const handleSubmit = async (values) => {
     const res = await userRegister(values);
     console.log(res);
-    
+
 
   };
 

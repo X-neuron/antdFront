@@ -41,17 +41,19 @@ const BasicLayout = (props) => {
         }}> {dom}</div>}
         selectedKeys={[activeKey]}
         // subMenuItemRender={(_, dom) => <div>pre {dom}</div>}
-        menuHeaderRender={() => (
-          <div
-            id="customize_menu_header" className={styles.logo}
-            onClick={() => {
-              window.open('www.baidu.com');
-            }}
-          >
-            <img src={logo} />
-            <h1>XX 系统?</h1>
-          </div>
-        )}
+        // menuHeaderRender={() => (
+        //   <div
+        //     id="customize_menu_header" className={styles.logo}
+        //     onClick={() => {
+        //       window.open('www.baidu.com');
+        //     }}
+        //   >
+        //     <img src={logo} />
+        //     <h1>XX 系统?</h1>
+        //   </div>
+        // )}
+        title={<h1>XX 系统</h1>}
+        logo={logo}
         rightContentRender={() => <RightContent />}
         // {...defaultProps}
         location={{
@@ -66,13 +68,14 @@ const BasicLayout = (props) => {
             {/* {ele} */}
           </Suspense>
         </ProLayout>
-         <SettingDrawer
-         getContainer={() => document.getElementById('prolayout')}
-         settings={settings}
-         onSettingChange={(changeSetting) => setSetting(changeSetting)}
+        <SettingDrawer
+          getContainer={() => document.getElementById('prolayout')}
+          settings={settings}
+          disableUrlParams={true}
+          onSettingChange={(changeSetting) => setSetting(changeSetting)}
         />
      </div>
-      
+
   );
 };
 

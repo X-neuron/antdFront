@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate  } from "react-router-dom";
-// import { redirectTo } from '@reach/router';
+
 // import PageLoading from '@/components/PageLoading';
 import { stringify } from "qs";
 import {  Outlet } from "react-router-dom";
@@ -17,7 +17,7 @@ const SecurityLayout = ({ children }) => {
 
   // const isLogin = currentUser && currentUser.userid;
   const login = useRecoilValue(loginStateAtom);
-  
+
   const queryString = stringify({
     redirect: window.location.href,
   });

@@ -28,7 +28,7 @@ const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 
 // react-dev-utils
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
-// const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin");
+const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin");
 const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 const typescriptFormatter = require("react-dev-utils/typescriptFormatter");
 const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
@@ -59,34 +59,44 @@ const getClientEnvironment = require("./env");
 
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-// const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
-// const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== "false";
+const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== "false";
 
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 // Get the path to the uncompiled service worker (if it exists).
-const {swSrc} = paths;
+// const {swSrc} = paths;
 
 
 // const appPackageJson = require(paths.appPackageJson);
 
 
+// style files regexes
+const cssRegex = /\.css$/;
+// const cssModuleRegex = /\.module\.css$/;
+const lessRegex = /\.less$/;
+// const lessModuleRegex = /\.module\.less$/;
+const sassRegex = /\.(scss|sass)$/;
+const csslessRegex = /\.((c|le)ss)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+// const lessRegex = /\.(less)$/;
+// const lessModuleRegex = /\.module\.less$/;
 
-// const hasJsxRuntime = (() => {
-//   if (process.env.DISABLE_NEW_JSX_TRANSFORM === "true") {
-//     return false;
-//   }
+const hasJsxRuntime = (() => {
+  if (process.env.DISABLE_NEW_JSX_TRANSFORM === "true") {
+    return false;
+  }
 
-//   try {
-//     require.resolve("react/jsx-runtime");
-//     return true;
-//   } catch (e) {
-//     return false;
-//   }
-// })();
+  try {
+    require.resolve("react/jsx-runtime");
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -110,103 +120,83 @@ module.exports = function () {
 
   // common function to get style loaders
 
-  const getStyleLoaders = (testReg,loader,options) => {
-    function applyLoaders(isCSSModules){
-      const loaders = [
-        isEnvDevelopment && require.resolve("style-loader"),
-        isEnvProduction && {
-          loader: MiniCssExtractPlugin.loader,
-          // css is located in `static/css`, use '../../' to locate index.html folder
-          // in production `paths.publicUrlOrPath` can be a relative path
-          options: paths.publicUrlOrPath.startsWith(".")
-            ? {
-                publicPath: "../../",
-                // hmr: isEnvDevelopment,
-              }: { },
+  const getStyleLoaders = (cssOptions, preProcessor) => {
+    const loaders = [
+      isEnvDevelopment && require.resolve("style-loader"),
+      isEnvProduction && {
+        loader: MiniCssExtractPlugin.loader,
+        // css is located in `static/css`, use '../../' to locate index.html folder
+        // in production `paths.publicUrlOrPath` can be a relative path
+        options: paths.publicUrlOrPath.startsWith(".")
+          ? { publicPath: "../../"}
+          : { },
+      },
+      {
+        loader: require.resolve("css-loader"),
+        options: cssOptions,
+      },
+      false && {
+        loader: "postcss-loader",
+        options: {
+          // Necessary for external CSS imports to work
+          // https://github.com/facebook/create-react-app/issues/2677
+          postcssOptions:{
+            // Options for PostCSS as we reference these options twice
+            // Adds vendor prefixing based on your specified browser support in
+            ident: "postcss",
+            plugins: [
+              require("postcss-flexbugs-fixes"),
+              require("postcss-preset-env")({
+                autoprefixer: {
+                  flexbox: "no-2009",
+                },
+                stage: 3,
+              }),
+              // Adds PostCSS Normalize as the reset css with default options,
+              // so that it honors browserslist config in package.json
+              // which in turn let's users customize the target behavior as per their needs.
+              postcssNormalize(),
+            ],
+          },
+          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
+      },
+    ].filter(Boolean);
+    if (preProcessor) {
+      loaders.push(
+        // https://github.com/webpack-contrib/postcss-loader/issues/477
+        // {
+        //   loader: require.resolve("resolve-url-loader"),
+        //   options: {
+        //     sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+        //   },
+        // },
         {
-          loader: require.resolve("css-loader"),
-          options: {
-            importLoaders: loader? 2:1,
-            ...(isCSSModules
-              ? {
-                  modules: {
-                    localIdentName: '[local]___[hash:base64:5]',
-                  },
-                }
-              : {}),
-          },
-        },
-        false && {
-          loader: "postcss-loader",
-          options: {
-            // Necessary for external CSS imports to work
-            // https://github.com/facebook/create-react-app/issues/2677
-            postcssOptions:{
-              // Options for PostCSS as we reference these options twice
-              // Adds vendor prefixing based on your specified browser support in
-              ident: "postcss",
-              plugins: [
-                require("postcss-flexbugs-fixes"),
-                require("postcss-preset-env")({
-                  autoprefixer: {
-                    flexbox: "no-2009",
-                  },
-                  stage: 3,
-                }),
-                // Adds PostCSS Normalize as the reset css with default options,
-                // so that it honors browserslist config in package.json
-                // which in turn let's users customize the target behavior as per their needs.
-                postcssNormalize(),
-              ],
+          loader: require.resolve(preProcessor),
+          options: preProcessor === "less-loader"
+            ? {
+              sourceMap: isEnvProduction && shouldUseSourceMap,
+              lessOptions: {
+                javascriptEnabled: true,
+              }
+            } // less loader 6.0.0 支持antd
+            : {
+              sourceMap: isEnvProduction && shouldUseSourceMap,
             },
-            sourceMap: isEnvDevelopment,
-          },
-        },
-      ].filter(Boolean);
-      if (loader) {
-        loaders.push(
-          // https://github.com/webpack-contrib/postcss-loader/issues/477
-          // {
-          //   loader: require.resolve("resolve-url-loader"),
-          //   options: {
-          //     sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-          //   },
-          // },
-          {
-            loader: require.resolve(loader),
-            options: options || {}
-          }
-        );
-      }
-      return loaders;
+        }
+      );
     }
 
-    return {
-      test:testReg,
-      oneOf:[
-        {
-          resourceQuery:/modules/,
-          use:applyLoaders(true)
-        },
-        {
-          use:applyLoaders(false)
-        }
-      ]
-    }
-  }
+    return loaders;
+  };
 
   return {
     mode: isEnvProduction ? "production" : isEnvDevelopment && "development",
     // Stop compilation early in production
     // bail: isEnvProduction,
     devtool: isEnvProduction
-      ? false :"cheap-module-source-map",//"eval-cheap-module-source-map"
+      ? false :"eval-cheap-module-source-map",
 
-    //webpack5.30 add featrue gc cahce
-    cache:{
-      type:'filesystem',
-    },
     // entry: [
     //   // "core-js/modules/es6.promise",
     //   // "core-js/modules/es6.array.iterator",
@@ -244,8 +234,7 @@ module.exports = function () {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
       // Add /* filename */ comments to generated require()s in the output.
-      // pathinfo: isEnvDevelopment,
-      pathinfo: false,
+      pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
@@ -306,7 +295,7 @@ module.exports = function () {
       },
       // 不能设为 false，因为 tnpm 是通过 link 处理依赖，设为 false tnpm 下会有大量的冗余模块
       symlinks: true,
-      // node_modules:path.resolve(module.cwd(), "../../node_modules"),
+      // node_modules:path.resolve(process.cwd(), "../../node_modules"),
       // modules:[path.resolve(process.cwd(), "../../node_modules"),"node_modules"],
 
       mainFields: ["browser", "module", "jsnext:main", "main"],
@@ -321,10 +310,10 @@ module.exports = function () {
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
 
-        new ModuleScopePlugin(paths.appSrc, [
-          paths.appPackageJson,
-          reactRefreshOverlayEntry,
-        ]),
+        // new ModuleScopePlugin(paths.appSrc, [
+        //   paths.appPackageJson,
+        //   reactRefreshOverlayEntry,
+        // ]),
       ],
     },
     resolveLoader: {
@@ -335,21 +324,16 @@ module.exports = function () {
       ],
     },
     optimization: {
-      minimize: isEnvProduction,
-      removeAvailableModules: isEnvProduction,
-      removeEmptyChunks: isEnvProduction,
-      runtimeChunk: {
-        name: "manifest"
-      },
+      minimize: true,
+      removeAvailableModules: isEnvDevelopment? false:true,
+      removeEmptyChunks: isEnvDevelopment? false:true,
       minimizer: [
-        new TerserPlugin({
+        isEnvProduction && new TerserPlugin({
           test: /\.js(\?.*)?$/i,
           // eslint-disable-next-line global-require
           /* webpack-5-react-scripts start */
-          // parallel: !process.env.CI,
-          //还有单核搞开发的？
           parallel: !process.env.CI,
-          extractComments: false,
+
           // sourceMap:isEnvProduction,
           /* webpack-5-react-scripts end */
           // sourceMap: true, // Must be set to true if using source-maps in production
@@ -376,36 +360,6 @@ module.exports = function () {
               // Pending further investigation:
               // https://github.com/terser-js/terser/issues/120
               inline: 2,
-
-              // turn off flags with small gains to speed up minification
-              arrows: false,
-              collapse_vars: false, // 0.3kb
-              comparisons: false,
-              computed_props: false,
-              hoist_funs: false,
-              hoist_props: false,
-              hoist_vars: false,
-              inline: false,
-              loops: false,
-              negate_iife: false,
-              properties: false,
-              reduce_funcs: false,
-              reduce_vars: false,
-              switches: false,
-              toplevel: false,
-              typeofs: false,
-
-              // a few flags with noticable gains/speed ratio
-              // numbers based on out of the box vendor bundle
-              booleans: true, // 0.7kb
-              if_return: true, // 0.4kb
-              sequences: true, // 0.7kb
-              unused: true, // 2.3kb
-
-              // required features to drop conditional branches
-              conditionals: true,
-              dead_code: true,
-              evaluate: true,
             },
             mangle: {
               safari10: true,
@@ -426,7 +380,7 @@ module.exports = function () {
         new OptimizeCssAssetsPlugin({
           cssProcessorOptions: {
             parser: SafePostCssParser,
-            map: isEnvDevelopment
+            map: shouldUseSourceMap
               ? {
                 // `inline: false` forces the sourcemap to be output into a
                 // separate file
@@ -450,178 +404,289 @@ module.exports = function () {
       //   chunks: "all",
       //   name: false,
       // },
-      splitChunks: isEnvDevelopment ? false:{
+      splitChunks: {
         chunks: "async",
         minSize: 30720,
         minChunks: 1,
         maxAsyncRequests: 6,
         maxInitialRequests: 4,
         automaticNameDelimiter: "-",
-        cacheGroups: {
-          common: {
-            name: "common",
-            chunks: "all",
-            priority: -20,
-            minChunks: 2,
-            reuseExistingChunk: true
-          },
-          vendors: {
-            name: "vendors",
-            test: /[\\/]node_modules[\\/]/,
-            chunks: "all",
-            priority: -10
-          },
-          react: {
-            name: "react",
-            test: /[\\/]node_modules[\\/](scheduler|react|react-dom|prop-types)/,
-            chunks: "all",
-            enforce: true
-          },
-          antd: {
-            name: "antd",
-            test: /[\\/]node_modules[\\/](@ant-design|antd)[\\/]/,
-            chunks: "all"
-          },
-          // styles: {
-          //   name: "styles",
-          //   test: /\.css$/,
-          //   chunks: "all",
-          //   enforce: true
-          // }
-        }
+        // cacheGroups: {
+        //   common: {
+        //     name: "common",
+        //     chunks: "all",
+        //     priority: -20,
+        //     minChunks: 2,
+        //     reuseExistingChunk: true
+        //   },
+        //   vendors: {
+        //     name: "vendors",
+        //     test: /[\\/]node_modules[\\/]/,
+        //     chunks: "all",
+        //     priority: -10
+        //   },
+        //   react: {
+        //     name: "react",
+        //     test: /[\\/]node_modules[\\/](scheduler|react|react-dom|prop-types)/,
+        //     chunks: "all",
+        //     enforce: true
+        //   },
+        //   antd: {
+        //     name: "antd",
+        //     test: /[\\/]node_modules[\\/](@ant-design|antd)[\\/]/,
+        //     chunks: "all"
+        //   },
+        //   styles: {
+        //     name: "styles",
+        //     test: /\.css$/,
+        //     chunks: "all",
+        //     enforce: true
+        //   }
+        // }
       },
+      // Keep the runtime chunk separated to enable long term caching
+      // https://twitter.com/wSokra/status/969679223278505985
+      // https://github.com/facebook/create-react-app/issues/5358
+      // runtimeChunk: {
+      //   name: entrypoint => `runtime-${entrypoint.name}`,
+      // },
+      // runtimeChunk: isEnvDevelopment ? true : "single"
 
     },
     module: {
+      parser: {
+        javascript: {
+          url: false, // disable parsing of `new URL()` syntax
+        },
+      },
       strictExportPresence: true,
       rules: [
-        // Disable require.ensure as it's not a standard language feature.
-        { parser: { requireEnsure: false } },
         // resolve : https://github.com/webpack/webpack/issues/11467 ^5.0.0-bata.30
-        // {
-        //   oneOf: [
+        {
+          test: /\.m?js/,
+          resolve: {
+            fullySpecified: false,
+          },
+        },
+        {
+          test: /\.(js|jsx|ts|tsx)$/,
+          // test: /\.(j|t)sx?$/,
+          exclude: /(node_modules|bower_components)/,
+          // resolve:{
+          //   fullySpecified: false
+          // },
+          use: [
             {
-              test: /\.m?js/,
-              resolve: {
-                fullySpecified: false,
-              },
-            },
-            {
-              test: /\.(js|jsx|ts|tsx)$/,
-              // test: /\.(j|t)sx?$/,
-              // exclude: /(node_modules|bower_components)/,
-              include: paths.appSrc,
-              // resolve:{
-              //   fullySpecified: false
-              // },
-              use: [
-                {
-                  loader: "babel-loader",
-                  options: {
-                    cacheDirectory: true,
-                    // See #6846 for context on why cacheCompression is disabled
-                    cacheCompression: false,
-                    compact: isEnvProduction,
-                    presets:  [
-                      ["@babel/preset-react", {
-                        "runtime": "automatic"
-                      }]
-                    ],
-                    plugins: [
-                      "lodash",
-                      // '@babel/plugin-proposal-object-rest-spread',
-                      "@babel/plugin-transform-runtime",
-                      // isEnvDevelopment && shouldUseReactRefresh && require.resolve("react-refresh/babel"),
-                      isEnvDevelopment && require.resolve("react-refresh/babel"),
-                    ].filter(Boolean),
-                  },
-                },
-              ],
-            },
-            // {
-            //   exclude: [/node_modules/],
-            //   test: /\.(ts|js)x?$/,
-            //   use: ['source-map-loader'],
-            //   enforce: 'pre',
-            // },
-            getStyleLoaders(/\.(css)(\?.*)?$/),
-            getStyleLoaders(/\.(less)(\?.*)?$/,'less-loader',{
-              sourceMap: isEnvDevelopment,
-              lessOptions: {
-                javascriptEnabled: true,
-              }
-            }),
-            getStyleLoaders(/\.(scss|sass)(\?.*)?$/,'sass-loader',{
-              sourceMap: isEnvDevelopment,
-            }),
-            {
-              test: /\.(svg|eot|woff|woff2|ttf)(\?.*)?$/,
-              use: [
-                {
-                  loader: "file-loader",
-                  options: {
-                    outputPath: "static/",
-                    esModule: false,
-                    name: "static/media/[name].[hash:8].[ext]",
-                  },
-                },
-              ],
-            },
-            {
-              test: /\.(txt|text|md)$/,
-              use: [
-                {
-                  loader: "raw-loader",
-                },
-              ],
-            },
-            {
-              test: /\.(bmp|png|jpe?g|gif|webp|ico)(\?.*)?$/,
-              use: [
-                {
-                  loader: "url-loader",
-                  options: {
-                    limit: 10000,
-                    esModule: false,
-                    name: "static/media/[name].[hash:8].[ext]",
-                    outputPath: "static/",
-                    fallback: {
-                      loader: "file-loader",
-                      options: {
-                        name: "[name].[hash:8].[ext]",
-                        outputPath: "static/media/[name].[hash:8].[ext]",
-                        esModule: false,
-                      },
-                    },
-                    // mimetype:'image/tif'
-                  },
-                },
-              ],
-            },
-            {
-              test: /\.html$/,
-              use: "html-loader",
-            },
-            {
-              test: /\.(mp4|webm)$/,
-              use: {
-                loader: "url-loader",
-                options: {
-                  limit: 10000,
-                },
-              },
-            },
-            {
-              test: [/\.avif$/],
-              loader: require.resolve("url-loader"),
+              loader: "babel-loader",
               options: {
-                limit: 10000,
-                mimetype: "image/avif",
+                cacheDirectory: true,
+                // See #6846 for context on why cacheCompression is disabled
+                cacheCompression: false,
+                compact: isEnvProduction,
+                presets:  [
+                  ["@babel/preset-react", {
+                    "runtime": "automatic"
+                  }]
+                ],
+                plugins: [
+                  "lodash",
+                  // '@babel/plugin-proposal-object-rest-spread',
+                  "@babel/plugin-transform-runtime",
+                  // isEnvDevelopment && shouldUseReactRefresh && require.resolve("react-refresh/babel"),
+                  isEnvDevelopment && require.resolve("react-refresh/babel"),
+                ].filter(Boolean),
+              },
+            },
+          ],
+        },
+        {
+          exclude: [/node_modules/],
+          test: /\.(ts|js)x?$/,
+          use: ['source-map-loader'],
+          enforce: 'pre',
+        },
+        // {
+        //   test: cssRegex,
+        //   include: [/[\\/]node_modules[\\/].*antd/],
+        //   // resourceQuery:/modules/,
+        //   use: getStyleLoaders(
+        //     {
+        //       // importLoaders: 2,
+        //       modules:false,
+        //       sourceMap: isEnvProduction
+        //         ? shouldUseSourceMap
+        //         : isEnvDevelopment,
+        //     },
+        //   ),
+        // },
+        // {
+        //   test: lessRegex,
+        //   exclude: [/[\\/]node_modules[\\/].*antd/],
+        //   // resourceQuery:/modules/,
+        //   use: getStyleLoaders(
+        //     {
+        //       // importLoaders: isEnvProduction ? 3 : 2,
+        //       modules: {
+        //         localIdentName: "[local]___[hash:base64:5]",
+        //       },
+        //       // modules: true,
+        //       sourceMap: isEnvProduction
+        //         ? shouldUseSourceMap
+        //         : isEnvDevelopment,
+        //     },
+        //   ),
+        //   // Don't consider CSS imports dead code even if the
+        //   // containing package claims to have no side effects.
+        //   // Remove this when webpack adds a warning or an error for this.
+        //   // See https://github.com/webpack/webpack/issues/6571
+        //   sideEffects: true,
+        // },
+        {
+          test: csslessRegex,
+          include: [/[\\/]node_modules[\\/].*antd/],
+          // resourceQuery:/modules/,
+          use: getStyleLoaders(
+            {
+              // importLoaders: 2,
+              modules:{auto:true},
+              importLoaders: 1,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
+            },
+            "less-loader"
+          ),
+        },
+        {
+          test: csslessRegex,
+          exclude: [/[\\/]node_modules[\\/].*antd/],
+          // resourceQuery:/modules/,
+          use: getStyleLoaders(
+            {
+              importLoaders: 2,
+              modules: {
+                localIdentName: "[local]___[hash:base64:5]",
+              },
+              // modules: true,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
+            },
+            "less-loader"
+          ),
+          // Don't consider CSS imports dead code even if the
+          // containing package claims to have no side effects.
+          // Remove this when webpack adds a warning or an error for this.
+          // See https://github.com/webpack/webpack/issues/6571
+          sideEffects: true,
+        },
+
+        // Adds support for CSS Modules, but using SASS
+        // using the extension .module.scss or .module.sass
+        // Opt-in support for SASS (using .scss or .sass extensions).
+        // By default we support SASS Modules with the
+        // extensions .module.scss or .module.sass
+        {
+          test: sassRegex,
+          exclude: sassModuleRegex,
+          use: getStyleLoaders(
+            {
+              importLoaders: 3,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
+            },
+            "sass-loader",
+          ),
+          // Don't consider CSS imports dead code even if the
+          // containing package claims to have no side effects.
+          // Remove this when webpack adds a warning or an error for this.
+          // See https://github.com/webpack/webpack/issues/6571
+          sideEffects: true,
+        },
+        // Adds support for CSS Modules, but using SASS
+        // using the extension .module.scss or .module.sass
+        {
+          test: sassModuleRegex,
+          use: getStyleLoaders(
+            {
+              importLoaders: 3,
+              sourceMap: isEnvProduction
+                ? shouldUseSourceMap
+                : isEnvDevelopment,
+              modules: {
+                getLocalIdent: getCSSModuleLocalIdent,
+              },
+            },
+            "sass-loader",
+          ),
+        },
+        {
+          test: /\.(svg|eot|woff|woff2|ttf)(\?.*)?$/,
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                outputPath: "static/",
+                esModule: false,
                 name: "static/media/[name].[hash:8].[ext]",
               },
-            }
-        //   ]
-        // }
+            },
+          ],
+        },
+        {
+          test: /\.(txt|text|md)$/,
+          use: [
+            {
+              loader: "raw-loader",
+            },
+          ],
+        },
+        {
+          test: /\.(png|jpe?g|gif|webp|ico)(\?.*)?$/,
+          use: [
+            {
+              loader: "url-loader",
+              options: {
+                limit: 10000,
+                esModule: false,
+                name: "static/media/[name].[hash:8].[ext]",
+                outputPath: "static/",
+                fallback: {
+                  loader: "file-loader",
+                  options: {
+                    name: "[name].[hash:8].[ext]",
+                    outputPath: "static/media/[name].[hash:8].[ext]",
+                    esModule: false,
+                  },
+                },
+                // mimetype:'image/tif'
+              },
+            },
+          ],
+        },
+        {
+          test: /\.html$/,
+          use: "html-loader",
+        },
+        {
+          test: /\.(mp4|webm)$/,
+          use: {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+            },
+          },
+        },
+        {
+          test: [/\.avif$/],
+          loader: require.resolve("url-loader"),
+          options: {
+            limit: 10000,
+            mimetype: "image/avif",
+            name: "static/media/[name].[hash:8].[ext]",
+          },
+        },
       ],
     },
     [isEnvDevelopment ? "devServer" : "ignoreWarnings"]: isEnvDevelopment ? {
@@ -695,23 +760,15 @@ module.exports = function () {
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
-      // isEnvProduction &&
-      //   shouldInlineRuntimeChunk &&
-      //   new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
+      isEnvProduction &&
+        shouldInlineRuntimeChunk &&
+        new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
       // Makes some environment variables available in index.html.
       // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
       // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
       // It will be an empty string unless you specify "homepage"
       // in `package.json`, in which case it will be the pathname of that URL.
-      // new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
-      // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
-    // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
-    new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
-      PUBLIC_URL: paths.appPublic,
-      // You can pass any key-value pairs, this was just an example.
-      // WHATEVER: 42 will replace %WHATEVER% with 42 in index.html.
-    }),
-
+      new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(paths.appPath),
@@ -735,17 +792,19 @@ module.exports = function () {
       // https://github.com/facebook/react/tree/master/packages/react-refresh
       isEnvDevelopment &&
         // shouldUseReactRefresh &&
-        new ReactRefreshWebpackPlugin({
-          overlay: {
-            entry: webpackDevClientEntry,
-            // The expected exports are slightly different from what the overlay exports,
-            // so an interop is included here to enable feedback on module-level errors.
-            module: reactRefreshOverlayEntry,
-            // Since we ship a custom dev client and overlay integration,
-            // the bundled socket handling logic can be eliminated.
-            sockIntegration: false,
-          },
-        }),
+        new ReactRefreshWebpackPlugin(
+          // {
+          //   overlay: {
+          //     // entry: webpackDevClientEntry,
+          //     // The expected exports are slightly different from what the overlay exports,
+          //     // so an interop is included here to enable feedback on module-level errors.
+          //     // module: reactRefreshOverlayEntry,
+          //     // Since we ship a custom dev client and overlay integration,
+          //     // the bundled socket handling logic can be eliminated.
+          //     // sockIntegration: false,
+          //   },
+          // }
+        ),
       isEnvProduction &&
         new CompressionPlugin({
           algorithm: "gzip",
@@ -771,7 +830,7 @@ module.exports = function () {
       new CopyPlugin({
         patterns: [
           { from: paths.appPublic, to: path.join(paths.appBuild,"/public" ) },
-          // { from: path.join(paths.appSrc,"/locales" ), to: path.join(paths.appBuild,"/public/locales" ) },
+          { from: path.join(paths.appSrc,"/locales" ), to: path.join(paths.appBuild,"/public/locales" ) },
         ],
         options: {
           concurrency: 100,
@@ -784,7 +843,7 @@ module.exports = function () {
           // both options are optional
           filename: "static/css/[name].[contenthash:8].css",
           chunkFilename: "static/css/[name].[contenthash:8].chunk.css",
-          ignoreOrder: true, // Enable to remove warnings about conflicting order
+          // ignoreOrder: false, // Enable to remove warnings about conflicting order
         }),
 
       // Generate an asset manifest file with the following content:
@@ -815,7 +874,6 @@ module.exports = function () {
 
 
       isEnvProduction &&
-      fs.existsSync(swSrc) &&
         new WorkboxWebpackPlugin.GenerateSW({
           clientsClaim: true, // 让浏览器立即 servece worker 被接管
           skipWaiting: true, // 更新 sw 文件后，立即插队到最前面
@@ -832,10 +890,6 @@ module.exports = function () {
             // a route with query params (e.g. auth callbacks).
             new RegExp("/[^/?]+\\.[^/]+$"),
           ],
-          // Bump up the default maximum size (2mb) that's precached,
-          // to make lazy-loading failure scenarios less likely.
-          // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         }),
 
       // TypeScript type checking

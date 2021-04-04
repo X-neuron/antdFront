@@ -37,7 +37,7 @@ const TabRoute = (props) => {
   const ele = useOutlet();
 
   const location = useLocation();
- 
+
   const navigate = useNavigate();
 
   const {routeConfig,routePath} = pickRoutes(route,location.pathname);
@@ -97,7 +97,7 @@ const TabRoute = (props) => {
       >
         {/* <Suspense fallback={<Pageloading tip="loading" />}> */}
         {tabList.map(item => (
-            <TabPane tab={item.name} key={item.path}> 
+            <TabPane tab={item.name} key={item.path}>
               {item.page}
             </TabPane>
         ))}
