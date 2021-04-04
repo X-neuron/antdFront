@@ -127,7 +127,7 @@ module.exports = function () {
         {
           loader: require.resolve("css-loader"),
           options: {
-            importLoaders: loader? 2:1,
+            importLoaders: loader? 1:0,
             ...(isCSSModules
               ? {
                   modules: {
@@ -338,9 +338,7 @@ module.exports = function () {
       minimize: isEnvProduction,
       removeAvailableModules: isEnvProduction,
       removeEmptyChunks: isEnvProduction,
-      runtimeChunk: {
-        name: "manifest"
-      },
+
       minimizer: [
         new TerserPlugin({
           test: /\.js(\?.*)?$/i,

@@ -23,6 +23,7 @@ module.exports = {
     '@babel/plugin-transform-react-inline-elements',
     '@babel/plugin-transform-react-constant-elements',
     'macros',
+    '@umijs/babel-plugin-auto-css-modules',
     // "babel-plugin-macros",
     // [
     //   "babel-plugin-styled-components",
