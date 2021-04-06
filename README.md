@@ -36,6 +36,6 @@ https://zhuanlan.zhihu.com/p/141738683
 
 ## Documentation
 
-recoil,webpack5 react17 i18n( lingui.js ）Prolayout react-router6 prolayout permission migration completed
+recoil,webpack5 react17 i18n( lingui.js ）Prolayout react-router6 prolayout permission micro front-end routing migration completed
 
-Recently, we will complete Qiankun micro front-end routing
+Recently, will publish a real world edition

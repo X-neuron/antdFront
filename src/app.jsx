@@ -8,7 +8,6 @@ import { useFavicon } from "ahooks";
 import { useRecoilValue } from 'recoil';
 import { appRouteAtom,staticRouteAtom } from '@/atoms/route';
 
-import { start } from "qiankun";
 
 function App() {
 
@@ -22,16 +21,13 @@ function App() {
   const appRoute = useRecoilValue(appRouteAtom);
 
   let element = useRoutes(appRoute);
-  
+
   return (
     <Locale>
       {element}
     </Locale>
   )
 }
-
-
-start();
 
 // export default hot(App);
 export default App;

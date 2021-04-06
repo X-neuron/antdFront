@@ -65,18 +65,18 @@
                 },
                 {
                   name: "Micro-front",
-                  path: "/micro",
+                  path: "micro",
                   icon: "PaperClipOutlined",
                   children: [
                     {
                       name: "material-ui",
-                      path: "material",
+                      path: "material/*",
                       access: "microOpen",
                       component: "http://localhost:8002" // 微前端配置
                     },
                     {
                       name: "vue2",
-                      path: "vue2",
+                      path: "vue2/*",
                       access: "microOpen",
                       component: "http://localhost:8001", // 微前端配置
                     },

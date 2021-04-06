@@ -45,15 +45,11 @@ const pages = new Map([
   ['Default',<Default />] //default microapp
 ])
 
-
-
-
-
-const getPage = memoized((pageStr,access) => {
+const getPage = memoized((pageStr,access,fullPath) => {
   const upperFirstPageStr = _.upperFirst(pageStr);
   let page = pages.get(upperFirstPageStr);
   if(isHttp(pageStr)){
-    return <MicroApp entry={pageStr} />
+    return <MicroApp entry={pageStr} fullPath={fullPath} />
   }
   if(access){
     return (

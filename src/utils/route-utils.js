@@ -64,7 +64,7 @@ function generateProlayoutMenuDataItem (menuTabs,basePath) {
       fullPath: resPath.pathname,
       key:resPath.pathname,
       icon: getIcon(conf.icon),
-      element: conf.component ? getPage(conf.component,conf.access) : getPage("Default"),
+      element: conf.component ? getPage(conf.component,conf.access,resPath.pathname) : getPage("Default"),
       caseSensitive: false,
       access: conf.access,
     }
@@ -105,7 +105,7 @@ function generateRoute(rConfig) {
 
     return config.map(conf => {
       const resPath = resolvePath(conf.path, basePath);
-      
+
       let route = {
         value: conf.component,
         // path: curPath,
@@ -114,7 +114,7 @@ function generateRoute(rConfig) {
         // 完整路径 parentPath:/a  childrenPath:b  fullPath:/a/b
         fullPath: resPath.pathname,
         // element: conf.component,
-        element: conf.component ? getPage(conf.component,conf.access) : getPage("Default"),
+        element: conf.component ? getPage(conf.component,conf.access,resPath.pathname) : getPage("Default"),
         caseSensitive: false,
         // authority: conf.authority,
         name: conf.name ?? conf.component ?? conf.path,

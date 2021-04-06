@@ -9,6 +9,9 @@ import { BrowserRouter } from "react-router-dom";
 
 // mock();
 
+import { start } from "qiankun";
+
+
 const initalContainer = document.getElementById("root");
 
 
@@ -31,5 +34,5 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// start();
 
+start();

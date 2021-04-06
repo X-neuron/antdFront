@@ -38,6 +38,6 @@ https://zhuanlan.zhihu.com/p/141738683
 
 ## 使用注意
 
-recoil,webpack5 react17 i18n(lingui.js) prolayout react-router6 权限 prolayout 布局 已迁移完成
+recoil,webpack5 react17 i18n(lingui.js) prolayout react-router6 权限 prolayout 布局 微前端路由 已迁移完成
 
-近期完成 qiankun 微前端路由 调优修改
+近期发布实战 功能版

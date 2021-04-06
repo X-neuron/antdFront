@@ -1,26 +1,33 @@
 import { useRef } from "react";
-import { loadMicroApp } from "qiankun";
+import { loadMicroApp } from 'qiankun';
 import { useMount, useUnmount } from "ahooks";
 import { customAlphabet } from "nanoid";
 
+
 const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz", 10);
 
-const MicroApp = ({ entry, params }) => {
+
+
+const MicroApp = ({ entry, fullPath }) => {
   const container = useRef(null);
   const containerID = useRef(nanoid(10));
   // const id = nanoid(10);
   const microApp = useRef(null);
-
+  console.log(fullPath);
   useMount(() => {
     microApp.current = loadMicroApp({
       name: `app${containerID.current}`,
       entry,
       // container: `#${id}`,
+      props:{
+        basePath:fullPath
+      },
       container: `#${containerID.current}`,
     }, {
       sandbox: { strictStyleIsolation: true },
       singular: false
     });
+
   });
 
   useUnmount(() => {
