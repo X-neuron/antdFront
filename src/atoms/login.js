@@ -4,11 +4,11 @@ export const loginStateAtom = atom({
   key:"loginStateAtom",
   default:{
     role: null,
-    userId: null,
-    userName: null,
-    isLogin: true,
-    // isLogin: false,
-    // token: null,
+    id: null,
+    account: "test",
+    isLogin: false,
+    // isLogin: true,
+    token: null,
     ssKey: null
   }
 });

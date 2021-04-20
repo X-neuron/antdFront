@@ -552,19 +552,19 @@ module.exports = function () {
             getStyleLoaders(/\.(scss|sass)(\?.*)?$/,'sass-loader',{
               sourceMap: isEnvDevelopment,
             }),
-            {
-              test: /\.(svg|eot|woff|woff2|ttf)(\?.*)?$/,
-              use: [
-                {
-                  loader: "file-loader",
-                  options: {
-                    outputPath: "static/",
-                    esModule: false,
-                    name: "static/media/[name].[hash:8].[ext]",
-                  },
-                },
-              ],
-            },
+            // {
+            //   test: /\.(svg|eot|woff|woff2|ttf)(\?.*)?$/,
+            //   use: [
+            //     {
+            //       loader: "file-loader",
+            //       options: {
+            //         outputPath: "static/",
+            //         esModule: false,
+            //         name: "/media/[name].[hash:8].[ext]",
+            //       },
+            //     },
+            //   ],
+            // },
             {
               test: /\.(txt|text|md)$/,
               use: [
@@ -574,20 +574,20 @@ module.exports = function () {
               ],
             },
             {
-              test: /\.(bmp|png|jpe?g|gif|webp|ico)(\?.*)?$/,
+              test: /\.(bmp|png|jpe?g|gif|webp|ico|svg|eot|woff|woff2|ttf)(\?.*)?$/,
               use: [
                 {
                   loader: "url-loader",
                   options: {
                     limit: 10000,
                     esModule: false,
-                    name: "static/media/[name].[hash:8].[ext]",
+                    name: "media/[name].[hash:8].[ext]",
                     outputPath: "static/",
                     fallback: {
                       loader: "file-loader",
                       options: {
                         name: "[name].[hash:8].[ext]",
-                        outputPath: "static/media/[name].[hash:8].[ext]",
+                        outputPath: "media/[name].[hash:8].[ext]",
                         esModule: false,
                       },
                     },
@@ -667,29 +667,55 @@ module.exports = function () {
         failOnError: false, // show a warning when there is a circular dependency
       }),
 
-      new HtmlWebpackPlugin({
-        // hash: false, // 防止缓存，在引入的文件后面加hash (PWA就是要缓存，这里设置为false)
-        // filename: HTMLTemplateFileName, // 生成的html存放路径，相对于 output.path
-        // template: `${HTMLTemplateFileFolder}/${HTMLTemplateFileName}`, // html模板路径
-        inject: true, // 是否将js放在body的末尾
-        template: paths.appHtml,
-        ...(isEnvProduction
-          ? {
-            minify: {
-              removeComments: true,
-              collapseWhitespace: true,
-              removeRedundantAttributes: true,
-              useShortDoctype: true,
-              removeEmptyAttributes: true,
-              removeStyleLinkTypeAttributes: true,
-              keepClosingSlash: true,
-              minifyJS: true,
-              minifyCSS: true,
-              minifyURLs: true,
-            },
-          }
-          : undefined),
-      }),
+      // new HtmlWebpackPlugin({
+      //   // hash: false, // 防止缓存，在引入的文件后面加hash (PWA就是要缓存，这里设置为false)
+      //   // filename: HTMLTemplateFileName, // 生成的html存放路径，相对于 output.path
+      //   // template: `${HTMLTemplateFileFolder}/${HTMLTemplateFileName}`, // html模板路径
+      //   inject: true, // 是否将js放在body的末尾
+      //   template: paths.appHtml,
+      //   ...(isEnvProduction
+      //     ? {
+      //       minify: {
+      //         removeComments: true,
+      //         collapseWhitespace: true,
+      //         removeRedundantAttributes: true,
+      //         useShortDoctype: true,
+      //         removeEmptyAttributes: true,
+      //         removeStyleLinkTypeAttributes: true,
+      //         keepClosingSlash: true,
+      //         minifyJS: true,
+      //         minifyCSS: true,
+      //         minifyURLs: true,
+      //       },
+      //     }
+      //     : undefined),
+      // }),
+       // Generates an `index.html` file with the <script> injected.
+       new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appHtml,
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
@@ -701,15 +727,7 @@ module.exports = function () {
       // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
       // It will be an empty string unless you specify "homepage"
       // in `package.json`, in which case it will be the pathname of that URL.
-      // new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
-      // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
-    // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
-    new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
-      PUBLIC_URL: paths.appPublic,
-      // You can pass any key-value pairs, this was just an example.
-      // WHATEVER: 42 will replace %WHATEVER% with 42 in index.html.
-    }),
-
+      new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(paths.appPath),
@@ -813,7 +831,6 @@ module.exports = function () {
 
 
       isEnvProduction &&
-      fs.existsSync(swSrc) &&
         new WorkboxWebpackPlugin.GenerateSW({
           clientsClaim: true, // 让浏览器立即 servece worker 被接管
           skipWaiting: true, // 更新 sw 文件后，立即插队到最前面

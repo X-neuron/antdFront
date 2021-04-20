@@ -18,7 +18,7 @@ export default {
   //   data: {
   //     code: Mock.Random.string(4)
   //   },
-  "POST /api/login/account": {
+  "POST /auth/login": {
     status: 200,
     data: {
       role: "user",
@@ -29,7 +29,7 @@ export default {
       isLogin: true
     }
   },
-  "/api/login/captcha": {
+  "/auth/login/captcha": {
     status: 200,
     data: {
       code: Mock.Random.string(4)

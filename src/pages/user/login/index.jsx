@@ -10,15 +10,16 @@ import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, {ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { Link } from 'react-router-dom';
-import CountDownButton from '@/components/CountDownButton';
+
 // import { getFakeCaptcha } from '@/services/login';
 import { i18n } from "@lingui/core";
-import { t } from "@lingui/macro";
-import { Trans } from "@lingui/macro";
+import { t,Trans } from "@lingui/macro";
 
 import styles from './index.less';
 import { accountLogin } from '@/services/login'
-
+import { loginStateAtom} from '@/atoms/login';
+import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 
 const LoginMessage = ({ content }) => (
   <Alert
@@ -36,10 +37,18 @@ const Login = (props) => {
   const { status } = userLogin;
   const [type, setType] = useState('account');
   const [captCha, setCaptCha] = useState(false);
-
+  const [login,setLogin] = useRecoilState(loginStateAtom);
+  const navigate = useNavigate();
   const handleSubmit = (values) => {
-    const res = accountLogin(values);
-    console.log('login res:',res);
+    // const res = accountLogin(values);
+    // console.log('login res:',res);
+    setLogin({
+      ...login,
+      isLogin:true
+    });
+    // 应该提取redirect ，此处省略
+    navigate("/",{replace:true});
+
   };
   return (
     <div className={styles.main}>
@@ -62,7 +71,7 @@ const Login = (props) => {
           return Promise.resolve();
         }}
       >
-        <Tabs activeKey={type} onChange={setType}>
+        <Tabs activeKey={type} onChange={setType} centered >
           <Tabs.TabPane
             key="account"
             tab={i18n._(t`账号密码登陆`)}
@@ -161,7 +170,7 @@ const Login = (props) => {
               countDown={10}
               onGetCaptcha={async (mobile) => {
                 // const result = await getFakeCaptcha(mobile);
-                
+
                 message.success('获取验证码成功！验证码为：1234');
               }}
             />

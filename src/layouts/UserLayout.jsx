@@ -6,6 +6,9 @@ import SelectLang from "@/components/SelectLang";
 import logo from "@/assets/logo.svg";
 import styles from "./UserLayout.less";
 
+import { i18n } from "@lingui/core";
+import { t,Trans } from "@lingui/macro";
+
 const links = [
   {
     key: "help",
@@ -27,7 +30,7 @@ const links = [
 
 
 const UserLayout = () => {
-  useTitle('欢迎登陆科研档案管理系统');
+  useTitle(i18n._(t`欢迎使用AntdFront's 多标签模板`));
   return (
     <div className={styles.container}>
       <div className={styles.lang}>
@@ -41,7 +44,7 @@ const UserLayout = () => {
               <span className={styles.title}>  Antd Front  </span>
             </Link>
           </div>
-          <div className={styles.desc}>Antd Front遵循 Ant Design 及 开放平台 设计规范</div>
+          <div className={styles.desc}><Trans>Antd Front 遵循 Ant Design 设计规范</Trans></div>
         </div>
         <Outlet />
       </div>

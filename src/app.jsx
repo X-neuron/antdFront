@@ -1,12 +1,11 @@
 
-import PageLoading from "@/components/PageLoading";
-import { BrowserRouter,useRoutes } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 // import { setConfig } from 'react-hot-loader';
 import Locale from "@/components/Locale";
 
 import { useFavicon } from "ahooks";
 import { useRecoilValue } from 'recoil';
-import { appRouteAtom,staticRouteAtom } from '@/atoms/route';
+import { appRouteAtom } from '@/atoms/route';
 
 
 function App() {
@@ -14,9 +13,7 @@ function App() {
   useFavicon("./public/favicon.ico");
 
   // 父路由伟/* 子路由为/ 无法导航 至子组件 是个bug
-  // const staticRoute = useRecoilValue(staticRouteAtom);
-  // useWhyDidYouUpdate('useWhyDidYouUpdate');
-  // let element = useRoutes(staticRoute);
+
 
   const appRoute = useRecoilValue(appRouteAtom);
 
@@ -29,6 +26,4 @@ function App() {
   )
 }
 
-// export default hot(App);
 export default App;
-// export default App;

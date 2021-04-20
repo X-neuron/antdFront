@@ -4,12 +4,12 @@ import ReactDom from "react-dom";
 import App from "./app";
 import { RecoilRoot } from "recoil";
 import { BrowserRouter } from "react-router-dom";
-// 生产环境 请注释掉mock
-// import mock from "./mock";
-
-// mock();
-
 import { start } from "qiankun";
+
+// 真实线上环境 请注释掉mock
+import runMock from "@/mock";
+
+runMock();
 
 
 const initalContainer = document.getElementById("root");

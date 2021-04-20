@@ -1,17 +1,51 @@
-import react, { useState } from "react";
-import routeConfig from "../config/routes";
-import { resolvePath, matchRoutes } from "react-router-dom";
-// import _ from "lodash";
+
+import routeConfig from "@/config/routes";
+import { resolvePath } from "react-router-dom";
 import getPage from "@/config/pages";
 import getIcon from '@/config/icons';
+import _ from 'lodash';
+// import { i18n } from "@lingui/core";
+// import { t } from "@lingui/macro";
+// 单独 拉出config 因为 修改route的时候，是按"@/config/routes"的格式提供的。
+// 而后端不可能可能提供key，resolvepath之类的参数。
+// staticConfig 以 menutabs 为标志。
+const extractConfig = extractRouteConfig(routeConfig);
+export const staticConfig = extractConfig.staticConfig;
+export const dynamicConfig = extractConfig.dynamicConfig;
 
-const rmtConfig = generateRoute(routeConfig);
+function extractRouteConfig(rConfig) {
+  if (!rConfig) return;
+  let dynamicConfig = null;
+  const copyConfig = (config) => {
+
+    return config.map(conf => {
+      let route = {
+        ...conf
+      }
+      if (conf.children) {
+        route.children = copyConfig(conf.children);
+      }else{
+        // 遇到menutabs 则 返回，将 静态和菜单的动态路由分开 ，有atom进行管理。
+        if(!dynamicConfig && conf.menuTabs){ // 确保只添加一次。
+          dynamicConfig = _.cloneDeep(conf.menuTabs);
+          route.menuTabs = true
+        }
+      }
+
+      return route;
+    });
+
+  };
+
+  const staticConfig = copyConfig(rConfig);
+  return { staticConfig, dynamicConfig };
+}
+
+// 抽离的congfig 去生成route config 和 menuconfig
 
 
-export const staticRoute = rmtConfig.routes;
 
-
-export const dynamicRoute = rmtConfig.menuTabs;
+// const rmtConfig = generateRouteAndProlayoutMenus(staticConfig,dynamicConfig);
 
 // 通常权限只更新menu的route 故 在此做区分。
 // 基本不变的路由为 staticRoute.
@@ -51,12 +85,31 @@ export const dynamicRoute = rmtConfig.menuTabs;
 //   },
 // ]
 
+// export function transConfigName(routeConfig,locale){
+
+//   return routeConfig.map(conf => {
+//     let confItem = {
+//       ...conf
+//     }
+//     if(conf.name){
+//       confItem.name = i18n._(conf.name);
+//     }
+//     if(conf.children){
+//       confItem.children = transConfigName(conf.children)
+//     }
+//     return confItem;
+//   })
+// }
+
 function generateProlayoutMenuDataItem (menuTabs,basePath) {
   return menuTabs.map(conf => {
-    const resPath = resolvePath(conf.path, basePath);
+    // fullPath 可去掉*号，以免引起url路径错误
+    // /*的配置只会在路由  路径的末尾...
+    const resPath = resolvePath(_.replace(conf.path,'/*',''),basePath);
 
     let menuDataItem = {
       // name为空则component 代替
+      // 加上翻译
       name: conf.name ? conf.name: conf.component,
       // react router6 支持的父子路径
       path: conf.path,
@@ -80,8 +133,8 @@ function generateProlayoutMenuDataItem (menuTabs,basePath) {
 
 // 根据 @/config/routes.js 里的格式，解析出全局的路由。构造好路由结构。
 
-function generateRoute(rConfig) {
-  if (!rConfig) return;
+export function generateRouteAndProlayoutMenus(staticConf,dynamicConf) {
+  if (!staticConf||!dynamicConf) return;
 
   let menuTabs = null;
       // 与prolayout 兼容的menuItem;
@@ -104,52 +157,53 @@ function generateRoute(rConfig) {
   const generateRmtConfig = (config, basePath) => {
 
     return config.map(conf => {
-      const resPath = resolvePath(conf.path, basePath);
+      // fullPath 可去掉*号，以免引起url路径错误
+      const resPath = resolvePath(_.replace(conf.path,'/*',''),basePath);
 
       let route = {
         value: conf.component,
         // path: curPath,
-        //reactRouter 6 的 父子path
+        //reactRouter 6 的 父子path 用来喂给react router6吃的
         path: conf.path,
         // 完整路径 parentPath:/a  childrenPath:b  fullPath:/a/b
+        // fullPath 可去掉*号，以免引起url路径错误
         fullPath: resPath.pathname,
         // element: conf.component,
         element: conf.component ? getPage(conf.component,conf.access,resPath.pathname) : getPage("Default"),
         caseSensitive: false,
         // authority: conf.authority,
-        name: conf.name ?? conf.component ?? conf.path,
+        name: conf.name ? conf.name: conf.component,
         access: conf.access,
       }
-
-      // 遇到menutabs 则 返回，将 静态和菜单的动态路由分开 ，有atom进行管理。
-      if(!menuTabs && conf.menuTabs){ // 确保只添加一次。
-        menuTabs = generateProlayoutMenuDataItem(conf.menuTabs,basePath)
-        route.menuTabs = true;
-        // 将全局的和功能菜单分开。方便路由多层次嵌套
-        // route.path = route.path.endsWith("/*") ? route.path : (route.path + "/*").replace("\/\/","\/");
-        return route;
-      }
-
       if (conf.children) {
         route.children = generateRmtConfig(conf.children,resPath.pathname);
+      }else{
+        // 遇到menutabs 则 返回，将 静态和菜单的动态路由分开 ，有atom进行管理。
+        if(!menuTabs && conf.menuTabs){ // 确保只添加一次。
+          menuTabs = generateProlayoutMenuDataItem(dynamicConf,basePath)
+          route.menuTabs = true;
+          // 将全局的和功能菜单分开。方便路由多层次嵌套
+          // route.path = route.path.endsWith("/*") ? route.path : (route.path + "/*").replace("\/\/","\/");
+        }
       }
 
       return route;
-    })
+    });
 
   };
 
-  const routes = generateRmtConfig(rConfig, "/");
-  return { routes, menuTabs };
+  const staticRoute = generateRmtConfig(staticConf, "/");
+  return { staticRoute, menuTabs };
 }
 
-// 路由拆分成了两部分，要把可变的部分 合并到整体中
-export const mergeRouteFromFlags = (routeArrayA,routeArrayB,flag = 'menuTabs') => {
-
+// 路由拆分成了两部分，要把可变的部分 合并到新的整体中,并返回新的路由，配合react-router6的使用
+// 以routeA 为基准，将routeB，拷贝至routeA里的object.menutabs=true标记的对象children属性下。使其成为一个可用的appRoute整体
+export const mergeRoute = (routeA,routeB,flag = 'menuTabs') => {
+  const newRoute = _.cloneDeep(routeA);
   const replaceFlagePropertyByChilren = (array) => {
     array.forEach(element => {
       if(element[flag]) {
-        element.children = routeArrayB;
+        element.children = routeB;
         return;
       }
       if(element.children){
@@ -157,6 +211,6 @@ export const mergeRouteFromFlags = (routeArrayA,routeArrayB,flag = 'menuTabs') =
       }
    })
   }
-  replaceFlagePropertyByChilren(routeArrayA);
-  return routeArrayA;
+  replaceFlagePropertyByChilren(newRoute);
+  return newRoute;
 }

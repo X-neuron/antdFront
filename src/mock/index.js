@@ -1,6 +1,6 @@
 import Mock from "mockjs";
 import _ from "lodash";
-import { pathToRegexp } from "path-to-regexp";
+// import { pathToRegexp } from "path-to-regexp";
 import login from "./login";
 
 Mock.setup({

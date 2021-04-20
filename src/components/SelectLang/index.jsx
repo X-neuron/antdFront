@@ -33,8 +33,6 @@ const HeaderDropdown = ({
 
 const SelectLang = (props) => {
   const {
-    globalIconClassName,
-    style,
     ...restProps
   } = props;
 
@@ -48,7 +46,7 @@ const SelectLang = (props) => {
     justifyContent: "center",
     fontSize: 18,
     verticalAlign: "middle",
-    ...style,
+
   };
 
   const menuItemStyle = { minWidth: "160px" };
@@ -74,10 +72,10 @@ const SelectLang = (props) => {
     </Menu>
   );
 
-  
+
   return (
     <HeaderDropdown overlay={langMenu} placement="bottomRight" {...restProps}>
-      <span className={globalIconClassName} style={inlineStyle}>
+      <span style={inlineStyle}>
         {/* <i className="anticon" title={allLangUIConfig[selectedLang]?.title}> */}
         <i className="anticon" >
           <svg

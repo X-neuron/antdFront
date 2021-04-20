@@ -24,19 +24,19 @@ export const locales = {
 }
 
 
-
 export const curLangAtom = atom({
   key: "curLangAtom",
   default: "zh-CN",
   effects_UNSTABLE:[
     ({onSet}) => {
-      // 用户国际化内容
+      // 用户国际化内容,同时菜单也国际化
       onSet((newLang,oldValue) => {
         if(newLang !== oldValue) {
           dynamicActivateCustomLocale(newLang)
+
         }
       })
-    },
+    }
   ]
 });
 

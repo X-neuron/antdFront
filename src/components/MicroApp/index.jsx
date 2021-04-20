@@ -13,7 +13,6 @@ const MicroApp = ({ entry, fullPath }) => {
   const containerID = useRef(nanoid(10));
   // const id = nanoid(10);
   const microApp = useRef(null);
-  console.log(fullPath);
   useMount(() => {
     microApp.current = loadMicroApp({
       name: `app${containerID.current}`,

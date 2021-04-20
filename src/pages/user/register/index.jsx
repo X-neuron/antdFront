@@ -17,8 +17,7 @@ import styles from "./index.less";
 import { Link } from 'react-router-dom';
 
 import { i18n } from "@lingui/core";
-import { t } from "@lingui/macro";
-import { Trans } from "@lingui/macro";
+import { t,Trans } from "@lingui/macro";
 
 import { userRegister } from '@/services/register';
 
@@ -148,7 +147,7 @@ const Register = (props) => {
           return Promise.resolve();
         }}
       >
-        <Tabs activeKey={type} onChange={setType}>
+        <Tabs activeKey={type} onChange={setType} centered >
           <Tabs.TabPane
             key="userRegister"
             tab={i18n._(t`用户注册`)}

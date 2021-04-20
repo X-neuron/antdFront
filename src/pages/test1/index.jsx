@@ -1,5 +1,8 @@
 import { Form, Input, Button, Checkbox } from "antd";
-// import Access from "@/components/Access";
+import Access from "@/components/Access";
+import { i18n } from "@lingui/core";
+import { t } from "@lingui/macro";
+import { Trans } from "@lingui/macro";
 
 const layout = {
   labelCol: { span: 8 },
@@ -47,13 +50,13 @@ const LoginForm = (props) => {
       <Form.Item {...tailLayout} name="remember" valuePropName="checked">
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
-      {/* <Access accessible="adminSubmit" fallback={null}>
+      <Access accessible="logionPermit" fallback={null}>
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            `(我是权限按钮切换个角色找到我)  提   交  `
+            <Trans>(我是权限按钮切换个角色找到我)  提   交 </Trans>
           </Button>
         </Form.Item>
-      </Access> */}
+      </Access>
     </Form>
   );
 };

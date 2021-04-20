@@ -1,12 +1,23 @@
-import { Tooltip, Tag } from 'antd';
-import { Settings as ProSettings } from '@ant-design/pro-layout';
+import { Tooltip, Switch  } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import Locale from '@/components/SelectLang';
 import SelectLang from '@/components/SelectLang';
 import Avatar from './AvatarDropdown';
 import styles from './index.less';
+import { tabsModelAtom } from '@/atoms/tabsModel';
+import { i18n } from "@lingui/core";
+import { t } from "@lingui/macro";
+import { useRecoilState } from 'recoil';
 
+const inlineStyle = {
+  cursor: "pointer",
+  padding: "12px",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: 18,
+  verticalAlign: "middle",
 
+};
 
 const GlobalHeaderRight = (props) => {
   const { theme, layout } = props;
@@ -16,9 +27,16 @@ const GlobalHeaderRight = (props) => {
   const className = `${styles.right}  ${styles.dark}`;
   // }
 
+  const [tabsModel,setTabsModel] = useRecoilState(tabsModelAtom);
+  const onChangetabsModel = (checked) => {
+    setTabsModel(checked);
+  }
+
   return (
     <div className={className}>
-
+      <div style={inlineStyle} >
+      <Switch onChange={onChangetabsModel} checkedChildren={i18n._(t`多标签`)} unCheckedChildren={i18n._(t`单页`)} defaultChecked={tabsModel} />
+      </div>
       <Tooltip title="使用文档">
         <a
           style={{
@@ -32,7 +50,7 @@ const GlobalHeaderRight = (props) => {
           <QuestionCircleOutlined />
         </a>
       </Tooltip>
-      <Avatar />
+      <Avatar className={styles.avatar} />
       <SelectLang />
     </div>
   );

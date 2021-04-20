@@ -15,7 +15,6 @@
   display: flex;
   float: right;
   height: 48px;
-  color: rgba(255, 255, 255, 0.85);
   margin-left: auto;
   overflow: hidden;
   .action {
@@ -50,17 +49,17 @@
       background: rgba(255, 255, 255, 0.85);
     }
   }
+}
 
-  .dark {
-    .action {
+.dark {
+  .action {
+    color: rgba(255, 255, 255, 0.85);
+    > span {
       color: rgba(255, 255, 255, 0.85);
-      > span {
-        color: rgba(255, 255, 255, 0.85);
-      }
-      &:hover,
-      &:global(.opened) {
-        background: @primary-color;
-      }
+    }
+    &:hover,
+    &:global(.opened) {
+      background: @primary-color;
     }
   }
 }

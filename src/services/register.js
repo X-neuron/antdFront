@@ -7,5 +7,5 @@ export async function userRegister(params) {
   });
 }
 export async function getCaptcha(mobile) {
-  return request(`/api/login/captcha?mobile=${mobile}`);
+  return request(`/api/register/captcha?mobile=${mobile}`);
 }
