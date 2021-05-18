@@ -22,6 +22,10 @@ Antdfront is a set of multi label experimental react microfrontend template base
 
 ## Technology choice and motivation
 
+router
+
+https://zhuanlan.zhihu.com/p/354111579
+
 i18n internationalization
 
 https://zhuanlan.zhihu.com/p/291202582

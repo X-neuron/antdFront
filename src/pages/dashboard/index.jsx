@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import {
   Form,
   Input,
@@ -12,6 +12,7 @@ import {
   AutoComplete,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import { useSafeState } from 'ahooks';
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -90,7 +91,7 @@ const RegistrationForm = () => {
     </Form.Item>
   );
 
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+  const [autoCompleteResult, setAutoCompleteResult] = useSafeState([]);
 
   const onWebsiteChange = value => {
     if (!value) {

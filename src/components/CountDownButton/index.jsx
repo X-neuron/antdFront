@@ -1,8 +1,8 @@
-import { useState } from "react";
+
 import { Button } from "antd";
 // import { useInterval, useBoolean } from "react-use";
 // import { usePersistFn, useCounter } from "ahooks"
-import { usePersistFn, useInterval, useBoolean, useCounter } from "ahooks"
+import { usePersistFn, useInterval, useBoolean, useCounter,useSafeState } from "ahooks"
 
 /* 是否开始倒计时
  start?: boolean;
@@ -28,7 +28,7 @@ const CountDownButton = ({ start, second, initText, resetText, runText, onEnd, .
   }] = useCounter(second, { min: 0, max: second });
 
 
-  const [delay] = useState(1000); // 1000
+  const [delay] = useSafeState(1000); // 1000
   const [done, doneOp] = useBoolean(false);
 
   const timeout = usePersistFn(() => {

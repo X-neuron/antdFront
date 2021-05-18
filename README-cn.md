@@ -24,6 +24,10 @@ AntdFront 是一套基于 Ant Design 的实验性、拥抱 react hook,纯函数,
 
 ## 技术选型和动机介绍
 
+路由
+
+https://zhuanlan.zhihu.com/p/354111579
+
 国际化
 
 https://zhuanlan.zhihu.com/p/291202582

@@ -7,9 +7,8 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 import { Alert, Space, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import { useSafeState } from 'ahooks';
 import ProForm, {ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { Link } from 'react-router-dom';
 
 // import { getFakeCaptcha } from '@/services/login';
 import { i18n } from "@lingui/core";
@@ -19,7 +18,7 @@ import styles from './index.less';
 import { accountLogin } from '@/services/login'
 import { loginStateAtom} from '@/atoms/login';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 
 const LoginMessage = ({ content }) => (
   <Alert
@@ -35,8 +34,8 @@ const LoginMessage = ({ content }) => (
 const Login = (props) => {
   const { userLogin = {}, submitting } = props;
   const { status } = userLogin;
-  const [type, setType] = useState('account');
-  const [captCha, setCaptCha] = useState(false);
+  const [type, setType] = useSafeState('account');
+  const [captCha, setCaptCha] = useSafeState(false);
   const [login,setLogin] = useRecoilState(loginStateAtom);
   const navigate = useNavigate();
   const handleSubmit = (values) => {

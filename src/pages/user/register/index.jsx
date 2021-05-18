@@ -5,13 +5,13 @@ import {
   MobileTwoTone,
   UserOutlined,
 } from '@ant-design/icons';
-import { useState,useRef } from "react";
+import { useRef } from "react";
 
 import { Popover, Progress,Tabs,Space,Form } from "antd";
 import ProForm, {ProFormCaptcha, ProFormCheckbox, ProFormText,ProFormSelect,ProFormGroup } from '@ant-design/pro-form';
 import Field from '@ant-design/pro-field';
 
-import { usePersistFn } from "ahooks";
+import { usePersistFn,useSafeState } from "ahooks";
 
 import styles from "./index.less";
 import { Link } from 'react-router-dom';
@@ -37,12 +37,12 @@ const passwordProgressMap = {
 const Register = (props) => {
   const { submitting } = props;
   const formRef = useRef();
-  const [allowClear] = useState(true);
-  const [captCha, setCaptCha] = useState(false);
-  const [type, setType] = useState('userRegister');
-  // const [popVisible, setPopVisible] = useState(false);
+  const [allowClear] = useSafeState(true);
+  const [captCha, setCaptCha] = useSafeState(false);
+  const [type, setType] = useSafeState('userRegister');
+  // const [popVisible, setPopVisible] = useSafeState(false);
 
-  const [state, setState] = useState({
+  const [state, setState] = useSafeState({
     confirmDirty: false,
     visible: false,
     help: "",

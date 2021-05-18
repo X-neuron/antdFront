@@ -51,7 +51,7 @@ const TabRoute = (props) => {
   const navigate = useNavigate();
 
   // tabList 使用 ref ，避免二次render。
-  // const [tabList, setTabList] = useState([]);
+  // const [tabList, setTabList] = useSafeState([]);
   // tablist 结构为 key:matchPath,value:tabObject ;
   // key == location.pathname
   // tabObject中记录当下location。

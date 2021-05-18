@@ -1,16 +1,15 @@
-import { useState } from "react";
-import { Navigate  } from "react-router-dom";
 
 // import PageLoading from '@/components/PageLoading';
 import { stringify } from "qs";
-import {  Outlet } from "react-router-dom";
+import {  Outlet,Navigate } from "react-router-dom";
 import { loginStateAtom } from '@/atoms/login';
 import { useRecoilValue } from 'recoil';
+import { useSafeState } from 'ahooks';
 
 
 
 const SecurityLayout = ({ children }) => {
-  // const [isReady] = useState(false);
+  // const [isReady] = useSafeState(false);
   // const { children, loading, currentUser } = props; // You can replace it to your authentication rule (such as check token exists)
   // 你可以把它替换成你自己的登录认证规则（比如判断 token 是否存在）
 

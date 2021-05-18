@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSafeState } from 'ahooks';
 import {
   Form,
   Input,
@@ -90,7 +90,7 @@ const RegistrationForm = () => {
     </Form.Item>
   );
 
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+  const [autoCompleteResult, setAutoCompleteResult] = useSafeState([]);
 
   const onWebsiteChange = value => {
     if (!value) {

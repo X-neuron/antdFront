@@ -1,5 +1,5 @@
 
-import { lazy,Suspense } from "react";
+import { lazy } from "react";
 import memoized from "nano-memoize";
 import { Outlet } from 'react-router-dom'
 // import loadable from "@loadable/component";
@@ -7,7 +7,7 @@ import _ from "lodash";
 import { isHttp } from "@/utils/is";
 import Access from "@/components/Access";
 import AccessResult from "@/components/AccessResult";
-import { PageLoading } from "@ant-design/pro-layout";
+// import { PageLoading } from "@ant-design/pro-layout";
 
 
 const Dashboard = lazy(() => import("@/pages/dashboard"));
@@ -57,9 +57,9 @@ const getPage = memoized((pageStr,access,fullPath) => {
   if(access){
     return (
         <Access accessible={access} fallback={<AccessResult code="403" />}>
-          <Suspense fallback={<PageLoading />}>
+          {/* <Suspense fallback={<PageLoading />}> */}
             {page}
-          </Suspense>
+          {/* </Suspense> */}
         </Access>
     );
   }else{
