@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useRef,Suspense } from "react";
 import { Tabs } from "antd";
-
+import PageLoading from "@/components/PageLoading";
 // import Lru from "@/utils/lru";
 import memoized from "nano-memoize";
 import _ from 'lodash';
@@ -122,7 +122,9 @@ const TabRoute = (props) => {
       >
         {[...tabList.current.values()].map(item => (
             <TabPane tab={i18n._(item.name)} key={item.key} >
-              {item.page}
+              <Suspense fallback={<PageLoading />} >
+                {item.page}
+              </Suspense>
             </TabPane>
         ))}
       </Tabs>

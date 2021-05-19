@@ -1,13 +1,12 @@
 
 
-import { Suspense } from 'react';
+
 import { useNavigate, Outlet,matchRoutes,useLocation } from "react-router-dom";
 import ProLayout,{ SettingDrawer,PageContainer} from '@ant-design/pro-layout';
 import defaultSettings from '@ant-design/pro-layout/es/defaultSettings';
 import { RightContent } from '@/components/GlobalHeader';
 import  GlobalFooter from '@/components/GlobalFooter';
 import TabRoute from '@/components/TabRoute';
-import PageLoading from "@/components/PageLoading";
 import logo from '@/assets/logo.svg';
 import styles from './BasicLayout.less';
 import { useCreation,useSafeState } from 'ahooks';
@@ -111,11 +110,9 @@ const BasicLayout = (props) => {
         // }}
         {...settings}
         >
-          <Suspense fallback={<PageLoading />}>
           {/* <PageContainer > */}
             {tabsModel ? <TabRoute route={route} routeConfig={routeConfig} matchPath={matchPath}/> : <Outlet />}
           {/* </PageContainer> */}
-          </Suspense>
         </ProLayout>
         <SettingDrawer
           getContainer={() => document.getElementById('prolayout')}
