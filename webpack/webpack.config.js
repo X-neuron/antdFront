@@ -132,7 +132,7 @@ module.exports = function () {
               : {}),
           },
         },
-        false && {
+        {
           loader: 'postcss-loader',
           options: {
             // Necessary for external CSS imports to work
