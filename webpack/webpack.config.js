@@ -813,7 +813,7 @@ module.exports = function () {
       //   can be used to reconstruct the HTML if necessary
       isEnvProduction &&
         new WebpackManifestPlugin({
-          fileName: 'asset-manifest.json',
+          fileName: 'assert-manifest.json',
           publicPath: paths.publicUrlOrPath,
           generate: (seed, files, entrypoints) => {
             const manifestFiles = files.reduce((manifest, file) => {
@@ -836,7 +836,7 @@ module.exports = function () {
           clientsClaim: true, // 让浏览器立即 servece worker 被接管
           skipWaiting: true, // 更新 sw 文件后，立即插队到最前面
           dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-          exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
+          exclude: [/\.map$/, /assert-manifest\.json$/, /LICENSE/],
           // importWorkboxFrom: 'cdn',
           navigateFallback: `${paths.publicUrlOrPath}index.html`,
           navigateFallbackDenylist: [
