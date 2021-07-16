@@ -27,7 +27,7 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 // react-dev-utils
-// const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 // const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin");
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
@@ -114,8 +114,8 @@ module.exports = function () {
           // in production `paths.publicUrlOrPath` can be a relative path
           options: paths.publicUrlOrPath.startsWith('.')
             ? {
-                publicPath: '../../',
-                // hmr: isEnvDevelopment,
+                // publicPath: 'auto',
+                hmr: isEnvDevelopment,
               }
             : {},
         },
@@ -198,15 +198,21 @@ module.exports = function () {
     devtool: isEnvProduction ? false : 'cheap-module-source-map', //"eval-cheap-module-source-map"
 
     //webpack5.30 add featrue gc cahce
-    // cache:{
-    //   type:'filesystem',
-    // },
-    // entry: [
-    //   // "core-js/modules/es6.promise",
-    //   // "core-js/modules/es6.array.iterator",
-    //   // path.join(process.cwd(), EntryJS),
-    //   paths.appIndexJs,
-    // ],
+    cache: { 
+      type:'memory'
+      // type: 'filesystem', 
+      // buildDependencies: { 
+      //   defaultWebpack: ["webpack/lib/"], 
+      //   config: [__filename], 
+      // }, 
+      // name: `${ process.env.NODE_ENV || 'development'}-cache` 
+    },
+    entry: [
+      // "core-js/modules/es6.promise",
+      // "core-js/modules/es6.array.iterator",
+      // path.join(process.cwd(), EntryJS),
+      paths.appIndexJs,
+    ],
 
     entry:
       isEnvDevelopment && !shouldUseReactRefresh
@@ -316,10 +322,10 @@ module.exports = function () {
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
 
-        // new ModuleScopePlugin(paths.appSrc, [
-        //   paths.appPackageJson,
-        //   reactRefreshOverlayEntry,
-        // ]),
+        new ModuleScopePlugin(paths.appSrc, [
+          paths.appPackageJson,
+          reactRefreshOverlayEntry,
+        ]),
       ],
     },
     resolveLoader: {
@@ -330,9 +336,15 @@ module.exports = function () {
       ],
     },
     optimization: {
+      // moduleIds: isEnvDevelopment ? 'named':'deterministic',
+      // chunkIds: isEnvDevelopment ? 'named':'deterministic',
       minimize: isEnvProduction,
       removeAvailableModules: isEnvProduction,
       removeEmptyChunks: isEnvProduction,
+
+      moduleIds: 'deterministic', 
+      chunkIds: 'deterministic',
+      mangleExports: 'deterministic',
 
       minimizer: [
         new TerserPlugin({
@@ -568,34 +580,36 @@ module.exports = function () {
         // },
         {
           test: /\.(txt|text|md)$/,
-          use: [
-            {
-              loader: 'raw-loader',
-            },
-          ],
+          type:'asset/resource',
+          // use: [
+          //   {
+          //     loader: 'raw-loader',
+          //   },
+          // ],
         },
         {
           test: /\.(bmp|png|jpe?g|gif|webp|ico|svg|eot|woff|woff2|ttf)(\?.*)?$/,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: 10000,
-                esModule: false,
-                name: 'media/[name].[hash:8].[ext]',
-                outputPath: 'static/',
-                fallback: {
-                  loader: 'file-loader',
-                  options: {
-                    name: '[name].[hash:8].[ext]',
-                    outputPath: 'media/[name].[hash:8].[ext]',
-                    esModule: false,
-                  },
-                },
-                // mimetype:'image/tif'
-              },
-            },
-          ],
+          type:'asset/inline',
+          // use: [
+          //   {
+          //     loader: 'url-loader',
+          //     options: {
+          //       limit: 10000,
+          //       esModule: false,
+          //       name: 'media/[name].[hash:8].[ext]',
+          //       outputPath: 'static/',
+          //       fallback: {
+          //         loader: 'file-loader',
+          //         options: {
+          //           name: '[name].[hash:8].[ext]',
+          //           outputPath: 'media/[name].[hash:8].[ext]',
+          //           esModule: false,
+          //         },
+          //       },
+          //       // mimetype:'image/tif'
+          //     },
+          //   },
+          // ],
         },
         {
           test: /\.html$/,
@@ -603,21 +617,23 @@ module.exports = function () {
         },
         {
           test: /\.(mp4|webm)$/,
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 10000,
-            },
-          },
+          type:'asset/inline',
+          // use: {
+          //   loader: 'url-loader',
+          //   options: {
+          //     limit: 10000,
+          //   },
+          // },
         },
         {
           test: [/\.avif$/],
-          loader: require.resolve('url-loader'),
-          options: {
-            limit: 10000,
-            mimetype: 'image/avif',
-            name: 'static/media/[name].[hash:8].[ext]',
-          },
+          type:'asset/inline',
+          // loader: require.resolve('url-loader'),
+          // options: {
+          //   limit: 10000,
+          //   mimetype: 'image/avif',
+          //   name: 'static/media/[name].[hash:8].[ext]',
+          // },
         },
         //   ]
         // }
@@ -652,7 +668,7 @@ module.exports = function () {
           // port: 8080, // 设置默认监听端口，如果省略，默认为"8080"
         }
       : [],
-    target: ['web', 'es5'],
+    // target: ['web', 'es5'],
     stats: 'normal',
     plugins: [
       // isEnvProduction && new CleanWebpackPlugin(),
@@ -754,15 +770,15 @@ module.exports = function () {
       isEnvDevelopment &&
         // shouldUseReactRefresh &&
         new ReactRefreshWebpackPlugin({
-          overlay: {
-            entry: webpackDevClientEntry,
-            // The expected exports are slightly different from what the overlay exports,
-            // so an interop is included here to enable feedback on module-level errors.
-            module: reactRefreshOverlayEntry,
-            // Since we ship a custom dev client and overlay integration,
-            // the bundled socket handling logic can be eliminated.
-            sockIntegration: false,
-          },
+          // overlay: {
+          //   entry: webpackDevClientEntry,
+          //   // The expected exports are slightly different from what the overlay exports,
+          //   // so an interop is included here to enable feedback on module-level errors.
+          //   module: reactRefreshOverlayEntry,
+          //   // Since we ship a custom dev client and overlay integration,
+          //   // the bundled socket handling logic can be eliminated.
+          //   sockIntegration: false,
+          // },
         }),
       isEnvProduction &&
         new CompressionPlugin({
