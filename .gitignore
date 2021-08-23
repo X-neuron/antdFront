@@ -6,6 +6,7 @@ package-lock.json
 yarn.lock
 coverage/
 build/
+dist/
 .idea/
 run/
 .DS_Store
