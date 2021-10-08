@@ -6,7 +6,7 @@
 // );
 
 module.exports = {
-  parser: "babel-eslint",
+  parser: "@babel/eslint-parser",
   extends: [
     "airbnb",
     "prettier",
@@ -19,7 +19,8 @@ module.exports = {
     "react-hooks",
     "html",
     "compat",
-    "formatjs"
+    "formatjs",
+    "@babel/eslint-plugin"
   ],
   env: {
     node: true,

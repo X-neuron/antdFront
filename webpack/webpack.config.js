@@ -641,7 +641,7 @@ module.exports = function () {
     },
     [isEnvDevelopment ? 'devServer' : 'ignoreWarnings']: isEnvDevelopment
       ? {
-        hot: true,
+        // hot: true,
         allowedHosts: 'all',
         client: {
           logging: "info",
