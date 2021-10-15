@@ -41,7 +41,7 @@ const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
 // const ignoredFiles = require('react-dev-utils/ignoredFiles');
 
-const DashboardPlugin = require('webpack-dashboard/plugin');
+// const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const webpackDevClientEntry = require.resolve(
   'react-dev-utils/webpackHotDevClient',
@@ -689,7 +689,7 @@ module.exports = function () {
     plugins: [
       // isEnvProduction && new CleanWebpackPlugin(),
       new Webpackbar(),
-      isEnvDevelopment && new DashboardPlugin(),
+      // isEnvDevelopment && new DashboardPlugin(),
 
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
