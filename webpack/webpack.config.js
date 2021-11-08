@@ -346,6 +346,7 @@ module.exports = function () {
       chunkIds: 'deterministic',
       mangleExports: 'deterministic',
 
+      usedExports:true,
       minimizer: [
         new TerserPlugin({
           test: /\.js(\?.*)?$/i,
