@@ -1,4 +1,5 @@
-
+import { Suspense } from "react";
+import PageLoading from "@/components/PageLoading";
 import { useRoutes } from "react-router-dom";
 // import { setConfig } from 'react-hot-loader';
 import Locale from "@/components/Locale";
@@ -20,9 +21,11 @@ function App() {
   let element = useRoutes(appRoute);
 
   return (
-    <Locale>
-      {element}
-    </Locale>
+    <Suspense fallback={<PageLoading />} >
+      <Locale>
+        {element}
+      </Locale>
+    </Suspense>
   )
 }
 

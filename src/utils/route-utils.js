@@ -4,11 +4,14 @@ import { resolvePath } from "react-router-dom";
 import getPage from "@/config/pages";
 import getIcon from '@/config/icons';
 import _ from 'lodash';
-// import { i18n } from "@lingui/core";
+import { i18n } from "@lingui/core";
 // import { t } from "@lingui/macro";
 // 单独 拉出config 因为 修改route的时候，是按"@/config/routes"的格式提供的。
-// 而后端不可能可能提供key，resolvepath之类的参数。
+// 而后端不可能提供key，resolvepath之类的参数。
 // staticConfig 以 menutabs 为标志。
+
+const normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
+
 const extractConfig = extractRouteConfig(routeConfig);
 export const staticConfig = extractConfig.staticConfig;
 export const dynamicConfig = extractConfig.dynamicConfig;
@@ -85,34 +88,44 @@ function extractRouteConfig(rConfig) {
 //   },
 // ]
 
-// export function transConfigName(routeConfig,locale){
+// 翻译下route的Name
+export function translateNameProperty (route, locale) {
+  let newRoute = [];
+  const transObjectName = (curRoute) => {
+    let newCurRoute = { ...curRoute };
+    if (newCurRoute.name) {
+      newCurRoute.name = i18n._(newCurRoute.name);
+    }
+    if (newCurRoute.children) {
+      let newChildren = [];
+      newCurRoute.children.forEach((item) => {
+        newChildren.push(transObjectName(item));
+      });
+      newCurRoute.children = newChildren;
+    }
+    return newCurRoute;
+  };
+  route.forEach((item) => {
+    newRoute.push(transObjectName(item));
+  });
 
-//   return routeConfig.map(conf => {
-//     let confItem = {
-//       ...conf
-//     }
-//     if(conf.name){
-//       confItem.name = i18n._(conf.name);
-//     }
-//     if(conf.children){
-//       confItem.children = transConfigName(conf.children)
-//     }
-//     return confItem;
-//   })
-// }
+  return newRoute;
+};
 
 function generateProlayoutMenuDataItem (menuTabs,basePath) {
   return menuTabs.map(conf => {
     // fullPath 可去掉*号，以免引起url路径错误
     // /*的配置只会在路由  路径的末尾...
-    const resPath = resolvePath(_.replace(conf.path,'/*',''),basePath);
+    const resPath = resolvePath(conf.path ? _.replace(conf.path,'/*',''):'/*',normalizePathname(basePath));
 
     let menuDataItem = {
       // name为空则component 代替
       // 加上翻译
       name: conf.name ? conf.name: conf.component,
-      // react router6 支持的父子路径
-      path: conf.path,
+      // 支持大小写敏感
+      caseSensitive:conf.caseSensitive,
+      // 支持index route
+      index:conf.index,
       // 完整路径 parentPath:/a  childrenPath:b  fullPath:/a/b
       fullPath: resPath.pathname,
       key:resPath.pathname,
@@ -121,7 +134,10 @@ function generateProlayoutMenuDataItem (menuTabs,basePath) {
       caseSensitive: false,
       access: conf.access,
     }
-
+    // 支持prolayout路由
+    if(conf.path){
+      menuDataItem.path = conf.path
+    }
 
     if (conf.children) {
       menuDataItem.children = generateProlayoutMenuDataItem(conf.children,resPath.pathname);
@@ -154,19 +170,25 @@ export function generateRouteAndProlayoutMenus(staticConf,dynamicConf) {
       // hideInMenu 会把这个路由配置在 menu 中隐藏这个路由，name 不填会有相同的效果
       // hideChildrenInMenu 会把这个路由的子节点在 menu 中隐藏
 
+
   const generateRmtConfig = (config, basePath) => {
 
     return config.map(conf => {
       // fullPath 可去掉*号，以免引起url路径错误
-      const resPath = resolvePath(_.replace(conf.path,'/*',''),basePath);
+
+      // const resPath = resolvePath(_.replace(conf.path,'/*',''),normalizePathname(basePath));
+      const resPath = resolvePath(conf.path ? _.replace(conf.path,'/*',''):'/*',normalizePathname(basePath));
+      console.log(resPath);
 
       let route = {
         value: conf.component,
-        // path: curPath,
         //reactRouter 6 的 父子path 用来喂给react router6吃的
-        path: conf.path,
         // 完整路径 parentPath:/a  childrenPath:b  fullPath:/a/b
         // fullPath 可去掉*号，以免引起url路径错误
+        // 支持大小写敏感
+        caseSensitive:conf.caseSensitive,
+        // 支持index route
+        index:conf.index,
         fullPath: resPath.pathname,
         // element: conf.component,
         element: conf.component ? getPage(conf.component,conf.access,resPath.pathname) : getPage("Default"),
@@ -175,6 +197,11 @@ export function generateRouteAndProlayoutMenus(staticConf,dynamicConf) {
         name: conf.name ? conf.name: conf.component,
         access: conf.access,
       }
+      // 支持prolayout路由
+      if(conf.path){
+        route.path = conf.path
+      }
+
       if (conf.children) {
         route.children = generateRmtConfig(conf.children,resPath.pathname);
       }else{

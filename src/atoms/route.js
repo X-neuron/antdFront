@@ -1,6 +1,6 @@
 import { atom,selector } from 'recoil';
-import {staticConfig,dynamicConfig,generateRouteAndProlayoutMenus,mergeRoute} from '@/utils/route-utils';
-import { curLangAtom } from '@/atoms/locale';
+import {staticConfig,dynamicConfig,generateRouteAndProlayoutMenus,mergeRoute,translateNameProperty} from '@/utils/route-utils';
+import { curLocaleLoadAtom } from '@/atoms/locale';
 // import { i18n } from "@lingui/core";
 // import memoized from "nano-memoize";
 
@@ -24,7 +24,7 @@ import { curLangAtom } from '@/atoms/locale';
   // export const transDynamicConfigAtom = selector({
   //   key:'transDynamicConfigAtom',
   //   get:({get}) => {
-  //     return transConfigName(get(dynamicConfigAtom),get(curLangAtom));
+  //     return transConfigName(get(dynamicConfigAtom),get(curLocaleLoadAtom));
   //   }
   // });
 
@@ -51,12 +51,12 @@ import { curLangAtom } from '@/atoms/locale';
     },
   });
   // 翻译name，方便后续使用
-  // export const transDynamicRouteAtom = selector({
-  //   key: 'transDynamicRouteAtom',
-  //   get:({get}) => {
-  //     return translateNameProperty(get(dynamicRouteAtom),get(curLangAtom));
-  //   }
-  // });
+  export const transDynamicRouteAtom = selector({
+    key: 'transDynamicRouteAtom',
+    get:async ({get}) => {
+      return translateNameProperty(get(dynamicRouteAtom),get(curLocaleLoadAtom));
+    }
+  });
 
   export const appRouteAtom = selector({
     key:'appRouteAtom',

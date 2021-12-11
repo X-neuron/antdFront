@@ -4,7 +4,7 @@ import PageLoading from "@/components/PageLoading";
 // import Lru from "@/utils/lru";
 import memoized from "nano-memoize";
 import _ from 'lodash';
-import { usePersistFn, useCreation } from "ahooks";
+import { useMemoizedFn, useCreation } from "ahooks";
 // import { useWhyDidYouUpdate } from 'ahooks';
 
 import { useOutlet,useNavigate,useLocation,generatePath,useParams } from "react-router-dom";
@@ -87,7 +87,7 @@ const TabRoute = (props) => {
 
   },[location]);
 
-  const closeTab = usePersistFn((selectKey) => {
+  const closeTab = useMemoizedFn((selectKey) => {
     // 记录原真实路由,微前端可能修改
     // keyLruSquence.newest.value.curPath = window.location.pathname
     // navigate(keyLruSquence.get(selectKey).curPath,{replace:true});
@@ -99,7 +99,7 @@ const TabRoute = (props) => {
 
   });
 
-  const selectTab = usePersistFn((selectKey) => {
+  const selectTab = useMemoizedFn((selectKey) => {
     // 记录原真实路由,微前端可能修改
     navigate(getTabPath(tabList.current.get(getTabMapKey(selectKey))),{replace:true});
   });

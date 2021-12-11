@@ -11,7 +11,7 @@ import { Popover, Progress,Tabs,Space,Form } from "antd";
 import ProForm, {ProFormCaptcha, ProFormCheckbox, ProFormText,ProFormSelect,ProFormGroup } from '@ant-design/pro-form';
 import Field from '@ant-design/pro-field';
 
-import { usePersistFn,useSafeState } from "ahooks";
+import { useMemoizedFn,useSafeState } from "ahooks";
 
 import styles from "./index.less";
 import { Link } from 'react-router-dom';
@@ -56,7 +56,7 @@ const Register = (props) => {
 
   };
 
-  const checkPwdConfirm = usePersistFn((rule, value, callback) => {
+  const checkPwdConfirm = useMemoizedFn((rule, value, callback) => {
     if (value && value !== formRef.current.getFieldValue("password")) {
       callback("两次输入的密码不匹配!");
     } else {
@@ -97,7 +97,7 @@ const Register = (props) => {
 
 
 
-  const getPasswordStatus = usePersistFn(() => {
+  const getPasswordStatus = useMemoizedFn(() => {
     const value = formRef.current?.getFieldValue("password");
     if (value && value.length > 9) {
       return "ok";
@@ -108,7 +108,7 @@ const Register = (props) => {
     return "poor";
   });
 
-  const renderPasswordProgress = usePersistFn(() => {
+  const renderPasswordProgress = useMemoizedFn(() => {
     if(!state.visible){
       return (<></>)
     }

@@ -2,6 +2,30 @@ import { atom, selector } from "recoil";
 import { i18n } from "@lingui/core";
 
 
+const localStorageLangEffect = key => ({setSelf, onSet, trigger}) => {
+  // If there's a persisted value - set it on load
+  const loadPersisted = async () => {
+    const savedValue = await localStorage.getItem(key);
+
+    if (savedValue != null) {
+      setSelf(JSON.parse(savedValue));
+    }
+  };
+
+  // Asynchronously set the persisted data
+  if (trigger === 'get') {
+    loadPersisted();
+  }
+
+  // Subscribe to state changes and persist them to localStorage
+  onSet((newValue, _, isReset) => {
+    isReset
+      ? localStorage.removeItem(key)
+      : localStorage.setItem(key, JSON.stringify(newValue));
+  });
+};
+
+
 export const locales = {
   "zh-CN":{
     name:"简体中文",
@@ -27,18 +51,31 @@ export const locales = {
 export const curLangAtom = atom({
   key: "curLangAtom",
   default: "zh-CN",
-  effects_UNSTABLE:[
-    ({onSet}) => {
-      // 用户国际化内容,同时菜单也国际化
-      onSet((newLang,oldValue) => {
-        if(newLang !== oldValue) {
-          dynamicActivateCustomLocale(newLang)
+  // effects_UNSTABLE:[
+  //   ({onSet}) => {
+  //     // 用户国际化内容,同时菜单也国际化
+  //     onSet((newLang,oldValue) => {
+  //       if(newLang !== oldValue) {
+  //         dynamicActivateCustomLocale(newLang)
 
-        }
-      })
-    }
-  ]
+  //       }
+  //     })
+  //   },
+  //   localStorageLangEffect('lang')
+  // ]
 });
+
+export const curLocaleLoadAtom = selector({
+  key:"curLocaleLoadAtom",
+  default:'none',
+  get:async ({get}) => {
+    const lang = get(curLangAtom);
+    const { messages } = await import(/* webpackChunkName: 'i18n' */`@/locales/${lang}.js`);
+    i18n.load(lang, messages)
+    i18n.activate(lang)
+    return lang;
+  }
+})
 
 
 // UI 国际化内容
@@ -50,25 +87,3 @@ export const antdLocaleAtom = selector({
     return locales[get(curLangAtom)].antd
   }
 });
-
-
-/**
-* We do a dynamic import of just the catalog that we need
-* @param locale any locale string
-*/
- async function dynamicActivateCustomLocale(locale) {
-
-  // request.get(`${window.location.origin}/public/locales/${locale}.json`,{
-  // // request.get(`./public/locales/${locale}.json`,{
-  //   responseType: "json",
-  // }).then(
-  //   res => {
-  //     i18n.load(locale, res)
-  //     i18n.activate(locale)
-  //   }
-  // )
-
-  const { messages } = await import(/* webpackChunkName: 'i18n' */`@/locales/${locale}.js`);
-  i18n.load(locale, messages)
-  i18n.activate(locale)
-}

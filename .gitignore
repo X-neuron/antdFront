@@ -14,5 +14,6 @@ run/
 *.un~
 typings/
 .nyc_output/
+.vscode/
 database/
 

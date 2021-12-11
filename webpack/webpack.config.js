@@ -207,13 +207,6 @@ module.exports = function () {
       // },
       // name: `${ process.env.NODE_ENV || 'development'}-cache`
     },
-    entry: [
-      // "core-js/modules/es6.promise",
-      // "core-js/modules/es6.array.iterator",
-      // path.join(process.cwd(), EntryJS),
-      paths.appIndexJs,
-    ],
-
     entry:
       isEnvDevelopment && !shouldUseReactRefresh
         ? [
