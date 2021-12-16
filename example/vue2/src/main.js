@@ -15,7 +15,7 @@ let router = null;
 let instance = null;
 
 function render(props = {}) {
-  const { container,basePath } = props;
+  const { container, basePath } = props;
   router = new VueRouter({
     base: window.__POWERED_BY_QIANKUN__ ? basePath : '/',
     mode: 'history',
@@ -25,7 +25,7 @@ function render(props = {}) {
   instance = new Vue({
     router,
     store,
-    render: h => h(App),
+    render: (h) => h(App),
   }).$mount(container ? container.querySelector('#app') : '#app');
 }
 
@@ -36,7 +36,8 @@ if (!window.__POWERED_BY_QIANKUN__) {
 function storeTest(props) {
   props.onGlobalStateChange &&
     props.onGlobalStateChange(
-      (value, prev) => console.log(`[onGlobalStateChange - ${props.name}]:`, value, prev),
+      (value, prev) =>
+        console.log(`[onGlobalStateChange - ${props.name}]:`, value, prev),
       true,
     );
   props.setGlobalState &&

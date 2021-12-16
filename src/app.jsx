@@ -1,32 +1,27 @@
 import { Suspense } from "react";
-import PageLoading from "@/components/PageLoading";
 import { useRoutes } from "react-router-dom";
 // import { setConfig } from 'react-hot-loader';
-import Locale from "@/components/Locale";
 
 import { useFavicon } from "ahooks";
-import { useRecoilValue } from 'recoil';
-import { appRouteAtom } from '@/atoms/route';
+import { useRecoilValue } from "recoil";
+import Locale from "@/components/Locale";
+import PageLoading from "@/components/PageLoading";
+import { appRouteAtom } from "@/atoms/route";
 
-
-function App() {
-
+const App = function() {
   useFavicon("./public/favicon.ico");
 
   // 父路由伟/* 子路由为/ 无法导航 至子组件 是个bug
 
-
   const appRoute = useRecoilValue(appRouteAtom);
 
-  let element = useRoutes(appRoute);
+  const element = useRoutes(appRoute);
 
   return (
-    <Suspense fallback={<PageLoading />} >
-      <Locale>
-        {element}
-      </Locale>
+    <Suspense fallback={<PageLoading />}>
+      <Locale>{element}</Locale>
     </Suspense>
-  )
+  );
 }
 
 export default App;

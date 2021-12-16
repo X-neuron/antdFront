@@ -11,52 +11,42 @@ module.exports = {
     "airbnb",
     "prettier",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
   ],
-  plugins: [
-    "react",
-    "react-hooks",
-    "html",
-    "compat",
-    "formatjs",
-    "@babel/eslint-plugin"
-  ],
+  plugins: ["react", "react-hooks", "html", "compat", "@babel/eslint-plugin"],
   env: {
     node: true,
     jquery: true,
     es6: true,
-    browser: true
+    browser: true,
   },
   globals: {
-    angular: false
+    angular: false,
   },
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 2020,
-    sourceType: "module"
+    sourceType: "module",
   },
   settings: {
     "import/resolver": {
       alias: {
-        map: [
-          ["@", "./src"]
-        ],
-        extensions: [".js", ".jsx", ".json", ".ts", "tsx"]
-      }
-    }
+        map: [["@", "./src"]],
+        extensions: [".js", ".jsx", ".json", ".ts", "tsx"],
+      },
+    },
   },
   rules: {
     // "compat/compat": 2,
     // "prettier/prettier": ["error", prettierOptions],
-    "global-require":1,
+    "global-require": 1,
     "arrow-body-style": [2, "as-needed"],
     "no-nested-ternary": 0,
     "no-bitwise": 0,
     "prefer-promise-reject-errors": 1,
     "react/jsx-props-no-spreading": 0,
-    "eqeqeq": 1,
     "prefer-rest-params": 1,
     "no-var": 1,
     "vars-on-top": 1,
@@ -75,15 +65,11 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     // 官方文档 http://eslint.org/docs/rules/
     // 参数：0 关闭，1 警告，2 错误
-    "quotes": [1, "double"], // 建议使用单引号
+    quotes: [1, "double"], // 建议使用单引号
     // "no-inner-declarations": [0, "both"],     //不建议在{}代码块内部声明变量或函数
     // 使用前未定义
-
-    "no-use-before-define": [
-      1,
-      "nofunc"
-    ],
-
+    "no-use-before-define": [1, "nofunc"],
+    "react/jsx-no-useless-fragment": 2,
     complexity: [0, 10], // 圈复杂度大于*
 
     // 定义数组或对象最后多余的逗号
@@ -93,18 +79,21 @@ module.exports = {
     // ],
     "comma-dangle": 0,
     // 不允许对全局变量赋值,如 window = 'abc'
-    "no-global-assign": ["error", {
-      // 定义例外
-      // "exceptions": ["Object"]
-    }],
+    "no-global-assign": [
+      "error",
+      {
+        // 定义例外
+        // "exceptions": ["Object"]
+      },
+    ],
     // "space-before-function-paren": 1,  // 函数定义时括号前面要不要有空格
     "no-console": 0, // 不禁用console
     "no-debugger": 2, // 禁用debugger
     // "no-var": 0, //对var警告
-    "semi": 0, // 不强制使用分号
+    semi: 0, // 不强制使用分号
     "no-irregular-whitespace": 0, // 不规则的空白不允许
     "no-trailing-spaces": 1, // 一行结束后面有空格就发出警告
-    "trailing":0,
+    trailing: 0,
     "eol-last": 0, // 文件以单一的换行符结束
     "no-unused-vars": [1, { vars: "all", args: "after-used" }], // 不能有声明后未被使用的变量或参数
     "no-underscore-dangle": 0, // 标识符不能以_开头或结尾
@@ -123,7 +112,7 @@ module.exports = {
     "no-this-before-super": 0, // 在调用super()之前不能使用this或super
     "no-undef": 1, // 不能有未定义的变量
     // "no-use-before-define": 2, //未定义前不能使用
-    "camelcase": 1, // 强制驼峰法命名
+    camelcase: 1, // 强制驼峰法命名
     "react/display-name": 0, // 防止在React组件定义中丢失displayName
     "react/forbid-prop-types": [2, { forbid: ["any"] }], // 禁止某些propTypes
     "react/jsx-boolean-value": 0, // 在JSX中强制布尔属性符号
@@ -188,10 +177,13 @@ module.exports = {
     "jsx-a11y/mouse-events-have-key-events": 2,
     "jsx-a11y/role-has-required-aria-props": 2,
     "jsx-a11y/role-supports-aria-props": 2,
-    "jsx-a11y/img-redundant-alt": [2, {
-      components: ["Image"],
-      words: ["Bild", "Foto"],
-    }], // Enforce img alt attribute does not contain the word image, picture, or photo. Screenreaders already announce img elements as an image. There is no need to use words such as image, photo, and/or picture.
+    "jsx-a11y/img-redundant-alt": [
+      2,
+      {
+        components: ["Image"],
+        words: ["Bild", "Foto"],
+      },
+    ], // Enforce img alt attribute does not contain the word image, picture, or photo. Screenreaders already announce img elements as an image. There is no need to use words such as image, photo, and/or picture.
     "jsx-a11y/no-access-key": 1, // 不要在标签上使用 accessKey 属性 为什么? 屏幕助读器在键盘快捷键与键盘命令时造成的不统一性会导致阅读性更加复杂.
     "jsx-a11y/anchor-is-valid": 0,
     "no-plusplus": 0,
@@ -204,7 +196,13 @@ module.exports = {
     "react/no-is-mounted": 2, // 不要再使用 isMounted,为什么? isMounted 反人类设计模式:(), 在 ES6 classes 中无法使用， 官方将在未来的版本里删除此方法
     // 代码风格优化 --------------------------------------
     "no-else-return": 1, // 在else代码块中return，else是多余的
-    "no-multi-spaces": [1, { ignoreEOLComments: false, exceptions: { VariableDeclarator: true, ImportDeclaration: true } }], // 不允许多个空格
+    "no-multi-spaces": [
+      1,
+      {
+        ignoreEOLComments: false,
+        exceptions: { VariableDeclarator: true, ImportDeclaration: true },
+      },
+    ], // 不允许多个空格
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
     "react/destructuring-assignment": 0,
     // object直接量建议写法 : 后一个空格前面不留空格,切keyvalue对齐
@@ -222,8 +220,8 @@ module.exports = {
       0,
       {
         beforeColon: false,
-        afterColon: true
-      }
+        afterColon: true,
+      },
     ],
 
     "block-scoped-var": 1, // 变量应在外部上下文中声明，不应在{}代码块中
@@ -231,10 +229,7 @@ module.exports = {
     "accessor-pairs": 1, // object getter/setter方法需要成对出现
 
     // 换行调用对象方法  点操作符应写在行首
-    "dot-location": [
-      1,
-      "property"
-    ],
+    "dot-location": [1, "property"],
     "no-lone-blocks": 1, // 多余的{}嵌套
     "no-labels": 1, // 无用的标记
     "no-extend-native": 1, // 禁止扩展原生对象
@@ -246,17 +241,14 @@ module.exports = {
     "no-throw-literal": 1, // 禁止抛出一个直接量 应是Error对象
 
     // 不允return时有赋值操作
-    "no-return-assign": [
-      1,
-      "always"
-    ],
+    "no-return-assign": [1, "always"],
 
     // 不允许重复声明
     "no-redeclare": [
       1,
       {
-        builtinGlobals: true
-      }
+        builtinGlobals: true,
+      },
     ],
 
     // 不执行的表达式
@@ -264,8 +256,8 @@ module.exports = {
       0,
       {
         allowShortCircuit: true,
-        allowTernary: true
-      }
+        allowTernary: true,
+      },
     ],
     "no-useless-call": 1, // 无意义的函数call或apply
     "no-useless-concat": 1, // 无意义的string concat
@@ -278,22 +270,18 @@ module.exports = {
       1,
       {
         requireParamDescription: true,
-        requireReturnDescription: true
-      }
+        requireReturnDescription: true,
+      },
     ],
 
     // 标记未写注释
     "no-warning-comments": [
       1,
       {
-        terms: [
-          "todo",
-          "fixme",
-          "any other term"
-        ],
-        location: "anywhere"
-      }
+        terms: ["todo", "fixme", "any other term"],
+        location: "anywhere",
+      },
     ],
-    curly: 0 // if、else、while、for代码块用{}包围
-  }
+    curly: 0, // if、else、while、for代码块用{}包围
+  },
 };

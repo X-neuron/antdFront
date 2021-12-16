@@ -1,8 +1,13 @@
-
 import { Button } from "antd";
 // import { useInterval, useBoolean } from "react-use";
 // import { useMemoizedFn, useCounter } from "ahooks"
-import { useMemoizedFn, useInterval, useBoolean, useCounter,useSafeState } from "ahooks"
+import {
+  useMemoizedFn,
+  useInterval,
+  useBoolean,
+  useCounter,
+  useSafeState,
+} from "ahooks";
 
 /* 是否开始倒计时
  start?: boolean;
@@ -19,14 +24,19 @@ import { useMemoizedFn, useInterval, useBoolean, useCounter,useSafeState } from 
  onEnd?: () => void;
  */
 
-const getTemplateText = (runText, second) => runText.replace(/\{([^{]*?)%s(.*?)\}/g, second.toString())
+const getTemplateText = (runText, second) =>
+  runText.replace(/\{([^{]*?)%s(.*?)\}/g, second.toString());
 
-const CountDownButton = ({ start, second, initText, resetText, runText, onEnd, ...rest }) => {
-  const [count, {
-    dec,
-    reset
-  }] = useCounter(second, { min: 0, max: second });
-
+const CountDownButton = function({
+  start,
+  second,
+  initText,
+  resetText,
+  runText,
+  onEnd,
+  ...rest
+}) {
+  const [count, { dec, reset }] = useCounter(second, { min: 0, max: second });
 
   const [delay] = useSafeState(1000); // 1000
   const [done, doneOp] = useBoolean(false);
@@ -46,9 +56,8 @@ const CountDownButton = ({ start, second, initText, resetText, runText, onEnd, .
         doneOp.toggle(true);
       }
     },
-    start ? delay : null
+    start ? delay : null,
   );
-
 
   const buttonText = () => {
     // console.log(done, start, count, second)
@@ -62,6 +71,6 @@ const CountDownButton = ({ start, second, initText, resetText, runText, onEnd, .
       {buttonText()}
     </Button>
   );
-};
+}
 
 export default CountDownButton;

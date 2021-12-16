@@ -1,7 +1,6 @@
-
 import { useCount } from "./useCount";
 
-function CountBtn() {
+const CountBtn = function() {
   const { countNum, addone, subone, start, stop, reset } = useCount();
 
   return (

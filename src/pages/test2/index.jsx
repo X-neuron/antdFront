@@ -1,4 +1,4 @@
-import { useSafeState } from 'ahooks';
+import { useSafeState } from "ahooks";
 import {
   Form,
   Input,
@@ -9,7 +9,7 @@ import {
   Col,
   Checkbox,
   Button,
-  AutoComplete
+  AutoComplete,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
@@ -27,11 +27,11 @@ const residences = [
         children: [
           {
             value: "xihu",
-            label: "West Lake"
-          }
-        ]
-      }
-    ]
+            label: "West Lake",
+          },
+        ],
+      },
+    ],
   },
   {
     value: "jiangsu",
@@ -43,41 +43,41 @@ const residences = [
         children: [
           {
             value: "zhonghuamen",
-            label: "Zhong Hua Men"
-          }
-        ]
-      }
-    ]
-  }
+            label: "Zhong Hua Men",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 8 }
+    sm: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 16 }
-  }
+    sm: { span: 16 },
+  },
 };
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 0
+      offset: 0,
     },
     sm: {
       span: 16,
-      offset: 8
-    }
-  }
+      offset: 8,
+    },
+  },
 };
 
-const RegistrationForm = () => {
+const RegistrationForm = function() {
   const [form] = Form.useForm();
 
-  const onFinish = values => {
+  const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
 
@@ -92,17 +92,19 @@ const RegistrationForm = () => {
 
   const [autoCompleteResult, setAutoCompleteResult] = useSafeState([]);
 
-  const onWebsiteChange = value => {
+  const onWebsiteChange = (value) => {
     if (!value) {
       setAutoCompleteResult([]);
     } else {
-      setAutoCompleteResult([".com", ".org", ".net"].map(domain => `${value}${domain}`));
+      setAutoCompleteResult(
+        [".com", ".org", ".net"].map((domain) => `${value}${domain}`),
+      );
     }
   };
 
-  const websiteOptions = autoCompleteResult.map(website => ({
+  const websiteOptions = autoCompleteResult.map((website) => ({
     label: website,
-    value: website
+    value: website,
   }));
 
   return (
@@ -113,7 +115,7 @@ const RegistrationForm = () => {
       onFinish={onFinish}
       initialValues={{
         residence: ["zhejiang", "hangzhou", "xihu"],
-        prefix: "86"
+        prefix: "86",
       }}
       scrollToFirstError
     >
@@ -123,12 +125,12 @@ const RegistrationForm = () => {
         rules={[
           {
             type: "email",
-            message: "The input is not valid E-mail!"
+            message: "The input is not valid E-mail!",
           },
           {
             required: true,
-            message: "Please input your E-mail!"
-          }
+            message: "Please input your E-mail!",
+          },
         ]}
       >
         <Input />
@@ -140,8 +142,8 @@ const RegistrationForm = () => {
         rules={[
           {
             required: true,
-            message: "Please input your password!"
-          }
+            message: "Please input your password!",
+          },
         ]}
         hasFeedback
       >
@@ -156,16 +158,18 @@ const RegistrationForm = () => {
         rules={[
           {
             required: true,
-            message: "Please confirm your password!"
+            message: "Please confirm your password!",
           },
           ({ getFieldValue }) => ({
             validator(rule, value) {
               if (!value || getFieldValue("password") === value) {
                 return Promise.resolve();
               }
-              return Promise.reject("The two passwords that you entered do not match!");
-            }
-          })
+              return Promise.reject(
+                "The two passwords that you entered do not match!",
+              );
+            },
+          }),
         ]}
       >
         <Input.Password />
@@ -173,15 +177,21 @@ const RegistrationForm = () => {
 
       <Form.Item
         name="nickname"
-        label={(
+        label={
           <span>
             Nickname&nbsp;
             <Tooltip title="What do you want others to call you?">
               <QuestionCircleOutlined />
             </Tooltip>
           </span>
-        )}
-        rules={[{ required: true, message: "Please input your nickname!", whitespace: true }]}
+        }
+        rules={[
+          {
+            required: true,
+            message: "Please input your nickname!",
+            whitespace: true,
+          },
+        ]}
       >
         <Input />
       </Form.Item>
@@ -190,7 +200,11 @@ const RegistrationForm = () => {
         name="residence"
         label="Habitual Residence"
         rules={[
-          { type: "array", required: true, message: "Please select your habitual residence!" }
+          {
+            type: "array",
+            required: true,
+            message: "Please select your habitual residence!",
+          },
         ]}
       >
         <Cascader options={residences} />
@@ -209,18 +223,30 @@ const RegistrationForm = () => {
         label="Website"
         rules={[{ required: true, message: "Please input website!" }]}
       >
-        <AutoComplete options={websiteOptions} onChange={onWebsiteChange} placeholder="website">
+        <AutoComplete
+          options={websiteOptions}
+          onChange={onWebsiteChange}
+          placeholder="website"
+        >
           <Input />
         </AutoComplete>
       </Form.Item>
 
-      <Form.Item label="Captcha" extra="We must make sure that your are a human.">
+      <Form.Item
+        label="Captcha"
+        extra="We must make sure that your are a human."
+      >
         <Row gutter={8}>
           <Col span={12}>
             <Form.Item
               name="captcha"
               noStyle
-              rules={[{ required: true, message: "Please input the captcha you got!" }]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please input the captcha you got!",
+                },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -231,7 +257,11 @@ const RegistrationForm = () => {
         </Row>
       </Form.Item>
 
-      <Form.Item name="agreement" valuePropName="checked" {...tailFormItemLayout}>
+      <Form.Item
+        name="agreement"
+        valuePropName="checked"
+        {...tailFormItemLayout}
+      >
         <Checkbox>
           I have read the <a href="">agreement</a>
         </Checkbox>
@@ -243,6 +273,6 @@ const RegistrationForm = () => {
       </Form.Item>
     </Form>
   );
-};
+}
 
 export default RegistrationForm;

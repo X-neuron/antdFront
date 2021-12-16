@@ -1,20 +1,12 @@
-import { Menu, Dropdown } from 'antd';
-import { ClickParam } from 'antd/es/menu';
-import { DropDownProps } from 'antd/es/dropdown';
-import { useRecoilState } from 'recoil';
-import { locales,curLangAtom } from '@/atoms/locale';
+import { Menu, Dropdown } from "antd";
+import { ClickParam } from "antd/es/menu";
+import { DropDownProps } from "antd/es/dropdown";
+import { useRecoilState } from "recoil";
+import { locales, curLangAtom } from "@/atoms/locale";
 
-
-const HeaderDropdown = ({
-  overlayClassName: cls,
-  ...restProps
-}) => (
-  <Dropdown
-    overlayClassName={cls}
-    {...restProps}
-  />
-);
-
+const HeaderDropdown = function({ overlayClassName: cls, ...restProps }) {
+  return <Dropdown overlayClassName={cls} {...restProps} />
+}
 
 // const locales = {
 //   "zh_CN":{
@@ -29,14 +21,10 @@ const HeaderDropdown = ({
 //   },
 // }
 
+const SelectLang = function(props) {
+  const { ...restProps } = props;
 
-
-const SelectLang = (props) => {
-  const {
-    ...restProps
-  } = props;
-
-  const [curLang,setCurLang] = useRecoilState(curLangAtom);
+  const [curLang, setCurLang] = useRecoilState(curLangAtom);
 
   const inlineStyle = {
     cursor: "pointer",
@@ -46,38 +34,34 @@ const SelectLang = (props) => {
     justifyContent: "center",
     fontSize: 18,
     verticalAlign: "middle",
-
   };
 
   const menuItemStyle = { minWidth: "160px" };
 
-  const handleClick = ({key}) => {
-    if(key !== curLang) {
-      setCurLang(key)
+  const handleClick = ({ key }) => {
+    if (key !== curLang) {
+      setCurLang(key);
     }
-  }
+  };
 
   const langMenu = (
     <Menu selectedKeys={curLang} onClick={handleClick}>
-      {Object.keys(locales).map((lang) => {
-        return (
-          <Menu.Item key={lang} style={menuItemStyle}>
-            <span role="img" aria-label={locales[lang].name}>
-              {locales[lang].icon || "🌐"}
-            </span>
-            {locales[lang].name}
-          </Menu.Item>
-        );
-      })}
+      {Object.keys(locales).map((lang) => (
+        <Menu.Item key={lang} style={menuItemStyle}>
+          <span role="img" aria-label={locales[lang].name}>
+            {locales[lang].icon || "🌐"}
+          </span>
+          {locales[lang].name}
+        </Menu.Item>
+      ))}
     </Menu>
   );
-
 
   return (
     <HeaderDropdown overlay={langMenu} placement="bottomRight" {...restProps}>
       <span style={inlineStyle}>
         {/* <i className="anticon" title={allLangUIConfig[selectedLang]?.title}> */}
-        <i className="anticon" >
+        <i className="anticon">
           <svg
             viewBox="0 0 24 24"
             focusable="false"
@@ -96,7 +80,6 @@ const SelectLang = (props) => {
       </span>
     </HeaderDropdown>
   );
-
-};
+}
 
 export default SelectLang;

@@ -1,8 +1,7 @@
-
 import { useRecoilState } from "recoil";
 import { useCount, count } from "./useCount";
 
-function ACountBtn() {
+const ACountBtn = function() {
   const { addone, subone, stop, reset } = useCount();
   const [countNum] = useRecoilState(count);
   return (

@@ -4,24 +4,28 @@ import {
   MailTwoTone,
   MobileTwoTone,
   TaobaoCircleOutlined,
-  UserOutlined
-} from '@ant-design/icons';
-import { Alert, Space, message, Tabs } from 'antd';
-import { useSafeState } from 'ahooks';
-import ProForm, {ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+  UserOutlined,
+} from "@ant-design/icons";
+import { Alert, Space, message, Tabs } from "antd";
+import { useSafeState } from "ahooks";
+import ProForm, {
+  ProFormCaptcha,
+  ProFormCheckbox,
+  ProFormText,
+} from "@ant-design/pro-form";
 
 // import { getFakeCaptcha } from '@/services/login';
 import { i18n } from "@lingui/core";
-import { t,Trans } from "@lingui/macro";
+import { t, Trans } from "@lingui/macro";
 
-import styles from './index.less';
-import { accountLogin } from '@/services/login'
-import { loginStateAtom} from '@/atoms/login';
-import { useRecoilState } from 'recoil';
-import { useNavigate,Link } from 'react-router-dom';
+import { useRecoilState } from "recoil";
+import { useNavigate, Link } from "react-router-dom";
+import styles from "./index.less";
+import { accountLogin } from "@/services/login";
+import { loginStateAtom } from "@/atoms/login";
 
-const LoginMessage = ({ content }) => (
-  <Alert
+const LoginMessage = function({ content }) {
+  return <Alert
     style={{
       marginBottom: 24,
     }}
@@ -29,25 +33,24 @@ const LoginMessage = ({ content }) => (
     type="error"
     showIcon
   />
-);
+}
 
-const Login = (props) => {
+const Login = function(props) {
   const { userLogin = {}, submitting } = props;
   const { status } = userLogin;
-  const [type, setType] = useSafeState('account');
+  const [type, setType] = useSafeState("account");
   const [captCha, setCaptCha] = useSafeState(false);
-  const [login,setLogin] = useRecoilState(loginStateAtom);
+  const [login, setLogin] = useRecoilState(loginStateAtom);
   const navigate = useNavigate();
   const handleSubmit = (values) => {
     // const res = accountLogin(values);
     // console.log('login res:',res);
     setLogin({
       ...login,
-      isLogin:true
+      isLogin: true,
     });
     // 应该提取redirect ，此处省略
-    navigate("/",{replace:true});
-
+    navigate("/", { replace: true });
   };
   return (
     <div className={styles.main}>
@@ -59,9 +62,9 @@ const Login = (props) => {
           render: (_, dom) => dom.pop(),
           submitButtonProps: {
             loading: submitting,
-            size: 'large',
+            size: "large",
             style: {
-              width: '100%',
+              width: "100%",
             },
           },
         }}
@@ -70,63 +73,57 @@ const Login = (props) => {
           return Promise.resolve();
         }}
       >
-        <Tabs activeKey={type} onChange={setType} centered >
-          <Tabs.TabPane
-            key="account"
-            tab={i18n._(t`账号密码登陆`)}
-          />
-          <Tabs.TabPane
-            key="mobile"
-            tab={i18n._(t`手机号登陆`)}
-          />
+        <Tabs activeKey={type} onChange={setType} centered>
+          <Tabs.TabPane key="account" tab={i18n._(t`账号密码登陆`)} />
+          <Tabs.TabPane key="mobile" tab={i18n._(t`手机号登陆`)} />
         </Tabs>
 
-        {status === 'error' && loginType === 'account' && !submitting && (
+        {status === "error" && loginType === "account" && !submitting && (
           <LoginMessage
             content={i18n._(t`账户或密码错误（admin/ant.design)`)}
           />
         )}
-        {type === 'account' && (
+        {type === "account" && (
           <>
             <ProFormText
               name="account"
               fieldProps={{
-                size: 'large',
+                size: "large",
                 prefix: <UserOutlined className={styles.prefixIcon} />,
               }}
               placeholder={i18n._(t`用户名: admin or user`)}
               rules={[
                 {
                   required: true,
-                  message: i18n._(t`请输入用户名`)
+                  message: i18n._(t`请输入用户名`),
                 },
               ]}
             />
             <ProFormText.Password
               name="password"
               fieldProps={{
-                size: 'large',
+                size: "large",
                 prefix: <LockTwoTone className={styles.prefixIcon} />,
               }}
               placeholder={i18n._(t`密码：any`)}
               rules={[
                 {
                   required: true,
-                  message:i18n._(t`请输入密码`),
+                  message: i18n._(t`请输入密码`),
                 },
               ]}
             />
           </>
         )}
 
-        {status === 'error' && loginType === 'mobile' && !submitting && (
+        {status === "error" && loginType === "mobile" && !submitting && (
           <LoginMessage content={i18n._(t`验证码错误`)} />
         )}
-        {type === 'mobile' && (
+        {type === "mobile" && (
           <>
             <ProFormText
               fieldProps={{
-                size: 'large',
+                size: "large",
                 prefix: <MobileTwoTone className={styles.prefixIcon} />,
               }}
               name="mobile"
@@ -144,11 +141,11 @@ const Login = (props) => {
             />
             <ProFormCaptcha
               fieldProps={{
-                size: 'large',
+                size: "large",
                 prefix: <MailTwoTone className={styles.prefixIcon} />,
               }}
               captchaProps={{
-                size: 'large',
+                size: "large",
               }}
               placeholder={i18n._(t`请输入验证码`)}
               captchaTextRender={(timing, count) => {
@@ -161,16 +158,14 @@ const Login = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <Trans>请输入验证码</Trans>
-                  ),
+                  message: <Trans>请输入验证码</Trans>,
                 },
               ]}
               countDown={10}
               onGetCaptcha={async (mobile) => {
                 // const result = await getFakeCaptcha(mobile);
 
-                message.success('获取验证码成功！验证码为：1234');
+                message.success("获取验证码成功！验证码为：1234");
               }}
             />
           </>
@@ -185,7 +180,7 @@ const Login = (props) => {
           </ProFormCheckbox>
           <a
             style={{
-              float: 'right',
+              float: "right",
             }}
           >
             <Trans> 忘记密码 </Trans>
@@ -193,7 +188,9 @@ const Login = (props) => {
         </div>
       </ProForm>
       <Space className={styles.other}>
-        <p className={styles.p}><Trans> 其他登陆方式 </Trans></p>
+        <p className={styles.p}>
+          <Trans> 其他登陆方式 </Trans>
+        </p>
         <AlipayCircleOutlined className={styles.icon} />
         <TaobaoCircleOutlined className={styles.icon} />
         <Link className={styles.register} to="/user/register">
@@ -202,7 +199,6 @@ const Login = (props) => {
       </Space>
     </div>
   );
-};
+}
 
 export default Login;
-

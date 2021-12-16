@@ -16,5 +16,5 @@ const defaultAccess = {
   logionPermit: false,
   // 'example': role === 'admin',
   // 'example2': some => some.prop === 'test'
-}
+};
 export default defaultAccess;

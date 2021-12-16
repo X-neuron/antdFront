@@ -1,25 +1,24 @@
 import { Form, Input, Button, Checkbox } from "antd";
-import Access from "@/components/Access";
 import { i18n } from "@lingui/core";
-import { t } from "@lingui/macro";
-import { Trans } from "@lingui/macro";
+import { t , Trans } from "@lingui/macro";
+import Access from "@/components/Access";
 
 const layout = {
   labelCol: { span: 8 },
-  wrapperCol: { span: 16 }
+  wrapperCol: { span: 16 },
 };
 const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 }
+  wrapperCol: { offset: 8, span: 16 },
 };
 
-const LoginForm = (props) => {
+const LoginForm = function(props) {
   // const { params } = props;
   // console.log(params);
-  const onFinish = values => {
+  const onFinish = (values) => {
     console.log("Success:", values);
   };
 
-  const onFinishFailed = errorInfo => {
+  const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
@@ -53,12 +52,12 @@ const LoginForm = (props) => {
       <Access accessible="logionPermit" fallback={null}>
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            <Trans>(我是权限按钮切换个角色找到我)  提   交 </Trans>
+            <Trans>(我是权限按钮切换个角色找到我) 提 交 </Trans>
           </Button>
         </Form.Item>
       </Access>
     </Form>
   );
-};
+}
 
 export default LoginForm;

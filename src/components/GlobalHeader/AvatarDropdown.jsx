@@ -1,13 +1,17 @@
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu, Spin } from 'antd';
-import HeaderDropdown from '../HeaderDropdown';
-import styles from './index.less';
+import {
+  LogoutOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Avatar, Menu, Spin } from "antd";
 import { Trans } from "@lingui/macro";
-import { useRecoilState } from 'recoil';
-import { loginStateAtom} from '@/atoms/login';
-import { dynamicConfigAtom } from '@/atoms/route';
-import { accessAtom } from '@/atoms/access';
-import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+import HeaderDropdown from "../HeaderDropdown";
+import styles from "./index.less";
+import { loginStateAtom } from "@/atoms/login";
+import { dynamicConfigAtom } from "@/atoms/route";
+import { accessAtom } from "@/atoms/access";
 
 const newConfig = [
   {
@@ -33,15 +37,16 @@ const newConfig = [
         access: "microOpen",
         component: "http://localhost:8001", // 微前端配置
       },
-    ]
-  }
-]
+    ],
+  },
+];
 
-const AvatarDropdown = (props) => {
+const AvatarDropdown = function(props) {
   const { menu } = props;
-  const [login,setLogin] = useRecoilState(loginStateAtom);
-  const [dynamicRouteConfig,setDynamicRouteConfig] = useRecoilState(dynamicConfigAtom);
-  const [access,setAccess] = useRecoilState(accessAtom);
+  const [login, setLogin] = useRecoilState(loginStateAtom);
+  const [dynamicRouteConfig, setDynamicRouteConfig] =
+    useRecoilState(dynamicConfigAtom);
+  const [access, setAccess] = useRecoilState(accessAtom);
   const navigate = useNavigate();
   const handleChangeRole = () => {
     setAccess({
@@ -53,18 +58,18 @@ const AvatarDropdown = (props) => {
       // 'example2': some => some.prop === 'test'
     });
     setDynamicRouteConfig(newConfig);
-    navigate(newConfig[0].path,{replace:true});
-  }
+    navigate(newConfig[0].path, { replace: true });
+  };
 
   const logout = () => {
     setLogin({
       ...login,
-      isLogin:false
-    })
-  }
+      isLogin: false,
+    });
+  };
 
   const menuHeaderDropdown = (
-    <Menu className={styles.menu} selectedKeys={[]} >
+    <Menu className={styles.menu} selectedKeys={[]}>
       <Menu.Item key="changeRole" onClick={() => handleChangeRole()}>
         <UserOutlined />
         <Trans>切换角色</Trans>
@@ -80,13 +85,18 @@ const AvatarDropdown = (props) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} style={{ backgroundColor: "#ffbf00", verticalAlign: 'middle' }} alt="avatar" >
+        <Avatar
+          size="small"
+          className={styles.avatar}
+          style={{ backgroundColor: "#ffbf00", verticalAlign: "middle" }}
+          alt="avatar"
+        >
           {login.account}
         </Avatar>
-            {/* <span className={`${styles.name} anticon`}>{login.account}</span> */}
+        {/* <span className={`${styles.name} anticon`}>{login.account}</span> */}
       </span>
     </HeaderDropdown>
-  )
+  );
 
   // return currentUser && currentUser.name ? (
   //   <HeaderDropdown overlay={<MenuHeaderDropdown />}>
@@ -108,7 +118,6 @@ const AvatarDropdown = (props) => {
   //     />
   //   </span>
   // );
-
 }
 
 export default AvatarDropdown;

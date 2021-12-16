@@ -6,7 +6,7 @@ import { extend } from "umi-request";
 import { notification } from "antd";
 
 // change to your api backend
-const baseUrl = "http://localhost:3000/api/v1"
+const baseUrl = "http://localhost:3000/api/v1";
 
 const codeMessage = {
   200: "服务器成功返回请求的数据。",
@@ -29,7 +29,7 @@ const codeMessage = {
  * 异常处理程序
  */
 
-const errorHandler = error => {
+const errorHandler = (error) => {
   const { response } = error;
 
   if (response && response.status) {
@@ -58,12 +58,9 @@ const request = extend({
   // credentials: "include", // 默认请求是否带上cookie
 });
 
-request.interceptors.request.use((url,options) => {
-  return {
-    url:`${baseUrl}${url}`,
-    options:{...options,interceptors:true}
-  }
-})
-
+request.interceptors.request.use((url, options) => ({
+  url: `${baseUrl}${url}`,
+  options: { ...options, interceptors: true },
+}));
 
 export default request;

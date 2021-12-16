@@ -1,6 +1,5 @@
 import Mock from "mockjs";
 
-
 export default {
   // login: () => Mock.mock(/\/api\/login\/account/, 'POST', (url) => ({
   //   status: 200,
@@ -26,14 +25,13 @@ export default {
       token: "fafaf",
       ssKey: "24234",
       userName: "fafa",
-      isLogin: true
-    }
+      isLogin: true,
+    },
   },
   "/auth/login/captcha": {
     status: 200,
     data: {
-      code: Mock.Random.string(4)
-    }
-  }
-
-}
+      code: Mock.Random.string(4),
+    },
+  },
+};

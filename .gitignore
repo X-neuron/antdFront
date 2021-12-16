@@ -8,6 +8,7 @@ coverage/
 build/
 dist/
 .idea/
+.eslintcache
 run/
 .DS_Store
 *.sw*

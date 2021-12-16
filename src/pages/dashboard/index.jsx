@@ -1,4 +1,3 @@
-
 import {
   Form,
   Input,
@@ -12,7 +11,7 @@ import {
   AutoComplete,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { useSafeState } from 'ahooks';
+import { useSafeState } from "ahooks";
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -75,10 +74,10 @@ const tailFormItemLayout = {
   },
 };
 
-const RegistrationForm = () => {
+const RegistrationForm = function() {
   const [form] = Form.useForm();
 
-  const onFinish = values => {
+  const onFinish = (values) => {
     // console.log("Received values of form: ", values);
   };
 
@@ -93,15 +92,17 @@ const RegistrationForm = () => {
 
   const [autoCompleteResult, setAutoCompleteResult] = useSafeState([]);
 
-  const onWebsiteChange = value => {
+  const onWebsiteChange = (value) => {
     if (!value) {
       setAutoCompleteResult([]);
     } else {
-      setAutoCompleteResult([".com", ".org", ".net"].map(domain => `${value}${domain}`));
+      setAutoCompleteResult(
+        [".com", ".org", ".net"].map((domain) => `${value}${domain}`),
+      );
     }
   };
 
-  const websiteOptions = autoCompleteResult.map(website => ({
+  const websiteOptions = autoCompleteResult.map((website) => ({
     label: website,
     value: website,
   }));
@@ -164,7 +165,9 @@ const RegistrationForm = () => {
               if (!value || getFieldValue("password") === value) {
                 return Promise.resolve();
               }
-              return Promise.reject("The two passwords that you entered do not match!");
+              return Promise.reject(
+                "The two passwords that you entered do not match!",
+              );
             },
           }),
         ]}
@@ -174,15 +177,21 @@ const RegistrationForm = () => {
 
       <Form.Item
         name="nickname"
-        label={(
+        label={
           <span>
             Nickname&nbsp;
             <Tooltip title="What do you want others to call you?">
               <QuestionCircleOutlined />
             </Tooltip>
           </span>
-        )}
-        rules={[{ required: true, message: "Please input your nickname!", whitespace: true }]}
+        }
+        rules={[
+          {
+            required: true,
+            message: "Please input your nickname!",
+            whitespace: true,
+          },
+        ]}
       >
         <Input />
       </Form.Item>
@@ -191,7 +200,11 @@ const RegistrationForm = () => {
         name="residence"
         label="Habitual Residence"
         rules={[
-          { type: "array", required: true, message: "Please select your habitual residence!" },
+          {
+            type: "array",
+            required: true,
+            message: "Please select your habitual residence!",
+          },
         ]}
       >
         <Cascader options={residences} />
@@ -210,18 +223,30 @@ const RegistrationForm = () => {
         label="Website"
         rules={[{ required: true, message: "Please input website!" }]}
       >
-        <AutoComplete options={websiteOptions} onChange={onWebsiteChange} placeholder="website">
+        <AutoComplete
+          options={websiteOptions}
+          onChange={onWebsiteChange}
+          placeholder="website"
+        >
           <Input />
         </AutoComplete>
       </Form.Item>
 
-      <Form.Item label="Captcha" extra="We must make sure that your are a human.">
+      <Form.Item
+        label="Captcha"
+        extra="We must make sure that your are a human."
+      >
         <Row gutter={8}>
           <Col span={12}>
             <Form.Item
               name="captcha"
               noStyle
-              rules={[{ required: true, message: "Please input the captcha you got!" }]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please input the captcha you got!",
+                },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -236,7 +261,12 @@ const RegistrationForm = () => {
         name="agreement"
         valuePropName="checked"
         rules={[
-          { validator: (_, value) => (value ? Promise.resolve() : Promise.reject("Should accept agreement")) },
+          {
+            validator: (_, value) =>
+              value
+                ? Promise.resolve()
+                : Promise.reject("Should accept agreement"),
+          },
         ]}
         {...tailFormItemLayout}
       >
@@ -251,6 +281,6 @@ const RegistrationForm = () => {
       </Form.Item>
     </Form>
   );
-};
+}
 
 export default RegistrationForm;

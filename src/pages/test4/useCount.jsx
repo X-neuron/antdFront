@@ -1,9 +1,9 @@
 import { atom, useRecoilState } from "recoil";
-import { useInterval,useSafeState } from "ahooks";
+import { useInterval, useSafeState } from "ahooks";
 
 export const count = atom({
   key: "count",
-  default: 0
+  default: 0,
 });
 
 export const useCount = (defValue) => {
@@ -15,7 +15,7 @@ export const useCount = (defValue) => {
       setCountNum(countNum + 1);
     },
     interval,
-    { immediate: false }
+    { immediate: false },
   );
 
   const start = () => {
