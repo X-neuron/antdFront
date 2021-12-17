@@ -54,16 +54,11 @@ const getClientEnvironment = require("./env");
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
 
-const reactRefreshRuntimeEntry = require.resolve("react-refresh/runtime");
-const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
-  "@pmmmwh/react-refresh-webpack-plugin",
-);
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== "false";
 
-const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === "true";
 const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === "true";
 
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || "10000",);
@@ -194,7 +189,6 @@ module.exports = function () {
           // {
           //   loader: require.resolve("resolve-url-loader"),
           //   options: {
-          //     sourceMap: isEnvDevelopment,
           //     root: paths.appSrc,
           //   },
           // },
@@ -559,7 +553,7 @@ module.exports = function () {
         },
         {
           test: /\.(mp4|webm)$/,
-          type: "asset/inline",
+          type: "asset",
           // use: {
           //   loader: 'url-loader',
           //   options: {
@@ -847,7 +841,7 @@ module.exports = function () {
       //   clientsClaim: true, // 让浏览器立即 servece worker 被接管
       //   skipWaiting: true, // 更新 sw 文件后，立即插队到最前面
       //   dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-      //   exclude: [/\.map$/, /assert-manifest\.json$/, /LICENSE/],
+      //   exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
       //   // importWorkboxFrom: 'cdn',
       //   navigateFallback: `${paths.publicUrlOrPath}index.html`,
       //   navigateFallbackDenylist: [
