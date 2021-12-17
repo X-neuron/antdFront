@@ -8,10 +8,10 @@
  "extractBabelOptions": {},
  "fallbackLocales": {},
  "format": "minimal",
- "locales": [en-US,zh-CN],
+ "locales": ["en-US","zh-CN"],
  "orderBy": "messageId",
  "pseudoLocale": "",
  "rootDir": ".",
  "runtimeConfigModule": ["@lingui/core", "i18n"],
- "sourceLocale": "",
+ "sourceLocale": ""
 }
