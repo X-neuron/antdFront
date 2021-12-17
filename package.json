@@ -168,6 +168,7 @@
     "@ant-design/pro-table": "^2.60.0",
     "@babel/runtime": "^7.16.5",
     "@koale/useworker": "^4.0.2",
+    "@lingui/core": "^3.12.1",
     "@lingui/react": "^3.13.0",
     "ahooks": "^3.0.5",
     "antd": "^4.17.3",
