@@ -11,11 +11,11 @@
     "compile": "lingui compile",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
-    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
-    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx",
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint:prettier": "prettier --check \"**/*\" --end-of-line auto",
-    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "lint:style": "stylelint \"src/**/*.less\" --custom-syntax less",
     "prettier": "prettier -c --write \"**/*\""
   },
   "browserslist": [
@@ -23,12 +23,16 @@
     "> 1%",
     "IE 10"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
-    "**/*.less": "stylelint --syntax less",
-    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+    "**/*.less": "stylelint --custom-syntax less",
     "**/*.{js,jsx,tsx,ts,less,md,json}": [
       "prettier --write --fix",
-      "npm run lint:eslint:fix",
+      "npm run lint:fix",
       "git add --force"
     ],
     "*.json": [
@@ -73,10 +77,17 @@
     "@babel/plugin-transform-runtime": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.7",
     "@lingui/cli": "^3.13.0",
     "@lingui/macro": "^3.13.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^6.1.2",
+    "@types/lodash": "^4.14.178",
+    "@types/qs": "^6.9.7",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
     "@umijs/babel-plugin-auto-css-modules": "^3.5.20",
     "babel-loader": "^8.2.3",
     "babel-plugin-dynamic-import-node": "^2.3.3",
@@ -116,11 +127,11 @@
     "file-loader": "^6.2.0",
     "html-loader": "^3.0.1",
     "html-webpack-plugin": "^5.5.0",
-    "husky": "^7.0.4",
+    "husky": "^3.1.0",
     "jest": "^27.4.5",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
-    "lint-staged": "^12.1.2",
+    "lint-staged": "10.5.1",
     "mini-css-extract-plugin": "^2.4.5",
     "mockjs": "^1.1.0",
     "node-sass": "^7.0.0",
@@ -128,6 +139,7 @@
     "postcss": "^8.4.5",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^14.0.2",
+    "postcss-less": "^6.0.0",
     "postcss-loader": "^6.2.1",
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^7.0.2",
@@ -184,6 +196,7 @@
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.1.1",
     "recoil": "^0.5.2",
+    "typescript": "^4.5.5",
     "umi-request": "^1.4.0"
   },
   "author": "X-neuron",

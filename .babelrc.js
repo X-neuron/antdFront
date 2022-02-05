@@ -22,6 +22,9 @@ module.exports = {
         development: true,
       },
     ],
+    [
+      "@babel/preset-typescript"
+    ]
   ],
   plugins: [
     "lodash",

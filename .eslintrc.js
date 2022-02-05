@@ -6,7 +6,7 @@
 // );
 
 module.exports = {
-  parser: "@babel/eslint-parser",
+  parser: "@typescript-eslint/parser",
   extends: [
     "airbnb",
     "prettier",
@@ -31,10 +31,14 @@ module.exports = {
     sourceType: "module",
   },
   settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+    },
+    "import/extensions": [".js", ".jsx", ".json", ".ts", ".tsx"],
     "import/resolver": {
       alias: {
         map: [["@", "./src"]],
-        extensions: [".js", ".jsx", ".json", ".ts", "tsx"],
+        extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
       },
     },
   },
@@ -65,11 +69,11 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     // 官方文档 http://eslint.org/docs/rules/
     // 参数：0 关闭，1 警告，2 错误
-    quotes: [1, "double"], // 建议使用单引号
+    quotes: [1, "double"], // 建议使用双引号
     // "no-inner-declarations": [0, "both"],     //不建议在{}代码块内部声明变量或函数
     // 使用前未定义
     "no-use-before-define": [1, "nofunc"],
-    "react/jsx-no-useless-fragment": 2,
+    "react/jsx-no-useless-fragment": 1,
     complexity: [0, 10], // 圈复杂度大于*
 
     // 定义数组或对象最后多余的逗号
@@ -135,7 +139,7 @@ module.exports = {
     "react/jsx-no-undef": 1, // 在JSX中禁止未声明的变量
     "react/jsx-pascal-case": 1, // 为用户定义的JSX组件强制使用PascalCase
     // "react/jsx-sort-props": 2, //强化props按字母排序
-    "react/jsx-uses-react": 0, // 防止反应被错误地标记为未使用 //new jsx trans可以关闭了
+    "react/jsx-uses-react": 2, // 防止反应被错误地标记为未使用 //new jsx trans可以关闭了
     "react/jsx-uses-vars": 2, // 防止在JSX中使用的变量被错误地标记为未使用
     "react/no-danger": 0, // 防止使用危险的JSX属性
     "react/no-did-mount-set-state": 0, // 防止在componentDidMount中使用setState
@@ -203,7 +207,10 @@ module.exports = {
         exceptions: { VariableDeclarator: true, ImportDeclaration: true },
       },
     ], // 不允许多个空格
-    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      1,
+      { extensions: [".ts", ".tsx", ".js", ".jsx"] },
+    ],
     "react/destructuring-assignment": 0,
     // object直接量建议写法 : 后一个空格前面不留空格,切keyvalue对齐
     // "key-spacing": [
@@ -283,5 +290,21 @@ module.exports = {
       },
     ],
     curly: 0, // if、else、while、for代码块用{}包围
+    "react/function-component-definition": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        ts: "never",
+        tsx: "never",
+      },
+    ],
+    "import/no-cycle": 0,
+    "react/no-unstable-nested-components": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/alt-text": 0,
+    "react/require-default-props": 0,
+    "no-lonely-if": 0,
   },
 };
