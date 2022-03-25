@@ -1,0 +1,67 @@
+stages:
+  - fecheck
+  - dev
+  - fat
+  - uat
+  - pro
+
+fecheck:
+  stage: fecheck
+  script:
+    - "/usr/bin/env bash $CI_BUILDS_DIR/ci/fecheck.sh"
+  only:
+    - merge_requests
+  tags:
+    - ecs
+
+dev:
+  stage: dev
+  script:
+    - '/usr/bin/env bash $CI_BUILDS_DIR/ci/build.sh'
+  when: manual
+  only:
+    refs:
+      - /^[t|v]\d+\.\d+\.\d+$/
+  except:
+    - branches
+  tags:
+    - ecs
+
+fat:
+  stage: fat
+  script:
+    - '/usr/bin/env bash $CI_BUILDS_DIR/ci/build.sh'
+  when: manual
+  only:
+    refs:
+      - /^[t|v]\d+\.\d+\.\d+$/
+  except:
+    - branches
+  tags:
+    - ecs
+
+uat:
+  stage: uat
+  script:
+    - '/usr/bin/env bash $CI_BUILDS_DIR/ci/build.sh'
+  when: manual
+  only:
+    refs:
+      - /^v\d+\.\d+\.\d+$/
+  except:
+    - branches
+  tags:
+    - ecs
+
+pro:
+  stage: pro
+  script:
+    - '/usr/bin/env bash $CI_BUILDS_DIR/ci/build.sh'
+  when: manual
+  only:
+    refs:
+      - /^v\d+\.\d+\.\d+$/
+  except:
+    - branches
+  tags:
+    - ecs
