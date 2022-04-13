@@ -4,7 +4,7 @@ English | [简体中文](./README-cn.md)
 
 Antdfront is a set of multi label experimental react microfrontend template based on ant design, embracing react hook, pure function, realizing button level access, using the next generation of data flow and micro front-end framework Qiankun.
 
-If you need a full application permission instance of the front end, please refer to: [x-plat]（ https://github.com/X-neuron/x-plat.git )
+If you need a full application permission instance of the front end, please refer to: [x-plat](https://github.com/X-neuron/x-plat.git)
 
 <img src="https://i.postimg.cc/QxHf9KZP/1111.gif" >
 
