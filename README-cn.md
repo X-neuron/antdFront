@@ -3,6 +3,7 @@
 # AntdFront
 
 AntdFront 是一套基于 Ant Design 的实验性、拥抱 react hook,纯函数,实现按钮级权限，使用下一代数据流, 微前端框架 qiankun 的 多标签 React 前端模板
+如果你需要前端完整应用权限实例，欢迎参考：[X-plat](https://github.com/X-neuron/x-plat.git)
 
 ## 特性
 
@@ -42,4 +43,4 @@ https://zhuanlan.zhihu.com/p/141738683
 
 ## 使用注意
 
-recoil,webpack5 react17 i18n(lingui.js) prolayout react-router6 权限 prolayout 布局 微前端路由 已迁移完成
+由于 Antdesign 4 部分组件对react 18 的支持不够理想，使用时暂不建议升级至react18..
