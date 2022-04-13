@@ -7,6 +7,7 @@ import {
   translateNameProperty,
 } from "@/utils/route-utils";
 import { curLocaleLoadAtom } from "@/atoms/locale";
+import { loginStateAtom } from "./login";
 // import { i18n } from "@lingui/core";
 // import memoized from "nano-memoize";
 
@@ -20,9 +21,9 @@ export const staticConfigAtom = atom({
   default: staticConfig,
 });
 
-export const dynamicConfigAtom = atom({
+export const dynamicConfigAtom = selector({
   key: "dynamicConfigAtom",
-  default: dynamicConfig,
+  get: ({ get }) => get(loginStateAtom).route
 });
 
 const rmtConfigAtom = selector({

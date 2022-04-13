@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import HeaderDropdown from "../HeaderDropdown";
 import styles from "./index.less";
 import { loginStateAtom } from "@/atoms/login";
-import { dynamicConfigAtom } from "@/atoms/route";
 import { accessAtom } from "@/atoms/access";
 
 const newConfig = [
@@ -44,8 +43,6 @@ const newConfig = [
 const AvatarDropdown = function(props) {
   const { menu } = props;
   const [login, setLogin] = useRecoilState(loginStateAtom);
-  const [dynamicRouteConfig, setDynamicRouteConfig] =
-    useRecoilState(dynamicConfigAtom);
   const [access, setAccess] = useRecoilState(accessAtom);
   const navigate = useNavigate();
   const handleChangeRole = () => {
@@ -57,7 +54,10 @@ const AvatarDropdown = function(props) {
       // 'example': role === 'admin',
       // 'example2': some => some.prop === 'test'
     });
-    setDynamicRouteConfig(newConfig);
+    setLogin({
+      ...login,
+      route:newConfig
+    })
     navigate(newConfig[0].path, { replace: true });
   };
 

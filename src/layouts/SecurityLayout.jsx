@@ -2,7 +2,6 @@
 import { stringify } from "qs";
 import { Outlet, Navigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { useSafeState } from "ahooks";
 import { loginStateAtom } from "@/atoms/login";
 
 const SecurityLayout = function({ children }) {

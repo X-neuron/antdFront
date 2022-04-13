@@ -60,7 +60,6 @@ const BasicLayout = function(props) {
   //   [orgRoute, locale],
   // );
 
-  // 之所以要喂给单独深拷贝喂，因为 https://github.com/umijs/route-utils/pull/10 它好像挺倔，这么反人类的 底裤操作，居然不纠正...
   const feedToProlayoutRoute = useCreation(() => _.cloneDeep(route), [locale]);
 
   const { routeConfig, matchPath } = pickRoutes(route, location.pathname);
@@ -122,6 +121,7 @@ const BasicLayout = function(props) {
         {/* </PageContainer> */}
       </ProLayout>
       <SettingDrawer
+      enableDarkTheme
         getContainer={() => document.getElementById("prolayout")}
         settings={settings}
         disableUrlParams={true}

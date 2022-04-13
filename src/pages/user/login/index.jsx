@@ -42,14 +42,11 @@ const Login = function(props) {
   const [captCha, setCaptCha] = useSafeState(false);
   const [login, setLogin] = useRecoilState(loginStateAtom);
   const navigate = useNavigate();
-  const handleSubmit = (values) => {
-    // const res = accountLogin(values);
-    // console.log('login res:',res);
+  const handleSubmit = async (values) => {
     setLogin({
       ...login,
-      isLogin: true,
+      isLogin:true
     });
-    // 应该提取redirect ，此处省略
     navigate("/", { replace: true });
   };
   return (
