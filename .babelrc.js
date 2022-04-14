@@ -60,22 +60,22 @@ module.exports = {
         useESModules: true,
       },
     ],
-    [
-      "import",
-      // using antd UI
-      {
-        libraryName: "antd",
-        libraryDirectory: "es",
-        // style: 'css', // `style: true` 会加载 less 文件
-        style: true,
-      },
-      // // using material-ui
-      // {
-      //   "libraryName": "@material-ui/core",
-      //   "libraryDirectory": "components",  // default: lib
-      //   "camel2DashComponentName": false  // default: true
-      // }
-    ],
+    // [
+    //   "import",
+    //   // using antd UI
+    //   {
+    //     libraryName: "antd",
+    //     libraryDirectory: "es",
+    //     // style: 'css', // `style: true` 会加载 less 文件
+    //     style: true,
+    //   },
+    //   // // using material-ui
+    //   // {
+    //   //   "libraryName": "@material-ui/core",
+    //   //   "libraryDirectory": "components",  // default: lib
+    //   //   "camel2DashComponentName": false  // default: true
+    //   // }
+    // ],
     [
       "@babel/plugin-proposal-class-properties",
       {

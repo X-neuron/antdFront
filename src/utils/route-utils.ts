@@ -145,7 +145,7 @@ function generateProlayoutMenuDataItem(
       // 完整路径 parentPath:/a  childrenPath:b  fullPath:/a/b
       fullPath: resPath.pathname,
       key: resPath.pathname,
-      icon: getIcon(conf.icon),
+      icon: getIcon(conf.icon??''),
       element: conf.component
         ? getPage(conf.component, conf.access, resPath.pathname)
         : getPage("Default"),

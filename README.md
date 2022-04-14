@@ -2,7 +2,9 @@ English | [简体中文](./README-cn.md)
 
 # AntdFront
 
-Antdfront is a set of multi label experimental react microfrontend template based on ant design, embracing react hook, pure function, realizing button level access, using the next generation of data flow and micro front-end framework Qiankun
+Antdfront is a set of multi label experimental react microfrontend template based on ant design, embracing react hook, pure function, realizing button level access, using the next generation of data flow and micro front-end framework Qiankun.
+
+If you need a full application permission instance of the front end, please refer to: [x-plat](https://github.com/X-neuron/x-plat.git)
 
 <img src="https://i.postimg.cc/QxHf9KZP/1111.gif" >
 
@@ -40,4 +42,6 @@ https://zhuanlan.zhihu.com/p/141738683
 
 ## Documentation
 
-recoil,webpack5 react17 i18n( lingui.js ）Prolayout react-router6 prolayout permission micro front-end routing migration completed
+Since some of Ant Design 4's components is not well support for react 18, it is not recommended to upgrade to react 18..
+
+Thanks：[qiujie8092916](https://github.com/qiujie8092916) offer the typescript edition

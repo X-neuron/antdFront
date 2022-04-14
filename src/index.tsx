@@ -1,9 +1,13 @@
 import { start } from "qiankun";
-import React from "react";
+// react 18
+// import * as ReactDOMClient from 'react-dom/client';
+// react 17
+import React,{ Suspense } from "react";
 import ReactDom from "react-dom";
+import PageLoading from "@/components/PageLoading";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-
+import 'antd/dist/antd.variable.min.css';
 // 真实线上环境 请注释掉mock
 import runMock from "@/mock";
 
@@ -11,12 +15,24 @@ import App from "./app";
 
 runMock();
 
-const initalContainer = document.getElementById("root");
+const initalContainer = document.getElementById("root") as Element;
+
+// react 18
+// const root =  ReactDOMClient.createRoot(initalContainer);
+// root.render(
+//   <RecoilRoot>
+//     <BrowserRouter>
+//       <App />
+//     </BrowserRouter>
+//   </RecoilRoot>,
+// );
 
 ReactDom.render(
   <RecoilRoot>
     <BrowserRouter>
-      <App />
+      <Suspense fallback={<PageLoading />} >
+        <App />
+      </Suspense>
     </BrowserRouter>
   </RecoilRoot>,
   initalContainer,

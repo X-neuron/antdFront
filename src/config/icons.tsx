@@ -26,7 +26,10 @@ const icons = new Map([
   ["UserOutlined", <UserOutlined />],
 ]);
 
-const getIcon = memoized((_iconStr: string) => {
+const getIcon = memoized((_iconStr: string | React.ReactElement ) => {
+  if (React.isValidElement(_iconStr)){
+    return _iconStr;
+  }
   if (isUrl(_iconStr)) {
     return (
       // eslint-disable-next-line jsx-a11y/alt-text

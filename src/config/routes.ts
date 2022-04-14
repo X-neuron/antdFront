@@ -30,7 +30,7 @@ export interface DynamicRouteType extends MenuDataItem {
   /** 翻译失败后 则采用name配置值,如无需全球化直接使用中文即可 */
   name: string;
   /** @/config/icons里配置的图标,小写也可以 */
-  icon?: string;
+  icon?: string | React.ReactElement;
   /** @/config/access里可配置静态策略。权限入口在@/config/pages里 */
   access?: string;
   /** 非动态的有page属性的路由，会默认显示在sideMmenu里 */

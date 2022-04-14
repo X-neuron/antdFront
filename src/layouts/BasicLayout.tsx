@@ -31,7 +31,7 @@ const pickRoutes = memoized((routes: DynamicRouteType[], pathname: string) => {
   return {
     routeConfig,
     // matchPath: matches ? matches.map(match => _.replace(match.route.path,'/*','')).join('/') : null // 解决下微端/*路径的问题
-    matchPath: routeConfig ? _.replace(routeConfig.key, "/*", "") : null,
+    matchPath: routeConfig ? _.replace(routeConfig.key, "/*", "") : '',
   };
 });
 
@@ -57,7 +57,6 @@ const BasicLayout: React.FC = () => {
   //   [orgRoute, locale],
   // );
 
-  // 之所以要喂给单独深拷贝喂，因为 https://github.com/umijs/route-utils/pull/10 它好像挺倔，这么反人类的 底裤操作，居然不纠正...
   const feedToProlayoutRoute = useCreation(() => _.cloneDeep(route), [locale]);
 
   const { routeConfig, matchPath } = pickRoutes(route, location.pathname);
@@ -69,7 +68,7 @@ const BasicLayout: React.FC = () => {
           height: "100vh",
         }}
         menuDataRender={() => feedToProlayoutRoute}
-        menuItemRender={(item, dom) => (
+        menuItemRender={(item:any, dom:any) => (
           <div
             onClick={() => {
               // fullPath 为加工过 '/*' 的路径
@@ -107,6 +106,7 @@ const BasicLayout: React.FC = () => {
         {/* </PageContainer> */}
       </ProLayout>
       <SettingDrawer
+        enableDarkTheme
         getContainer={() => document.getElementById("prolayout")}
         settings={settings}
         disableUrlParams={true}

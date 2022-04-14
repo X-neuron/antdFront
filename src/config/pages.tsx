@@ -38,7 +38,7 @@ const pages: Map<string, React.ReactElement> = new Map([
   ["Default", <Outlet />], // default microapp
 ]);
 
-const getPage = memoized((pageStr: string, access?: string, fullPath = "") => {
+const getPage = memoized((pageStr: string, access?: string | boolean , fullPath = "") => {
   const page = isHttp(pageStr) ? (
     <MicroApp entry={pageStr} fullPath={fullPath} />
   ) : (
@@ -46,7 +46,7 @@ const getPage = memoized((pageStr: string, access?: string, fullPath = "") => {
   );
   if (access) {
     return (
-      <Access accessible={access} fallback={<AccessResult code="403" />}>
+      <Access accessible={access as string} fallback={<AccessResult code="403" />}>
         {page}
       </Access>
     );

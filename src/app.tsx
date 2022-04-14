@@ -7,6 +7,7 @@ import { useRecoilValue } from "recoil";
 import { appRouteAtom } from "@/atoms/route";
 import Locale from "@/components/Locale";
 import PageLoading from "@/components/PageLoading";
+// import { loginStateAtom } from "@/atoms/login";
 
 const App: React.FC = () => {
   useFavicon("./public/favicon.ico");
@@ -16,6 +17,24 @@ const App: React.FC = () => {
   const appRoute = useRecoilValue(appRouteAtom);
 
   const element = useRoutes(appRoute);
+
+  // const [login,setLogin] = useRecoilState(loginStateAtom);
+
+  // 免账号登陆逻辑...
+  // useMount(async () => {
+  //   if(!login.isLogin){
+  //     // const res = await fastLogin();
+  //     if(res.data?.jwt){
+  //       const { route,permission} = res.data;
+  //       setLogin({
+  //         ...res.data,
+  //         route,
+  //         permission,
+  //         isLogin:true,
+  //       });
+  //     }
+  //   }
+  // });
 
   return (
     <Suspense fallback={<PageLoading />}>

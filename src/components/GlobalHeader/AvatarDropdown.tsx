@@ -7,7 +7,6 @@ import { useRecoilState } from "recoil";
 
 import { accessAtom } from "@/atoms/access";
 import { loginStateAtom } from "@/atoms/login";
-import { dynamicConfigAtom } from "@/atoms/route";
 
 import HeaderDropdown from "../HeaderDropdown";
 import styles from "./index.less";
@@ -34,7 +33,7 @@ const newConfig = [
         name: "vue2测试",
         path: "vue2/*",
         access: "microOpen",
-        component: "http://localhost:7101", // 微前端配置
+        component: "http://localhost:8001", // 微前端配置
       },
     ],
   },
@@ -43,7 +42,7 @@ const newConfig = [
 const AvatarDropdown: React.FC = () => {
   // const { menu } = props;
   const [login, setLogin] = useRecoilState(loginStateAtom);
-  const [, setDynamicRouteConfig] = useRecoilState(dynamicConfigAtom);
+
   const [, setAccess] = useRecoilState(accessAtom);
   const navigate = useNavigate();
   const handleChangeRole = () => {
@@ -55,7 +54,10 @@ const AvatarDropdown: React.FC = () => {
       // 'example': role === 'admin',
       // 'example2': some => some.prop === 'test'
     });
-    setDynamicRouteConfig(newConfig);
+    setLogin({
+      ...login,
+      route:newConfig
+    })
     navigate(newConfig[0].path, { replace: true });
   };
 

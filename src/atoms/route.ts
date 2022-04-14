@@ -1,8 +1,8 @@
 import { atom, selector } from "recoil";
 
 import { curLocaleLoadAtom } from "@/atoms/locale";
+import { loginStateAtom } from "./login";
 import {
-  dynamicConfig,
   generateRouteWithMenuTypes,
   mergeRoute,
   staticConfig,
@@ -19,9 +19,9 @@ export const staticConfigAtom = atom({
   default: staticConfig,
 });
 
-export const dynamicConfigAtom = atom({
+export const dynamicConfigAtom = selector({
   key: "dynamicConfigAtom",
-  default: dynamicConfig,
+  get: ({ get }) => get(loginStateAtom).route
 });
 
 const rmtConfigAtom = selector({
