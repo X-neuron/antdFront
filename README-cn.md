@@ -41,8 +41,5 @@ https://zhuanlan.zhihu.com/p/268890371
 
 https://zhuanlan.zhihu.com/p/141738683
 
-## 使用注意
-
-由于 Antdesign 4 部分组件对react 18 的支持不够理想，使用时暂不建议升级至react18..
 
 致谢：[qiujie8092916](https://github.com/qiujie8092916) 提供typescript版

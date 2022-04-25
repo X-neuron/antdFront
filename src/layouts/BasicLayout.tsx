@@ -1,6 +1,7 @@
 import ProLayout, { SettingDrawer } from "@ant-design/pro-layout";
 import defaultSettings from "@ant-design/pro-layout/es/defaultSettings";
-import { useCreation, useSafeState } from "ahooks";
+// import { useCreation, useSafeState } from "ahooks";
+import {  useSafeState } from "ahooks";
 import _ from "lodash";
 import memoized from "nano-memoize";
 import React, { Suspense } from "react";
@@ -25,10 +26,11 @@ import styles from "./BasicLayout.less";
 
 // 从config里 把 匹配的信息 调出来
 // 放这因为activekey 在 prolayout 和 tabroute之间共享。
-const pickRoutes = memoized((routes: DynamicRouteType[], pathname: string) => {
+const pickRoutes = memoized((routes: DynamicRouteType[], pathname: string,locale: string) => {
   const matches = matchRoutes(routes, { pathname });
   const routeConfig: any = matches ? matches[matches.length - 1].route : null;
   return {
+    locale, // just for cache
     routeConfig,
     // matchPath: matches ? matches.map(match => _.replace(match.route.path,'/*','')).join('/') : null // 解决下微端/*路径的问题
     matchPath: routeConfig ? _.replace(routeConfig.key, "/*", "") : '',
@@ -57,9 +59,9 @@ const BasicLayout: React.FC = () => {
   //   [orgRoute, locale],
   // );
 
-  const feedToProlayoutRoute = useCreation(() => _.cloneDeep(route), [locale]);
+  // const feedToProlayoutRoute = useCreation(() => _.cloneDeep(route), [locale,route]);
 
-  const { routeConfig, matchPath } = pickRoutes(route, location.pathname);
+  const { routeConfig, matchPath } = pickRoutes(route, location.pathname,locale);
 
   return (
     <div id="prolayout" key="prolayout">
@@ -67,7 +69,8 @@ const BasicLayout: React.FC = () => {
         style={{
           height: "100vh",
         }}
-        menuDataRender={() => feedToProlayoutRoute}
+        // menuDataRender={() => feedToProlayoutRoute}
+        menuDataRender={() => route}
         menuItemRender={(item:any, dom:any) => (
           <div
             onClick={() => {

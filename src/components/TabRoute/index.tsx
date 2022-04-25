@@ -1,9 +1,9 @@
-import { i18n } from "@lingui/core";
-import { useCreation, useMemoizedFn } from "ahooks";
+
+import { useMemoizedFn } from "ahooks";
 import { Tabs } from "antd";
 import _ from "lodash";
 import memoized from "nano-memoize";
-import React, { Suspense, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 // import Lru from "@/utils/lru";
 import type { Location } from "react-router-dom";
 // import { useWhyDidYouUpdate } from 'ahooks';
@@ -72,7 +72,7 @@ const TabRoute: React.FC<Props> = ({ routeConfig, matchPath }) => {
   /*
    * const updateTabList =
    */
-  useCreation(() => {
+  useEffect(() => {
     const tab = tabList.current.get(matchPath);
     const newTab: TabObjectType = {
       name: routeConfig.name,
@@ -136,7 +136,7 @@ const TabRoute: React.FC<Props> = ({ routeConfig, matchPath }) => {
       onEdit={(targetKey) => closeTab(targetKey)}
     >
       {[...tabList.current.values()].map((item) => (
-        <TabPane tab={i18n._(item.name)} key={item.key}>
+        <TabPane tab={item.name} key={item.key}>
           <Suspense fallback={<PageLoading />}>{item.page}</Suspense>
         </TabPane>
       ))}

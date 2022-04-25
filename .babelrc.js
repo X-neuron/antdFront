@@ -22,6 +22,7 @@ module.exports = {
         development: true,
       },
     ],
+    // "@lingui/babel-preset-react",
     [
       "@babel/preset-typescript"
     ]

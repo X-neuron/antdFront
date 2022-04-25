@@ -40,8 +40,5 @@ motivation：
 
 https://zhuanlan.zhihu.com/p/141738683
 
-## Documentation
-
-Since some of Ant Design 4's components is not well support for react 18, it is not recommended to upgrade to react 18..
 
 Thanks：[qiujie8092916](https://github.com/qiujie8092916) offer the typescript edition
