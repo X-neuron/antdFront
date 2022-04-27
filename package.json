@@ -1,6 +1,6 @@
 {
   "name": "antdfront",
-  "version": "2.3.1",
+  "version": "2.3.0",
   "description": "Antdfront is a set of multi tab experimental react microfrontend template",
   "main": "webpack.config.js",
   "scripts": {
