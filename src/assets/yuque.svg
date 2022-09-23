@@ -1,0 +1,47 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="70px" viewBox="0 0 80 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48 (47235) - http://www.bohemiancoding.com/sketch -->
+    <title>logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="38.1747213%" cy="86.0776601%" fx="38.1747213%" fy="86.0776601%" r="90.6379431%" gradientTransform="translate(0.381747,0.860777),scale(0.833781,1.000000),rotate(-45.568769),translate(-0.381747,-0.860777)" id="radialGradient-1">
+            <stop stop-color="#178F67" offset="0%"></stop>
+            <stop stop-color="#31CC79" stop-opacity="0.55" offset="61.0821026%"></stop>
+            <stop stop-color="#53E68D" stop-opacity="0.8" offset="100%"></stop>
+        </radialGradient>
+        <path d="M77.5819539,9.83501416 L71.2491659,9.49982106 C71.2491659,9.49982106 68.8538018,1.17064614 57.8616031,0.423397631 C46.8694044,-0.323850876 39.6765658,0.145500308 39.6765658,0.145500308 C39.6765658,0.145500308 47.8309005,5.29052753 44.5630439,14.4715129 C42.1349503,19.4231612 38.2936298,23.4692542 34.1980721,28.118925 L7.11614732,58.7530847 C32.3261131,58.3867293 47.1890038,58.2035515 51.7048196,58.2035515 C64.3689421,58.2035515 75.0716413,47.3180735 74.6336784,35.2065312 C74.3326764,26.8825395 71.658957,25.0017469 70.7399116,21.3562574 C69.8208662,17.7107678 71.6604983,11.8970614 77.5819539,9.83501416 Z" id="path-2"></path>
+        <linearGradient x1="54.9723321%" y1="81.5762245%" x2="-8.23595123%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#D6F056" offset="100%"></stop>
+        </linearGradient>
+        <path d="M34.0872936,28.2177762 C20.8317294,43.056087 0,66.664375 0,66.664375 C37.4770771,76.4137655 54.7441968,52.7516626 57.4478406,44.5600109 C61.072771,33.5769936 55.9509283,28.2177762 53.0523252,26.4701213 C43.2233292,20.5439245 35.9306602,26.1543072 34.0872936,28.2177762 Z" id="path-4"></path>
+        <linearGradient x1="52.4389279%" y1="0%" x2="74.0305759%" y2="89.1130587%" id="linearGradient-5">
+            <stop stop-color="#9BEB5E" offset="0%"></stop>
+            <stop stop-color="#23C26D" offset="100%"></stop>
+        </linearGradient>
+        <path d="M47.4137691,58.3482158 C41.40154,58.3883063 27.9346047,58.56037 7.01296319,58.8644068 L32.9018629,29.5797567 C33.4670371,28.9381166 34.0271468,28.3085002 34.578859,27.6865677 C37.0146153,25.3606314 43.9785295,20.9099676 53.134607,26.4304417 C56.0447995,28.1850841 61.1871205,33.5657289 57.5476968,44.5926588 C56.4920924,47.790988 53.2252503,53.3382651 47.4137691,58.3482158 Z" id="path-6"></path>
+    </defs>
+    <g id="企业管理" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo">
+            <g id="Group-6" transform="translate(0.000000, 1.000000)">
+                <g id="Group-3">
+                    <g id="2-copy-13">
+                        <g id="Fill-10-Copy">
+                            <use fill="#31CC79" xlink:href="#path-2"></use>
+                            <use fill-opacity="0.600000024" fill="url(#radialGradient-1)" xlink:href="#path-2"></use>
+                        </g>
+                        <g id="Fill-12-Copy">
+                            <use fill="#93E65C" xlink:href="#path-4"></use>
+                            <use fill-opacity="0.75" fill="url(#linearGradient-3)" style="mix-blend-mode: overlay;" xlink:href="#path-4"></use>
+                        </g>
+                        <g id="Combined-Shape" opacity="0.447805721">
+                            <use fill="#60DB69" xlink:href="#path-6"></use>
+                            <use fill-opacity="0.649999976" fill="url(#linearGradient-5)" xlink:href="#path-6"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
