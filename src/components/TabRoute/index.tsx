@@ -3,7 +3,7 @@ import { useMemoizedFn } from "ahooks";
 import { Tabs } from "antd";
 import _ from "lodash";
 import memoized from "nano-memoize";
-import React, { Suspense, useEffect, useRef } from "react";
+import React, {Suspense, useEffect, useRef } from "react";
 // import Lru from "@/utils/lru";
 import type { Location } from "react-router-dom";
 // import { useWhyDidYouUpdate } from 'ahooks';
@@ -19,14 +19,17 @@ import PageLoading from "@/components/PageLoading";
 import { DynamicRouteType } from "@/config/routes";
 
 interface TabObjectType {
-  name: string;
+  // name: string;
+  label: string;
   key: string;
-  page: React.ReactElement | null;
+  children: React.ReactElement | null;
+  forceRender: boolean
+  // page: React.ReactElement | null;
   location: Location;
   params: Record<string, any>;
 }
 
-const { TabPane } = Tabs;
+// const { TabPane } = Tabs;
 
 const getTabPath = (tab: TabObjectType) =>
   generatePath(tab.location.pathname, tab.params);
@@ -75,9 +78,12 @@ const TabRoute: React.FC<Props> = ({ routeConfig, matchPath }) => {
   useEffect(() => {
     const tab = tabList.current.get(matchPath);
     const newTab: TabObjectType = {
-      name: routeConfig.name,
+      // name: routeConfig.name,
+      label: routeConfig.name,
       key: generTabKey(location, matchPath),
-      page: ele,
+      forceRender: false,
+      // page: ele,
+      children: <Suspense fallback={<PageLoading />}>{ele}</Suspense>,
       // access:routeConfig.access,
       location,
       params,
@@ -134,12 +140,14 @@ const TabRoute: React.FC<Props> = ({ routeConfig, matchPath }) => {
       hideAdd
       type="editable-card"
       onEdit={(targetKey) => closeTab(targetKey)}
+      items={[...tabList.current.values()]}
+      // items=[tabList]
     >
-      {[...tabList.current.values()].map((item) => (
+      {/* {[...tabList.current.values()].map((item) => (
         <TabPane tab={item.name} key={item.key}>
           <Suspense fallback={<PageLoading />}>{item.page}</Suspense>
         </TabPane>
-      ))}
+      ))} */}
     </Tabs>
   );
 };
