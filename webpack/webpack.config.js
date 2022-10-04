@@ -1,50 +1,52 @@
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
-const resolve = require("resolve");
+// const resolve = require("resolve");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Webpackbar = require("webpackbar");
 
 const CopyPlugin = require("copy-webpack-plugin");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const { ESBuildMinifyPlugin } = require("esbuild-loader");
+// const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
+// const TerserPlugin = require("terser-webpack-plugin");
 
-const TerserPlugin = require("terser-webpack-plugin");
 // const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const SafePostCssParser = require("postcss-safe-parser");
-const postcssNormalize = require("postcss-normalize");
+// const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+// const SafePostCssParser = require("postcss-safe-parser");
+// const postcssNormalize = require("postcss-normalize");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
+// const ESLintPlugin = require("eslint-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
-
+// const threadLoader = require("thread-loader");
 // react-dev-utils
 // const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const InlineChunkHtmlPlugin = require("react-dev-utils/InlineChunkHtmlPlugin");
-const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
+// const ForkTsCheckerWebpackPlugin = require("react-dev-utils/ForkTsCheckerWebpackPlugin");
 
 const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
 const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const getCSSModuleLocalIdent = require("react-dev-utils/getCSSModuleLocalIdent");
-const getCacheIdentifier = require("react-dev-utils/getCacheIdentifier");
+// const getCacheIdentifier = require("react-dev-utils/getCacheIdentifier");
 
 const createEnvironmentHash = require("./createEnvironmentHash");
 // const ignoredFiles = require('react-dev-utils/ignoredFiles');
 
 // const DashboardPlugin = require('webpack-dashboard/plugin');
 
-const webpackDevClientEntry = require.resolve(
-  "react-dev-utils/webpackHotDevClient",
-);
-const reactRefreshOverlayEntry = require.resolve(
-  "react-dev-utils/refreshOverlayInterop",
-);
+// const webpackDevClientEntry = require.resolve(
+//   "react-dev-utils/webpackHotDevClient",
+// );
+// const reactRefreshOverlayEntry = require.resolve(
+//   "react-dev-utils/refreshOverlayInterop",
+// );
 
 // resolve css less scss support module import
 const paths = require("./paths");
@@ -52,14 +54,14 @@ const modules = require("./modules");
 const getClientEnvironment = require("./env");
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
+// const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
 
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== "false";
 
-const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === "true";
+// const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === "true";
 
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || "10000",);
 
@@ -106,7 +108,7 @@ module.exports = function () {
   const isEnvProductionProfile =
     isEnvProduction && process.argv.includes("--profile");
 
-  const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+  // const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
   // common function to get style loaders
 
@@ -176,6 +178,7 @@ module.exports = function () {
                       },
                       stage: 3,
                     },
+                    "postcss-normalize"
                   ],
                 ],
             },
@@ -319,46 +322,51 @@ module.exports = function () {
       usedExports: true,
       minimizer: [
         // This is only used in production mode
-        new TerserPlugin({
-          terserOptions: {
-            parse: {
-              // We want terser to parse ecma 8 code. However, we don't want it
-              // to apply any minification steps that turns valid ecma 5 code
-              // into invalid ecma 5 code. This is why the 'compress' and 'output'
-              // sections only apply transformations that are ecma 5 safe
-              // https://github.com/facebook/create-react-app/pull/4234
-              ecma: 8,
-            },
-            compress: {
-              ecma: 5,
-              warnings: false,
-              // Disabled because of an issue with Uglify breaking seemingly valid code:
-              // https://github.com/facebook/create-react-app/issues/2376
-              // Pending further investigation:
-              // https://github.com/mishoo/UglifyJS2/issues/2011
-              comparisons: false,
-              // Disabled because of an issue with Terser breaking valid code:
-              // https://github.com/facebook/create-react-app/issues/5250
-              // Pending further investigation:
-              // https://github.com/terser-js/terser/issues/120
-              inline: 2,
-            },
-            mangle: {
-              safari10: true,
-            },
-            // Added for profiling in devtools
-            keep_classnames: isEnvProductionProfile,
-            keep_fnames: isEnvProductionProfile,
-            output: {
-              ecma: 5,
-              comments: false,
-              // Turned on because emoji and regex is not minified properly using default
-              // https://github.com/facebook/create-react-app/issues/2488
-              ascii_only: true,
-            },
-          },
-        }),
-        new CssMinimizerPlugin(),
+        // new TerserPlugin({
+        //   terserOptions: {
+        //     parse: {
+        //       // We want terser to parse ecma 8 code. However, we don't want it
+        //       // to apply any minification steps that turns valid ecma 5 code
+        //       // into invalid ecma 5 code. This is why the 'compress' and 'output'
+        //       // sections only apply transformations that are ecma 5 safe
+        //       // https://github.com/facebook/create-react-app/pull/4234
+        //       ecma: 8,
+        //     },
+        //     compress: {
+        //       ecma: 5,
+        //       warnings: false,
+        //       // Disabled because of an issue with Uglify breaking seemingly valid code:
+        //       // https://github.com/facebook/create-react-app/issues/2376
+        //       // Pending further investigation:
+        //       // https://github.com/mishoo/UglifyJS2/issues/2011
+        //       comparisons: false,
+        //       // Disabled because of an issue with Terser breaking valid code:
+        //       // https://github.com/facebook/create-react-app/issues/5250
+        //       // Pending further investigation:
+        //       // https://github.com/terser-js/terser/issues/120
+        //       inline: 2,
+        //     },
+        //     mangle: {
+        //       safari10: true,
+        //     },
+        //     // Added for profiling in devtools
+        //     keep_classnames: isEnvProductionProfile,
+        //     keep_fnames: isEnvProductionProfile,
+        //     output: {
+        //       ecma: 5,
+        //       comments: false,
+        //       // Turned on because emoji and regex is not minified properly using default
+        //       // https://github.com/facebook/create-react-app/issues/2488
+        //       ascii_only: true,
+        //     },
+        //   },
+        // }),
+        new ESBuildMinifyPlugin({
+          target: "es2015",
+          css: true // Apply minification to CSS assets
+        })
+        // new ESBuildPlugin(),
+        // new CssMinimizerPlugin(),
       ].filter(Boolean),
       // Automatically split vendor and commons
       // https://twitter.com/wSokra/status/969633336732905474
@@ -429,10 +437,30 @@ module.exports = function () {
           // test: /\.(j|t)sx?$/,
           // exclude: /(node_modules|bower_components)/,
           include: paths.appSrc,
+          exclude: /node_modules/,
           // resolve:{
           //   fullySpecified: false
           // },
           use: [
+            // {
+            //   loader: "swc-loader",
+            //   options: {
+            //     // This makes swc-loader invoke swc synchronously.
+            //     sync: true,
+            //     jsc: {
+            //       parser: {
+            //         syntax: "typescript"
+            //       }
+            //     }
+            //   }
+            // },
+            // {
+            //   loader: "esbuild-loader",
+            //   options: {
+            //     loader: "tsx",
+            //     target: "es2015",
+            //   },
+            // },
             {
               loader: "babel-loader",
               options: {
@@ -450,6 +478,7 @@ module.exports = function () {
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
                 compact: isEnvProduction,
+                sourceMaps: isEnvDevelopment,
                 plugins: [
                   isEnvDevelopment && require.resolve("react-refresh/babel"),
                 ].filter(Boolean),
@@ -457,28 +486,41 @@ module.exports = function () {
             },
           ],
         },
-        {
-          test: /\.(js|mjs)$/,
-          exclude: /@babel(?:\/|\\{1,2})runtime/,
-          loader: require.resolve("babel-loader"),
-          options: {
-            configFile: false,
-            compact: false,
-            cacheDirectory: true,
-            // See #6846 for context on why cacheCompression is disabled
-            cacheCompression: false,
-            // Babel sourcemaps are needed for debugging into node_modules
-            // code.  Without the options below, debuggers like VSCode
-            // show incorrect code and set breakpoints on the wrong lines.
-            sourceMaps: isEnvDevelopment,
-            inputSourceMap: isEnvDevelopment,
-          },
-        },
+        // {
+        //   test: /\.(js|mjs|jsx|ts|tsx)$/,
+        //   exclude: paths.appSrc,
+        //   use:[
+        //     {
+        //       loader: "esbuild-loader",
+        //       options: {
+        //         loader: "tsx",
+        //         target: "es2015",
+        //       },
+        //     },
+        //   ]
+        // },
+        // {
+        //   test: /\.(js|mjs)$/,
+        //   exclude: /@babel(?:\/|\\{1,2})runtime/,
+        //   loader: require.resolve("babel-loader"),
+        //   options: {
+        //     configFile: false,
+        //     compact: false,
+        //     cacheDirectory: true,
+        //     // See #6846 for context on why cacheCompression is disabled
+        //     cacheCompression: false,
+        //     // Babel sourcemaps are needed for debugging into node_modules
+        //     // code.  Without the options below, debuggers like VSCode
+        //     // show incorrect code and set breakpoints on the wrong lines.
+        //     sourceMaps: isEnvDevelopment,
+        //     inputSourceMap: isEnvDevelopment,
+        //   },
+        // },
         // {
         //   exclude: [/node_modules/],
         //   test: /\.(ts|js)x?$/,
-        //   use: ['source-map-loader'],
-        //   enforce: 'pre',
+        //   use: ["source-map-loader"],
+        //   enforce: "pre",
         // },
         getStyleLoaders(/\.(css)(\?.*)?$/),
         getStyleLoaders(/\.(less)(\?.*)?$/, "less-loader", {
@@ -522,7 +564,7 @@ module.exports = function () {
           },
         },
         {
-          test: /\.svg$/,
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           use: [
             {
               loader: require.resolve("@svgr/webpack"),
@@ -543,9 +585,9 @@ module.exports = function () {
               },
             },
           ],
-          issuer: {
-            and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
-          },
+          // issuer: {
+          //   and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+          // },
         },
         {
           test: /\.html$/,
@@ -624,7 +666,6 @@ module.exports = function () {
           },
         ],
         // host: "local-ip",
-        port: "8080",
         historyApiFallback: {
           // Paths with dots should still use the history fallback.
           // See https://github.com/facebook/create-react-app/issues/387.
@@ -637,7 +678,8 @@ module.exports = function () {
         //   disableDotRule: true,
         //   index: paths.publicUrlOrPath,
         // },
-        host: "127.0.0.1",
+        host: "0.0.0.0",
+        port: "8080",
         // port: 8080, // 设置默认监听端口，如果省略，默认为"8080"
       }
       : [],
@@ -653,6 +695,7 @@ module.exports = function () {
       // See https://github.com/facebook/create-react-app/issues/240
       isEnvDevelopment && new CaseSensitivePathsPlugin(),
 
+      // isEnvDevelopment && new BundleAnalyzerPlugin(),
       new CircularDependencyPlugin({
         exclude: /a\.js|node_modules/, // exclude node_modules
         failOnError: false, // show a warning when there is a circular dependency
@@ -861,53 +904,53 @@ module.exports = function () {
 
       // TypeScript type checking
       // TypeScript type checking
-      useTypeScript &&
-        new ForkTsCheckerWebpackPlugin({
-          async: isEnvDevelopment,
-          typescript: {
-            typescriptPath: resolve.sync("typescript", {
-              basedir: paths.appNodeModules,
-            }),
-            configOverwrite: {
-              compilerOptions: {
-                sourceMap: isEnvProduction
-                  ? shouldUseSourceMap
-                  : isEnvDevelopment,
-                skipLibCheck: true,
-                inlineSourceMap: false,
-                declarationMap: false,
-                noEmit: true,
-                incremental: true,
-                tsBuildInfoFile: paths.appTsBuildInfoFile,
-              },
-            },
-            context: paths.appPath,
-            diagnosticOptions: {
-              syntactic: true,
-            },
-            mode: "write-references",
-            // profile: true,
-          },
-          issue: {
-            // This one is specifically to match during CI tests,
-            // as micromatch doesn't match
-            // '../cra-template-typescript/template/src/App.tsx'
-            // otherwise.
-            include: [
-              { file: "../**/src/**/*.{ts,tsx}" },
-              { file: "**/src/**/*.{ts,tsx}" },
-            ],
-            exclude: [
-              { file: "**/src/**/__tests__/**" },
-              { file: "**/src/**/?(*.){spec|test}.*" },
-              { file: "**/src/setupProxy.*" },
-              { file: "**/src/setupTests.*" },
-            ],
-          },
-          logger: {
-            infrastructure: "silent",
-          },
-        }),
+      // useTypeScript &&
+      //   new ForkTsCheckerWebpackPlugin({
+      //     async: isEnvDevelopment,
+      //     typescript: {
+      //       typescriptPath: resolve.sync("typescript", {
+      //         basedir: paths.appNodeModules,
+      //       }),
+      //       configOverwrite: {
+      //         compilerOptions: {
+      //           sourceMap: isEnvProduction
+      //             ? shouldUseSourceMap
+      //             : isEnvDevelopment,
+      //           skipLibCheck: true,
+      //           inlineSourceMap: false,
+      //           declarationMap: false,
+      //           noEmit: true,
+      //           incremental: true,
+      //           tsBuildInfoFile: paths.appTsBuildInfoFile,
+      //         },
+      //       },
+      //       context: paths.appPath,
+      //       diagnosticOptions: {
+      //         syntactic: true,
+      //       },
+      //       mode: "write-references",
+      //       // profile: true,
+      //     },
+      //     issue: {
+      //       // This one is specifically to match during CI tests,
+      //       // as micromatch doesn't match
+      //       // '../cra-template-typescript/template/src/App.tsx'
+      //       // otherwise.
+      //       include: [
+      //         { file: "../**/src/**/*.{ts,tsx}" },
+      //         { file: "**/src/**/*.{ts,tsx}" },
+      //       ],
+      //       exclude: [
+      //         { file: "**/src/**/__tests__/**" },
+      //         { file: "**/src/**/?(*.){spec|test}.*" },
+      //         { file: "**/src/setupProxy.*" },
+      //         { file: "**/src/setupTests.*" },
+      //       ],
+      //     },
+      //     logger: {
+      //       infrastructure: "silent",
+      //     },
+      //   }),
       // !disableESLintPlugin &&
       //   new ESLintPlugin({
       //     // Plugin options
