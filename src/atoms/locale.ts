@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import { i18n } from "@lingui/core";
 import { atom, selector } from "recoil";
 

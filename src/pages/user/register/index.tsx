@@ -1,6 +1,6 @@
 import {
   LockTwoTone,
-  MailTwoTone,
+  LockOutlined,
   MobileTwoTone,
   UserOutlined,
 } from "@ant-design/icons";
@@ -20,12 +20,23 @@ import { Link } from "react-router-dom";
 import { userRegister } from "@/services/register";
 
 import { LoginMessage } from "../login/index";
-import styles from "./index.less";
 
 const passwordStatusMap = {
-  ok: <div className={styles.success}>强度：强</div>,
-  pass: <div className={styles.warning}>强度：中</div>,
-  poor: <div className={styles.error}>强度：太短</div>,
+  ok: <div style={{
+    transition: "color 0.3s",
+    color: "green",
+  }}
+  >强度：强</div>,
+  pass: <div style={{
+    transition: "color 0.3s",
+    color: "blue",
+  }}
+  >强度：中</div>,
+  poor: <div style={{
+    transition: "color 0.3s",
+    color: "red",
+  }}
+  >强度：太短</div>,
 };
 
 type PasswordProgressType = "success" | "normal" | "exception";
@@ -120,10 +131,9 @@ const Register: React.FC<Props> = (props) => {
     const value = formRef.current?.getFieldValue("password");
     const passwordStatus = getPasswordStatus();
     return value && value.length ? (
-      <div className={styles[`progress-${passwordStatus}`]}>
+      <div >
         <Progress
           status={passwordProgressMap[passwordStatus] as PasswordProgressType}
-          className={styles.progress}
           strokeWidth={6}
           percent={value.length * 10 > 100 ? 100 : value.length * 10}
           showInfo={false}
@@ -133,7 +143,7 @@ const Register: React.FC<Props> = (props) => {
   });
 
   return (
-    <div className={styles.main}>
+    <div>
       <ProForm
         submitter={{
           render: (_, dom) => dom.pop(),
@@ -167,7 +177,7 @@ const Register: React.FC<Props> = (props) => {
               name="account"
               fieldProps={{
                 size: "large",
-                prefix: <UserOutlined className={styles.prefixIcon} />,
+                prefix: <UserOutlined className="prefixIcon" />,
                 allowClear,
               }}
               placeholder={i18n._(t`账户名`)}
@@ -186,7 +196,7 @@ const Register: React.FC<Props> = (props) => {
               name="email"
               fieldProps={{
                 size: "large",
-                prefix: <UserOutlined className={styles.prefixIcon} />,
+                prefix: <LockOutlined className="prefixIcon" />,
                 allowClear,
               }}
               placeholder={i18n._(t`邮箱`)}
@@ -222,7 +232,7 @@ const Register: React.FC<Props> = (props) => {
               <ProFormText
                 fieldProps={{
                   size: "large",
-                  prefix: <MobileTwoTone className={styles.prefixIcon} />,
+                  prefix: <MobileTwoTone className="prefixIcon" />,
                   allowClear,
                 }}
                 name="phoneNumber"
@@ -259,7 +269,7 @@ const Register: React.FC<Props> = (props) => {
                 name="password"
                 fieldProps={{
                   size: "large",
-                  prefix: <LockTwoTone className={styles.prefixIcon} />,
+                  prefix: <LockOutlined className="prefixIcon" />,
                   allowClear,
                 }}
                 placeholder={i18n._(t`密码需6位以上，区分大小写`)}
@@ -278,7 +288,7 @@ const Register: React.FC<Props> = (props) => {
               name="passwordConfirm"
               fieldProps={{
                 size: "large",
-                prefix: <LockTwoTone className={styles.prefixIcon} />,
+                prefix: <LockOutlined className="prefixIcon" />,
                 allowClear,
               }}
               placeholder={i18n._(t`密码：任意`)}
@@ -303,7 +313,7 @@ const Register: React.FC<Props> = (props) => {
             <ProFormText
               fieldProps={{
                 size: "large",
-                prefix: <MobileTwoTone className={styles.prefixIcon} />,
+                prefix: <MobileTwoTone className="prefixIcon" />,
                 allowClear,
               }}
               name="mobile"
@@ -322,7 +332,7 @@ const Register: React.FC<Props> = (props) => {
             <ProFormCaptcha
               fieldProps={{
                 size: "large",
-                prefix: <MailTwoTone className={styles.prefixIcon} />,
+                prefix: <MobileTwoTone className="prefixIcon" />,
                 allowClear,
               }}
               captchaProps={{
@@ -352,8 +362,14 @@ const Register: React.FC<Props> = (props) => {
           </>
         )}
       </ProForm>
-      <Space className={styles.other}>
-        <Link className={styles.tologin} to="/user/login">
+      <Space style={{
+        marginTop:"24px",
+        lineHeight:"22px",
+        textAlign:"left",
+        display:"block",
+      }}>
+        <Link style={{
+        }} to="/user/login">
           <Trans>返回登录</Trans>
         </Link>
       </Space>

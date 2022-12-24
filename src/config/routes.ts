@@ -129,7 +129,7 @@ const routes: RouteType[] = [
                     name: "vue2测试",
                     path: "vue2/*",
                     access: "microOpen",
-                    component: "http://localhost:7101", // 微前端配置
+                    component: "http://localhost:8004", // 微前端配置
                   },
                 ],
               },

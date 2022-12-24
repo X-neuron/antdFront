@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import ProLayout, { SettingDrawer } from "@ant-design/pro-layout";
 import { defaultSettings } from "@ant-design/pro-layout/es/defaultSettings";
 // import { useCreation, useSafeState } from "ahooks";
@@ -11,16 +12,21 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-
+import { i18n } from "@lingui/core";
+import { t } from "@lingui/macro";
+import {  Switch } from "antd";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { tabsModelAtom } from "@/atoms/tabsModel";
+import { useEmotionCss } from "@ant-design/use-emotion-css";
 import logo from "@/assets/logo.svg";
 // import yuque from "@/assets/yuque.svg";
 // import procomponent from "@/assets/procomponent.svg";
 import { curLocaleLoadAtom } from "@/atoms/locale";
 import { transDynamicRouteAtom } from "@/atoms/route";
-import { tabsModelAtom } from "@/atoms/tabsModel";
-import { RightContent } from "@/components/GlobalHeader";
-import PageLoading from "@/components/PageLoading";
+
+import Avatar from "@/components/RightContent/AvatarDropdown";
+import SelectLang from "@/components/SelectLang";
+import { PageLoading } from "@ant-design/pro-components";
 import TabRoute from "@/components/TabRoute";
 import { DynamicRouteType } from "@/config/routes";
 
@@ -32,17 +38,17 @@ import { DynamicRouteType } from "@/config/routes";
 const appList = [
   {
     // icon: yuque,
-    icon: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-    title: 'Pro Components',
-    desc: '专业级 UI 组件库',
-    url: 'https://procomponents.ant.design/',
+    icon: "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
+    title: "Pro Components",
+    desc: "专业级 UI 组件库",
+    url: "https://procomponents.ant.design/",
   },
   {
     // icon: procomponent,
-    icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg',
-    title: '语雀',
-    desc: '知识创作与分享工具',
-    url: 'https://www.yuque.com/',
+    icon: "https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg",
+    title: "语雀",
+    desc: "知识创作与分享工具",
+    url: "https://www.yuque.com/",
   },
 ];
 
@@ -53,21 +59,26 @@ const pickRoutes = memoized((routes: DynamicRouteType[], pathname: string,locale
     locale, // just for cache
     routeConfig,
     // matchPath: matches ? matches.map(match => _.replace(match.route.path,'/*','')).join('/') : null // 解决下微端/*路径的问题
-    matchPath: routeConfig ? _.replace(routeConfig.key, "/*", "") : '',
+    matchPath: routeConfig ? _.replace(routeConfig.key, "/*", "") : "",
   };
 });
+
 
 const BasicLayout: React.FC = () => {
   const location = useLocation();
   const [settings, setSetting] = useSafeState<any>({
     ...defaultSettings,
     fixSiderbar: true,
-    layout: 'mix',
+    layout: "mix",
     fixedHeader: true,
     splitMenus: true,
   });
   const locale = useRecoilValue(curLocaleLoadAtom);
-  const tabsModel = useRecoilValue(tabsModelAtom);
+
+  const [tabsModel, setTabsModel] = useRecoilState(tabsModelAtom);
+  const onChangetabsModel = (checked) => {
+    setTabsModel(checked);
+  };
 
   const navigate = useNavigate();
 
@@ -84,6 +95,20 @@ const BasicLayout: React.FC = () => {
   // const feedToProlayoutRoute = useCreation(() => _.cloneDeep(route), [locale,route]);
 
   const { routeConfig, matchPath } = pickRoutes(route, location.pathname,locale);
+
+  const actionClassName = useEmotionCss(({ token }) => ({
+    display: "flex",
+    float: "right",
+    height: "48px",
+    marginLeft: "auto",
+    overflow: "hidden",
+    cursor: "pointer",
+    padding: "0 12px",
+    borderRadius: token.borderRadius,
+    "&:hover": {
+      backgroundColor: token.colorBgTextHover,
+    },
+  }));
 
   return (
     <div id="prolayout" key="prolayout">
@@ -107,17 +132,17 @@ const BasicLayout: React.FC = () => {
         )}
         selectedKeys={[matchPath]}
         logo={logo}
-        title={<h1>Antd Front</h1>}
+        title="Antd Front"
         menuFooterRender={(props) => {
           if (props?.collapsed) return undefined;
           return (
             <p
               style={{
-                textAlign: 'center',
+                textAlign: "center",
                 paddingBlockStart: 12,
               }}
             >
-              Power by Ant Design
+              技术支持-XXX技术社区
             </p>
           );
         }}
@@ -125,7 +150,26 @@ const BasicLayout: React.FC = () => {
         actionsRender={(props) => {
           if (props.isMobile) return [];
           return [
-            <RightContent />,
+            // <GlobalHeaderRight />,
+            <div style={{
+              cursor: "pointer",
+              padding: "12px",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 18,
+              verticalAlign: "middle",
+            }}
+            >
+              <Switch
+                onChange={onChangetabsModel}
+                checkedChildren={i18n._(t`多标签`)}
+                unCheckedChildren={i18n._(t`单页`)}
+                defaultChecked={tabsModel}
+              />
+            </div>,
+            <Avatar />,
+            <SelectLang className={actionClassName} />
           ];
         }}
         {...settings}

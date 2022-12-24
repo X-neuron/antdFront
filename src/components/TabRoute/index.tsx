@@ -15,7 +15,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import PageLoading from "@/components/PageLoading";
+import { PageLoading } from "@ant-design/pro-components";
 import { DynamicRouteType } from "@/config/routes";
 
 interface TabObjectType {

@@ -459,6 +459,7 @@ module.exports = function () {
             //   options: {
             //     loader: "tsx",
             //     target: "es2015",
+            //     tsconfigRaw: require("./tsconfig.json")
             //   },
             // },
             {
@@ -523,12 +524,6 @@ module.exports = function () {
         //   enforce: "pre",
         // },
         getStyleLoaders(/\.(css)(\?.*)?$/),
-        getStyleLoaders(/\.(less)(\?.*)?$/, "less-loader", {
-          sourceMap: isEnvDevelopment,
-          lessOptions: {
-            javascriptEnabled: true,
-          },
-        }),
         getStyleLoaders(/\.(scss|sass)(\?.*)?$/, "sass-loader", {
           sourceMap: isEnvDevelopment,
         }),

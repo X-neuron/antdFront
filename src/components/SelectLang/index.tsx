@@ -1,4 +1,4 @@
-import { Menu } from "antd";
+
 import React from "react";
 import { useRecoilState } from "recoil";
 
@@ -20,6 +20,7 @@ import HeaderDropdown from "../HeaderDropdown";
 // }
 
 const SelectLang: React.FC<Record<string, any>> = (props) => {
+  const { style,restProps } = props;
   const [curLang, setCurLang] = useRecoilState(curLangAtom);
 
   const inlineStyle = {
@@ -30,9 +31,11 @@ const SelectLang: React.FC<Record<string, any>> = (props) => {
     justifyContent: "center",
     fontSize: 18,
     verticalAlign: "middle",
+    ...style,
   };
 
   const menuItemStyle = { minWidth: "160px" };
+  const menuItemIconStyle = { marginRight: "8px" };
 
   const handleClick = ({ key }: { key: string }) => {
     if (key !== curLang) {
@@ -40,21 +43,28 @@ const SelectLang: React.FC<Record<string, any>> = (props) => {
     }
   };
 
-  const langMenu = (
-    <Menu selectedKeys={[curLang]} onClick={handleClick}>
-      {Object.keys(locales).map((lang) => (
-        <Menu.Item key={lang} style={menuItemStyle}>
-          <span role="img" aria-label={locales[lang].name}>
+  const langMenu = {
+    selectedKeys: [curLang],
+    onClick: handleClick,
+    items: Object.keys(locales).map((lang) => ({
+      key: lang,
+      style: menuItemStyle,
+      label: (
+        <>
+          <span role="img" aria-label={locales[lang].name || "en-US"} style={menuItemIconStyle}>
             {locales[lang].icon || "🌐"}
           </span>
-          {locales[lang].name}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
+          {locales[lang].name || "en-US"}
+        </>
+      ),
+    })),
+
+  }
+
+  const dropdownProps = {menu: langMenu}
 
   return (
-    <HeaderDropdown overlay={langMenu} placement="bottomRight" {...props}>
+    <HeaderDropdown {...dropdownProps} placement="bottomRight" {...restProps}>
       <span style={inlineStyle}>
         {/* <i className="anticon" title={allLangUIConfig[selectedLang]?.title}> */}
         <i className="anticon">

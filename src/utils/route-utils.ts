@@ -23,7 +23,7 @@ const { staticConf: sc, dynamicConf: dc } = extractRouteConfig(routeConfig);
 export const staticConfig = sc;
 export const dynamicConfig = dc;
 
-function extractRouteConfig(rConfig: RouteType[]): {
+export function extractRouteConfig(rConfig: RouteType[]): {
   staticConf: StaticRouteType[] | null;
   dynamicConf: DynamicRouteType[] | null;
 } {

@@ -4,10 +4,9 @@ import React,{ Suspense } from "react";
 // import ReactDom from "react-dom";
 // react 18
 import * as ReactDOMClient from 'react-dom/client';
-import PageLoading from "@/components/PageLoading";
+import { PageLoading } from "@ant-design/pro-components";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-import 'antd/dist/antd.variable.min.css';
 // 真实线上环境 请注释掉mock
 import runMock from "@/mock";
 

@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 
 import { appRouteAtom } from "@/atoms/route";
 import Locale from "@/components/Locale";
-import PageLoading from "@/components/PageLoading";
+import { PageLoading } from "@ant-design/pro-components";
 // import { loginStateAtom } from "@/atoms/login";
 
 const App: React.FC = () => {

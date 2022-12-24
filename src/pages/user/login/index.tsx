@@ -1,9 +1,10 @@
 import {
-  AlipayCircleOutlined,
-  LockTwoTone,
+  AlipayOutlined,
+  WeiboOutlined,
+  LockOutlined,
   MailTwoTone,
   MobileTwoTone,
-  TaobaoCircleOutlined,
+  TaobaoOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import ProForm, {
@@ -16,12 +17,19 @@ import { t, Trans } from "@lingui/macro";
 import { useSafeState } from "ahooks";
 import { Alert, message, Space, Tabs } from "antd";
 import React from "react";
+import type { CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
 import { loginStateAtom } from "@/atoms/login";
 
-import styles from "./index.less";
+const iconStyles: CSSProperties = {
+  color: "rgba(0, 0, 0, 0.2)",
+  fontSize: "18px",
+  verticalAlign: "middle",
+  cursor: "pointer",
+};
+
 
 export const LoginMessage: React.FC<{ content: string }> = ({ content }) => (
   <Alert
@@ -55,7 +63,7 @@ const Login: React.FC<Props> = (props) => {
     navigate("/", { replace: true });
   };
   return (
-    <div className={styles.main}>
+    <div>
       <ProForm
         initialValues={{
           autoLogin: true,
@@ -91,7 +99,7 @@ const Login: React.FC<Props> = (props) => {
               name="account"
               fieldProps={{
                 size: "large",
-                prefix: <UserOutlined className={styles.prefixIcon} />,
+                prefix: <UserOutlined className="prefixIcon" />,
               }}
               placeholder={i18n._(t`用户名: admin or user`)}
               rules={[
@@ -105,7 +113,7 @@ const Login: React.FC<Props> = (props) => {
               name="password"
               fieldProps={{
                 size: "large",
-                prefix: <LockTwoTone className={styles.prefixIcon} />,
+                prefix: <LockOutlined className="prefixIcon" />,
               }}
               placeholder={i18n._(t`密码：any`)}
               rules={[
@@ -126,7 +134,7 @@ const Login: React.FC<Props> = (props) => {
             <ProFormText
               fieldProps={{
                 size: "large",
-                prefix: <MobileTwoTone className={styles.prefixIcon} />,
+                prefix: <MobileTwoTone className="prefixIcon" />,
               }}
               name="mobile"
               placeholder={i18n._(t`手机号`)}
@@ -144,7 +152,7 @@ const Login: React.FC<Props> = (props) => {
             <ProFormCaptcha
               fieldProps={{
                 size: "large",
-                prefix: <MailTwoTone className={styles.prefixIcon} />,
+                prefix: <MailTwoTone className="prefixIcon" />,
               }}
               captchaProps={{
                 size: "large",
@@ -189,13 +197,19 @@ const Login: React.FC<Props> = (props) => {
           </a>
         </div>
       </ProForm>
-      <Space className={styles.other}>
-        <p className={styles.p}>
-          <Trans> 其他登陆方式 </Trans>
-        </p>
-        <AlipayCircleOutlined className={styles.icon} />
-        <TaobaoCircleOutlined className={styles.icon} />
-        <Link className={styles.register} to="/user/register">
+      <Space
+        style={{
+          marginBottom: "24px",
+          marginTop: "24px",
+          lineHeight: "22px",
+          textAlign: "left",
+          display: "block"
+        }}
+      >
+        <Link style={{
+          // float: "right",
+        }} to="/user/register"
+        >
           <Trans> APP/账户注册 </Trans>
         </Link>
       </Space>
