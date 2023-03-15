@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import ProLayout, { SettingDrawer } from "@ant-design/pro-layout";
+// import ProLayout, { SettingDrawer } from "@ant-design/pro-layout";
 import { defaultSettings } from "@ant-design/pro-layout/es/defaultSettings";
 // import { useCreation, useSafeState } from "ahooks";
 import {  useSafeState } from "ahooks";
@@ -26,7 +26,7 @@ import { transDynamicRouteAtom } from "@/atoms/route";
 
 import Avatar from "@/components/RightContent/AvatarDropdown";
 import SelectLang from "@/components/SelectLang";
-import { PageLoading } from "@ant-design/pro-components";
+import { PageLoading, ProLayout, SettingDrawer } from "@ant-design/pro-components";
 import TabRoute from "@/components/TabRoute";
 import { DynamicRouteType } from "@/config/routes";
 

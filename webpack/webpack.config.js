@@ -8,7 +8,7 @@ const Webpackbar = require("webpackbar");
 const CopyPlugin = require("copy-webpack-plugin");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const { ESBuildMinifyPlugin } = require("esbuild-loader");
+const { EsbuildPlugin } = require("esbuild-loader");
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
 // const TerserPlugin = require("terser-webpack-plugin");
 
@@ -361,7 +361,7 @@ module.exports = function () {
         //     },
         //   },
         // }),
-        new ESBuildMinifyPlugin({
+        new EsbuildPlugin ({
           target: "es2015",
           css: true // Apply minification to CSS assets
         })
