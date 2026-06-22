@@ -161,7 +161,7 @@
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.1.4",
     "webpack-dashboard": "^3.3.8",
-    "webpack-dev-server": "5.0.3",
+    "webpack-dev-server": "5.2.5",
     "webpack-manifest-plugin": "^5.0.0",
     "webpackbar": "^6.0.1",
     "workbox-webpack-plugin": "^7.0.0"
